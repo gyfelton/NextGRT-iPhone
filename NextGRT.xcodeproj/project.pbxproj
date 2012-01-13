@@ -1,0 +1,315 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FEACF03E14C027F8003CC962 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF03D14C027F8003CC962 /* UIKit.framework */; };
+		FEACF04014C027F8003CC962 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF03F14C027F8003CC962 /* Foundation.framework */; };
+		FEACF04214C027F8003CC962 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF04114C027F8003CC962 /* CoreGraphics.framework */; };
+		FEACF04814C027F8003CC962 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FEACF04614C027F8003CC962 /* InfoPlist.strings */; };
+		FEACF04A14C027F8003CC962 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF04914C027F8003CC962 /* main.m */; };
+		FEACF04E14C027F8003CC962 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF04D14C027F8003CC962 /* AppDelegate.m */; };
+		FEACF05114C027F8003CC962 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF05014C027F8003CC962 /* FirstViewController.m */; };
+		FEACF05314C027F8003CC962 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05214C027F8003CC962 /* first.png */; };
+		FEACF05514C027F8003CC962 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05414C027F8003CC962 /* first@2x.png */; };
+		FEACF05814C027F8003CC962 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF05714C027F8003CC962 /* SecondViewController.m */; };
+		FEACF05A14C027F8003CC962 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05914C027F8003CC962 /* second.png */; };
+		FEACF05C14C027F8003CC962 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05B14C027F8003CC962 /* second@2x.png */; };
+		FEACF05F14C027F8003CC962 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05D14C027F8003CC962 /* FirstViewController.xib */; };
+		FEACF06214C027F8003CC962 /* SecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEACF06014C027F8003CC962 /* SecondViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FEACF03914C027F8003CC962 /* NextGRT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextGRT.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEACF03D14C027F8003CC962 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FEACF03F14C027F8003CC962 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FEACF04114C027F8003CC962 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FEACF04514C027F8003CC962 /* NextGRT-Info.plist */ = {isa = PBXFileReference; path = "NextGRT-Info.plist"; sourceTree = "<group>"; };
+		FEACF04714C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FEACF04914C027F8003CC962 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FEACF04B14C027F8003CC962 /* NextGRT-Prefix.pch */ = {isa = PBXFileReference; path = "NextGRT-Prefix.pch"; sourceTree = "<group>"; };
+		FEACF04C14C027F8003CC962 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		FEACF04D14C027F8003CC962 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FEACF04F14C027F8003CC962 /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
+		FEACF05014C027F8003CC962 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		FEACF05214C027F8003CC962 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		FEACF05414C027F8003CC962 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		FEACF05614C027F8003CC962 /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
+		FEACF05714C027F8003CC962 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		FEACF05914C027F8003CC962 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		FEACF05B14C027F8003CC962 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		FEACF05E14C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstViewController.xib; sourceTree = "<group>"; };
+		FEACF06114C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FEACF03614C027F8003CC962 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEACF03E14C027F8003CC962 /* UIKit.framework in Frameworks */,
+				FEACF04014C027F8003CC962 /* Foundation.framework in Frameworks */,
+				FEACF04214C027F8003CC962 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FEACF02E14C027F8003CC962 = {
+			isa = PBXGroup;
+			children = (
+				FEACF04314C027F8003CC962 /* NextGRT */,
+				FEACF03C14C027F8003CC962 /* Frameworks */,
+				FEACF03A14C027F8003CC962 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FEACF03A14C027F8003CC962 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF03914C027F8003CC962 /* NextGRT.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FEACF03C14C027F8003CC962 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF03D14C027F8003CC962 /* UIKit.framework */,
+				FEACF03F14C027F8003CC962 /* Foundation.framework */,
+				FEACF04114C027F8003CC962 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FEACF04314C027F8003CC962 /* NextGRT */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF04C14C027F8003CC962 /* AppDelegate.h */,
+				FEACF04D14C027F8003CC962 /* AppDelegate.m */,
+				FEACF04F14C027F8003CC962 /* FirstViewController.h */,
+				FEACF05014C027F8003CC962 /* FirstViewController.m */,
+				FEACF05214C027F8003CC962 /* first.png */,
+				FEACF05414C027F8003CC962 /* first@2x.png */,
+				FEACF05614C027F8003CC962 /* SecondViewController.h */,
+				FEACF05714C027F8003CC962 /* SecondViewController.m */,
+				FEACF05914C027F8003CC962 /* second.png */,
+				FEACF05B14C027F8003CC962 /* second@2x.png */,
+				FEACF05D14C027F8003CC962 /* FirstViewController.xib */,
+				FEACF06014C027F8003CC962 /* SecondViewController.xib */,
+				FEACF04414C027F8003CC962 /* Supporting Files */,
+			);
+			path = NextGRT;
+			sourceTree = "<group>";
+		};
+		FEACF04414C027F8003CC962 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF04514C027F8003CC962 /* NextGRT-Info.plist */,
+				FEACF04614C027F8003CC962 /* InfoPlist.strings */,
+				FEACF04914C027F8003CC962 /* main.m */,
+				FEACF04B14C027F8003CC962 /* NextGRT-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FEACF03814C027F8003CC962 /* NextGRT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEACF06514C027F8003CC962 /* Build configuration list for PBXNativeTarget "NextGRT" */;
+			buildPhases = (
+				FEACF03514C027F8003CC962 /* Sources */,
+				FEACF03614C027F8003CC962 /* Frameworks */,
+				FEACF03714C027F8003CC962 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NextGRT;
+			productName = NextGRT;
+			productReference = FEACF03914C027F8003CC962 /* NextGRT.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FEACF03014C027F8003CC962 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = FEACF03314C027F8003CC962 /* Build configuration list for PBXProject "NextGRT" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FEACF02E14C027F8003CC962;
+			productRefGroup = FEACF03A14C027F8003CC962 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FEACF03814C027F8003CC962 /* NextGRT */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FEACF03714C027F8003CC962 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEACF04814C027F8003CC962 /* InfoPlist.strings in Resources */,
+				FEACF05314C027F8003CC962 /* first.png in Resources */,
+				FEACF05514C027F8003CC962 /* first@2x.png in Resources */,
+				FEACF05A14C027F8003CC962 /* second.png in Resources */,
+				FEACF05C14C027F8003CC962 /* second@2x.png in Resources */,
+				FEACF05F14C027F8003CC962 /* FirstViewController.xib in Resources */,
+				FEACF06214C027F8003CC962 /* SecondViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FEACF03514C027F8003CC962 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEACF04A14C027F8003CC962 /* main.m in Sources */,
+				FEACF04E14C027F8003CC962 /* AppDelegate.m in Sources */,
+				FEACF05114C027F8003CC962 /* FirstViewController.m in Sources */,
+				FEACF05814C027F8003CC962 /* SecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FEACF04614C027F8003CC962 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEACF04714C027F8003CC962 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FEACF05D14C027F8003CC962 /* FirstViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEACF05E14C027F8003CC962 /* en */,
+			);
+			name = FirstViewController.xib;
+			sourceTree = "<group>";
+		};
+		FEACF06014C027F8003CC962 /* SecondViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEACF06114C027F8003CC962 /* en */,
+			);
+			name = SecondViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FEACF06314C027F8003CC962 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FEACF06414C027F8003CC962 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FEACF06614C027F8003CC962 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
+				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FEACF06714C027F8003CC962 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
+				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FEACF03314C027F8003CC962 /* Build configuration list for PBXProject "NextGRT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEACF06314C027F8003CC962 /* Debug */,
+				FEACF06414C027F8003CC962 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEACF06514C027F8003CC962 /* Build configuration list for PBXNativeTarget "NextGRT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEACF06614C027F8003CC962 /* Debug */,
+				FEACF06714C027F8003CC962 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FEACF03014C027F8003CC962 /* Project object */;
+}
