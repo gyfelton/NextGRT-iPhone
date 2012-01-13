@@ -6,25 +6,48 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
+
 #import "AppDelegate.h"
 
-#import "FirstViewController.h"
+#import "FavouritesViewController.h"
 
-#import "SecondViewController.h"
+#import "SearchViewController.h"
+
+#import "MoreViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
 
++ (CLLocationManager*)sharedLocationManager {
+    static CLLocationManager* locationManager_;
+    
+    @synchronized (self) {
+        if( !locationManager_ ) {
+            locationManager_ = [[CLLocationManager alloc] init];
+            locationManager_.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+        }
+    }
+    return locationManager_;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    UIViewController *viewController1 = [[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil];
-    UIViewController *viewController2 = [[SecondViewController alloc] initWithNibName:@"SecondViewController" bundle:nil];
+    UIViewController *viewController1 = [[FavouritesViewController alloc] initWithNibName:@"FavouritesViewController" bundle:nil];
+    UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:viewController1];
+    
+    UIViewController *viewController2 = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
+    
+    UIViewController *viewController3 = [[MoreViewController alloc] initWithNibName:@"MoreViewController" bundle:nil];
+    UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:viewController3];
+    
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:nav1, viewController2, nav3, nil];
+    
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  FirstViewController.h
 //  NextGRT
 //
 //  Created by Yuanfeng on 12-01-13.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
+@interface FavouritesViewController : UIViewController
+
+@property (nonatomic, strong) NSMutableArray* favStopsDict;
 
 @end

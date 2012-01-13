@@ -13,14 +13,20 @@
 		FEACF04814C027F8003CC962 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FEACF04614C027F8003CC962 /* InfoPlist.strings */; };
 		FEACF04A14C027F8003CC962 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF04914C027F8003CC962 /* main.m */; };
 		FEACF04E14C027F8003CC962 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF04D14C027F8003CC962 /* AppDelegate.m */; };
-		FEACF05114C027F8003CC962 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF05014C027F8003CC962 /* FirstViewController.m */; };
-		FEACF05314C027F8003CC962 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05214C027F8003CC962 /* first.png */; };
-		FEACF05514C027F8003CC962 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05414C027F8003CC962 /* first@2x.png */; };
-		FEACF05814C027F8003CC962 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF05714C027F8003CC962 /* SecondViewController.m */; };
-		FEACF05A14C027F8003CC962 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05914C027F8003CC962 /* second.png */; };
-		FEACF05C14C027F8003CC962 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05B14C027F8003CC962 /* second@2x.png */; };
-		FEACF05F14C027F8003CC962 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05D14C027F8003CC962 /* FirstViewController.xib */; };
-		FEACF06214C027F8003CC962 /* SecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEACF06014C027F8003CC962 /* SecondViewController.xib */; };
+		FEACF05114C027F8003CC962 /* FavouritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF05014C027F8003CC962 /* FavouritesViewController.m */; };
+		FEACF05814C027F8003CC962 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF05714C027F8003CC962 /* SearchViewController.m */; };
+		FEACF05F14C027F8003CC962 /* FavouritesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEACF05D14C027F8003CC962 /* FavouritesViewController.xib */; };
+		FEACF06214C027F8003CC962 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEACF06014C027F8003CC962 /* SearchViewController.xib */; };
+		FEACF06914C02810003CC962 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF06814C02810003CC962 /* CoreLocation.framework */; };
+		FEACF06B14C02819003CC962 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF06A14C02819003CC962 /* QuartzCore.framework */; };
+		FEACF06D14C02828003CC962 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF06C14C02828003CC962 /* libsqlite3.0.dylib */; };
+		FEACF07414C02A83003CC962 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF07214C02A83003CC962 /* MoreViewController.m */; };
+		FEACF07614C02A91003CC962 /* MoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEACF07814C02A91003CC962 /* MoreViewController.xib */; };
+		FEACF07F14C02DDF003CC962 /* FavouriteStopsCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF07C14C02DDF003CC962 /* FavouriteStopsCentralManager.m */; };
+		FEACF08014C02DDF003CC962 /* GRTDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF07E14C02DDF003CC962 /* GRTDatabaseManager.m */; };
+		FEACF08414C02E98003CC962 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08314C02E98003CC962 /* Stop.m */; };
+		FEACF08714C02F08003CC962 /* BusRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08614C02F08003CC962 /* BusRoute.m */; };
+		FEACF08A14C02F63003CC962 /* CountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08914C02F63003CC962 /* CountDown.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,22 +34,38 @@
 		FEACF03D14C027F8003CC962 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FEACF03F14C027F8003CC962 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FEACF04114C027F8003CC962 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		FEACF04514C027F8003CC962 /* NextGRT-Info.plist */ = {isa = PBXFileReference; path = "NextGRT-Info.plist"; sourceTree = "<group>"; };
+		FEACF04514C027F8003CC962 /* NextGRT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NextGRT-Info.plist"; sourceTree = "<group>"; };
 		FEACF04714C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FEACF04914C027F8003CC962 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FEACF04B14C027F8003CC962 /* NextGRT-Prefix.pch */ = {isa = PBXFileReference; path = "NextGRT-Prefix.pch"; sourceTree = "<group>"; };
-		FEACF04C14C027F8003CC962 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		FEACF04B14C027F8003CC962 /* NextGRT-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NextGRT-Prefix.pch"; sourceTree = "<group>"; };
+		FEACF04C14C027F8003CC962 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FEACF04D14C027F8003CC962 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FEACF04F14C027F8003CC962 /* FirstViewController.h */ = {isa = PBXFileReference; path = FirstViewController.h; sourceTree = "<group>"; };
-		FEACF05014C027F8003CC962 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		FEACF05214C027F8003CC962 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
-		FEACF05414C027F8003CC962 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		FEACF05614C027F8003CC962 /* SecondViewController.h */ = {isa = PBXFileReference; path = SecondViewController.h; sourceTree = "<group>"; };
-		FEACF05714C027F8003CC962 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		FEACF05914C027F8003CC962 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		FEACF05B14C027F8003CC962 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		FEACF05E14C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstViewController.xib; sourceTree = "<group>"; };
-		FEACF06114C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SecondViewController.xib; sourceTree = "<group>"; };
+		FEACF04F14C027F8003CC962 /* FavouritesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavouritesViewController.h; sourceTree = "<group>"; };
+		FEACF05014C027F8003CC962 /* FavouritesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FavouritesViewController.m; sourceTree = "<group>"; };
+		FEACF05614C027F8003CC962 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		FEACF05714C027F8003CC962 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		FEACF05E14C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FavouritesViewController.xib; sourceTree = "<group>"; };
+		FEACF06114C027F8003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SearchViewController.xib; sourceTree = "<group>"; };
+		FEACF06814C02810003CC962 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FEACF06A14C02819003CC962 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FEACF06C14C02828003CC962 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		FEACF06E14C02960003CC962 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "/Users/elton/Documents/workspace/NextGRT/NextGRT/zh-Hans.lproj/FavouritesViewController.xib"; sourceTree = "<absolute>"; };
+		FEACF06F14C02960003CC962 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "/Users/elton/Documents/workspace/NextGRT/NextGRT/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<absolute>"; };
+		FEACF07014C02960003CC962 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "/Users/elton/Documents/workspace/NextGRT/NextGRT/zh-Hans.lproj/SearchViewController.xib"; sourceTree = "<absolute>"; };
+		FEACF07114C02A83003CC962 /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
+		FEACF07214C02A83003CC962 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
+		FEACF07714C02A91003CC962 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MoreViewController.xib; sourceTree = "<group>"; };
+		FEACF07914C02A99003CC962 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MoreViewController.xib"; sourceTree = "<group>"; };
+		FEACF07B14C02DDF003CC962 /* FavouriteStopsCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavouriteStopsCentralManager.h; sourceTree = "<group>"; };
+		FEACF07C14C02DDF003CC962 /* FavouriteStopsCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouriteStopsCentralManager.m; sourceTree = "<group>"; };
+		FEACF07D14C02DDF003CC962 /* GRTDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRTDatabaseManager.h; sourceTree = "<group>"; };
+		FEACF07E14C02DDF003CC962 /* GRTDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRTDatabaseManager.m; sourceTree = "<group>"; };
+		FEACF08214C02E98003CC962 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
+		FEACF08314C02E98003CC962 /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
+		FEACF08514C02F08003CC962 /* BusRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusRoute.h; sourceTree = "<group>"; };
+		FEACF08614C02F08003CC962 /* BusRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusRoute.m; sourceTree = "<group>"; };
+		FEACF08814C02F63003CC962 /* CountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDown.h; sourceTree = "<group>"; };
+		FEACF08914C02F63003CC962 /* CountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDown.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEACF06D14C02828003CC962 /* libsqlite3.0.dylib in Frameworks */,
+				FEACF06B14C02819003CC962 /* QuartzCore.framework in Frameworks */,
+				FEACF06914C02810003CC962 /* CoreLocation.framework in Frameworks */,
 				FEACF03E14C027F8003CC962 /* UIKit.framework in Frameworks */,
 				FEACF04014C027F8003CC962 /* Foundation.framework in Frameworks */,
 				FEACF04214C027F8003CC962 /* CoreGraphics.framework in Frameworks */,
@@ -80,6 +105,9 @@
 		FEACF03C14C027F8003CC962 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FEACF06C14C02828003CC962 /* libsqlite3.0.dylib */,
+				FEACF06A14C02819003CC962 /* QuartzCore.framework */,
+				FEACF06814C02810003CC962 /* CoreLocation.framework */,
 				FEACF03D14C027F8003CC962 /* UIKit.framework */,
 				FEACF03F14C027F8003CC962 /* Foundation.framework */,
 				FEACF04114C027F8003CC962 /* CoreGraphics.framework */,
@@ -90,18 +118,19 @@
 		FEACF04314C027F8003CC962 /* NextGRT */ = {
 			isa = PBXGroup;
 			children = (
+				FEACF08114C02E85003CC962 /* Model */,
+				FEACF07A14C02DB7003CC962 /* Singleton Managers */,
 				FEACF04C14C027F8003CC962 /* AppDelegate.h */,
 				FEACF04D14C027F8003CC962 /* AppDelegate.m */,
-				FEACF04F14C027F8003CC962 /* FirstViewController.h */,
-				FEACF05014C027F8003CC962 /* FirstViewController.m */,
-				FEACF05214C027F8003CC962 /* first.png */,
-				FEACF05414C027F8003CC962 /* first@2x.png */,
-				FEACF05614C027F8003CC962 /* SecondViewController.h */,
-				FEACF05714C027F8003CC962 /* SecondViewController.m */,
-				FEACF05914C027F8003CC962 /* second.png */,
-				FEACF05B14C027F8003CC962 /* second@2x.png */,
-				FEACF05D14C027F8003CC962 /* FirstViewController.xib */,
-				FEACF06014C027F8003CC962 /* SecondViewController.xib */,
+				FEACF04F14C027F8003CC962 /* FavouritesViewController.h */,
+				FEACF05014C027F8003CC962 /* FavouritesViewController.m */,
+				FEACF05614C027F8003CC962 /* SearchViewController.h */,
+				FEACF05714C027F8003CC962 /* SearchViewController.m */,
+				FEACF07114C02A83003CC962 /* MoreViewController.h */,
+				FEACF07214C02A83003CC962 /* MoreViewController.m */,
+				FEACF05D14C027F8003CC962 /* FavouritesViewController.xib */,
+				FEACF06014C027F8003CC962 /* SearchViewController.xib */,
+				FEACF07814C02A91003CC962 /* MoreViewController.xib */,
 				FEACF04414C027F8003CC962 /* Supporting Files */,
 			);
 			path = NextGRT;
@@ -116,6 +145,30 @@
 				FEACF04B14C027F8003CC962 /* NextGRT-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FEACF07A14C02DB7003CC962 /* Singleton Managers */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF07B14C02DDF003CC962 /* FavouriteStopsCentralManager.h */,
+				FEACF07C14C02DDF003CC962 /* FavouriteStopsCentralManager.m */,
+				FEACF07D14C02DDF003CC962 /* GRTDatabaseManager.h */,
+				FEACF07E14C02DDF003CC962 /* GRTDatabaseManager.m */,
+			);
+			name = "Singleton Managers";
+			sourceTree = "<group>";
+		};
+		FEACF08114C02E85003CC962 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF08214C02E98003CC962 /* Stop.h */,
+				FEACF08314C02E98003CC962 /* Stop.m */,
+				FEACF08514C02F08003CC962 /* BusRoute.h */,
+				FEACF08614C02F08003CC962 /* BusRoute.m */,
+				FEACF08814C02F63003CC962 /* CountDown.h */,
+				FEACF08914C02F63003CC962 /* CountDown.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +205,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = FEACF02E14C027F8003CC962;
 			productRefGroup = FEACF03A14C027F8003CC962 /* Products */;
@@ -169,12 +223,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEACF04814C027F8003CC962 /* InfoPlist.strings in Resources */,
-				FEACF05314C027F8003CC962 /* first.png in Resources */,
-				FEACF05514C027F8003CC962 /* first@2x.png in Resources */,
-				FEACF05A14C027F8003CC962 /* second.png in Resources */,
-				FEACF05C14C027F8003CC962 /* second@2x.png in Resources */,
-				FEACF05F14C027F8003CC962 /* FirstViewController.xib in Resources */,
-				FEACF06214C027F8003CC962 /* SecondViewController.xib in Resources */,
+				FEACF05F14C027F8003CC962 /* FavouritesViewController.xib in Resources */,
+				FEACF06214C027F8003CC962 /* SearchViewController.xib in Resources */,
+				FEACF07614C02A91003CC962 /* MoreViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,8 +238,14 @@
 			files = (
 				FEACF04A14C027F8003CC962 /* main.m in Sources */,
 				FEACF04E14C027F8003CC962 /* AppDelegate.m in Sources */,
-				FEACF05114C027F8003CC962 /* FirstViewController.m in Sources */,
-				FEACF05814C027F8003CC962 /* SecondViewController.m in Sources */,
+				FEACF05114C027F8003CC962 /* FavouritesViewController.m in Sources */,
+				FEACF05814C027F8003CC962 /* SearchViewController.m in Sources */,
+				FEACF07414C02A83003CC962 /* MoreViewController.m in Sources */,
+				FEACF07F14C02DDF003CC962 /* FavouriteStopsCentralManager.m in Sources */,
+				FEACF08014C02DDF003CC962 /* GRTDatabaseManager.m in Sources */,
+				FEACF08414C02E98003CC962 /* Stop.m in Sources */,
+				FEACF08714C02F08003CC962 /* BusRoute.m in Sources */,
+				FEACF08A14C02F63003CC962 /* CountDown.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,24 +256,36 @@
 			isa = PBXVariantGroup;
 			children = (
 				FEACF04714C027F8003CC962 /* en */,
+				FEACF06F14C02960003CC962 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		FEACF05D14C027F8003CC962 /* FirstViewController.xib */ = {
+		FEACF05D14C027F8003CC962 /* FavouritesViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FEACF05E14C027F8003CC962 /* en */,
+				FEACF06E14C02960003CC962 /* zh-Hans */,
 			);
-			name = FirstViewController.xib;
+			name = FavouritesViewController.xib;
 			sourceTree = "<group>";
 		};
-		FEACF06014C027F8003CC962 /* SecondViewController.xib */ = {
+		FEACF06014C027F8003CC962 /* SearchViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FEACF06114C027F8003CC962 /* en */,
+				FEACF07014C02960003CC962 /* zh-Hans */,
 			);
-			name = SecondViewController.xib;
+			name = SearchViewController.xib;
+			sourceTree = "<group>";
+		};
+		FEACF07814C02A91003CC962 /* MoreViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEACF07714C02A91003CC962 /* en */,
+				FEACF07914C02A99003CC962 /* zh-Hans */,
+			);
+			name = MoreViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -242,7 +311,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -260,7 +329,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
