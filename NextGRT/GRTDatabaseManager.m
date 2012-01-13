@@ -16,7 +16,7 @@ static GRTDatabaseManager* sharedManager = nil;
 
 @implementation GRTDatabaseManager
 
-@synthesize databasePath = databasePath_, delegate;
+@synthesize databasePath = databasePath_;
 
 + (id) sharedManager {
     @synchronized(self) {
@@ -74,8 +74,14 @@ static GRTDatabaseManager* sharedManager = nil;
  if there is any problem, feel free to email to gyfelton@gmail.com
 */
 
-- (void) queryStopIDs:(NSArray*) stopIDs withDelegate:(id)object groupByStopName:(bool) groupByStopname {
-    self.delegate = object;
+- (void)queryStopIDs:(NSDictionary*)arg
+{
+    NSMutableArray *stopIDs = [arg valueForKey:@"stopIDs"];
+    
+    id d = [arg valueForKey:@"delegate"];
+    
+    BOOL groupByStopName = [[arg valueForKey:@"groupByStopName"] boolValue];
+    
     // Setup the database object
 	sqlite3 *database;
     NSMutableArray* results = [[NSMutableArray alloc] init];
@@ -86,7 +92,7 @@ static GRTDatabaseManager* sharedManager = nil;
             
             // Setup the SQL Statement and compile it for faster access
             NSString* completeSQLStmt = [NSString stringWithFormat:kQueryStopIDs, stopID];
-            if (groupByStopname) {
+            if (groupByStopName) {
                 completeSQLStmt = [completeSQLStmt stringByAppendingString:kQueryFilterGroupByStopName];
             }
             
@@ -114,6 +120,12 @@ static GRTDatabaseManager* sharedManager = nil;
 	sqlite3_close(database);
     
     //[self.delegate stopInfoArrayReceived:results];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStopInfoReceivedNotificationName object:results userInfo:[NSDictionary dictionaryWithObjectsAndKeys:d, @"delegate", nil]];
+}
+
+- (void) queryStopIDs:(NSArray*) stopIDs withDelegate:(id)object groupByStopName:(bool) groupByStopname {
+    NSDictionary *arg = [[NSDictionary alloc] initWithObjectsAndKeys:stopIDs, @"stopIDs", object, @"delegate", [NSNumber numberWithBool:groupByStopname], @"groupByStopName", nil];
+    [self performSelectorInBackground:@selector(queryStopIDs:) withObject:arg];
 }
 
 - (void) calculateLatLonBaseOffset:(CLLocation*)location {
@@ -132,7 +144,7 @@ static GRTDatabaseManager* sharedManager = nil;
 //    CLLocation* temp = [[[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059] autorelease];
 //    location = temp;
     
-    self.delegate = object;
+    //self.delegate = object;
     
     // Setup the database object
 	sqlite3 *database;
@@ -182,7 +194,7 @@ static GRTDatabaseManager* sharedManager = nil;
     [stops sortUsingSelector:@selector(compareDistanceWithStop:)];
     
     //pass the data back to delegate
-    [self.delegate nearbyStopsReceived: stops];
+    //[self.delegate nearbyStopsReceived: stops];
 }
 
 - (NSString*) dayOfWeekHelper {
@@ -216,8 +228,7 @@ static GRTDatabaseManager* sharedManager = nil;
 }
 
 - (void) queryBusRoutesForStops:(NSMutableArray*)stops withDelegate:(id)object {
-    self.delegate = object;
-    
+    NSMutableArray *ss = [stops copy];
     //generate current time (truncate seconds)
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH':'mm':'00"];
@@ -229,7 +240,7 @@ static GRTDatabaseManager* sharedManager = nil;
     
     // Open the database from the users files sytem
 	if(sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
-        for( Stop* aStop in stops) {
+        for( Stop* aStop in ss) {
             //to store routes
             NSMutableArray* routes = [NSMutableArray arrayWithCapacity:0];
             
@@ -283,7 +294,8 @@ static GRTDatabaseManager* sharedManager = nil;
     }
     sqlite3_close(database);
     
-    [self.delegate busRoutesForAllStopsReceived];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kBusRoutesForAllStopsReceivedNotificationName object:ss userInfo:[NSDictionary dictionaryWithObjectsAndKeys:object, @"delegate",nil]];
+//    [self.delegate busRoutesForAllStopsReceived];
 }
 
 - (NSMutableArray*) queryAllStopsWithStopName:(NSString*)stopName {

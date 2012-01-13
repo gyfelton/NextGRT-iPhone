@@ -10,6 +10,9 @@
 #import "Stop.h"
 #import "CoreLocation/CLLocation.h"
 
+#define kStopInfoReceivedNotificationName @"stopInfoArrayReceived"
+#define kBusRoutesForAllStopsReceivedNotificationName @"busRoutesForAllStopsReceived"
+
 //TODO should use delegate? seems that it doesn't help anything
 @protocol GRTDatabaseManagerDelegate <NSObject>
 
@@ -28,7 +31,7 @@
 
 
 @property (copy) NSString* databasePath;
-@property (nonatomic, assign) id<GRTDatabaseManagerDelegate> delegate;
+//@property (nonatomic, assign) id<GRTDatabaseManagerDelegate> delegate;
 
 + (id) sharedManager;
 

@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface FavouritesViewController : UIViewController
-
+{
+     NSMutableArray* _favStops;
+}
 @property (nonatomic, strong) NSMutableArray* favStopsDict;
 
 @end
