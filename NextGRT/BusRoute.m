@@ -17,7 +17,8 @@
 - (id) initWithRouteNumber:(NSString*)routeNumber routeID:(NSString*)routeID direction:(NSString*)dir AndTime:(NSString*)time {
     if( [routeNumber compare:@"200"] == NSOrderedSame ) {
         self.shortRouteNumber = @"iXps";
-        self.fullRouteNumber = @"iXpress";
+//        self.fullRouteNumber = @"iXpress";
+        self.fullRouteNumber = @"";
     } else {
         self.shortRouteNumber = routeNumber;
         self.fullRouteNumber = routeNumber;
@@ -82,6 +83,7 @@
 }
 
 - (void) initNextArrivalCountDownBaesdOnTime:(NSDate*)time {
+    
     //get time's date and year using dateFormatter
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd"];
@@ -95,6 +97,7 @@
     //loop through every nextArrivalTime and calculate the count down
     for( NSString* nextArrivalTime in nextArrivalTimes_ ) {
         int offset = 0;
+        NSString *adjustedTime = [nextArrivalTime copy];
         //Problem: the query actually return with some time as "24:13:00" which whill not be parsed correctly
         //Solution: if we get any hour value > 23, we chop it off and add it back to count down later
         NSArray* timeComponents = [nextArrivalTime componentsSeparatedByString:@":"];
@@ -102,13 +105,17 @@
             NSString* hourComponent = [timeComponents objectAtIndex:0];
             int hour = [hourComponent intValue];
             if( hour > 23 ){
-                offset = hour - 23;
+                offset = hour % 23;
                 hour = 23; //adjust time to 23:min:sec, then add the missing hours back later
-                //TODO: nextArrivalTime = [NSString stringWithFormat:@"%d:%@:%@", hour, [timeComponents objectAtIndex:1], [timeComponents objectAtIndex:1]];
+                adjustedTime = [NSString stringWithFormat:@"%d:%@:%@", hour, [timeComponents objectAtIndex:1], [timeComponents objectAtIndex:2]];
+                //adjust currDateString by adding number of days indicated in offset
+                currDateString = [dateFormat stringFromDate:[time dateByAddingTimeInterval:offset*3600]];
             }
         }
+        
         //now combine currDateString with nextBusTime to generate the actual time
-        NSString* combined = [NSString stringWithFormat:@"%@ %@", currDateString, nextArrivalTime];
+        
+        NSString* combined = [NSString stringWithFormat:@"%@ %@", currDateString, adjustedTime];
         NSDate* nextArrivalTimeInNSDate = [inputFormatter dateFromString:combined];
         
         if( nextArrivalTimeInNSDate ) {

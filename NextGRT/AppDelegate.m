@@ -37,8 +37,10 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
     UIViewController *viewController1 = [[FavouritesViewController alloc] initWithNibName:@"FavouritesViewController" bundle:nil];
     UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:viewController1];
+//    viewController1.navigationController.navigationBar.tintColor = [UIColor colorWithRed:49/255 green:92/255 blue:152/255 alpha:1.0f];
     
     UIViewController *viewController2 = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
     

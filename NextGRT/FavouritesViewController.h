@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BusStopBaseTableViewController.h"
 
 @interface FavouritesViewController : UIViewController
 {
-     NSMutableArray* _favStops;
+    NSMutableArray* _favStops;
+    BusStopBaseTableViewController* _favStopsTableVC;
 }
 @property (nonatomic, strong) NSMutableArray* favStopsDict;
 

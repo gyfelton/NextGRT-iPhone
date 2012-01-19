@@ -42,7 +42,7 @@
 						<string key="NSFrame">{{54, 98}, {212, 43}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="255779567"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="670856415">
+						<object class="NSColor" key="IBUIBackgroundColor" id="971807141">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -74,7 +74,7 @@
 					<object class="IBUITextView" id="255779567">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 181}, {280, 88}}</string>
+						<string key="NSFrame">{{20, 181}, {280, 107}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -89,8 +89,9 @@
 						<float key="IBUIMaximumZoomScale">0.0</float>
 						<bool key="IBUIBouncesZoom">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
-						<string type="base64-UTF8" key="IBUIText">WW91IGRvbid0IGhhdmUgYW55IGZhdm91cml0ZSBzdG9wIHlldC4KCkNsaWNrICJTZWFyY2giIGJlbG93
-IHRvIHNlYXJjaCBidXMgc3RvcHMgYW5kIGFkZCB0aGVtIGFzIGZhdm91cmllcyE</string>
+						<string type="base64-UTF8" key="IBUIText">WW91IGRvbid0IGhhdmUgYW55IGZhdm9yaXRlIHN0b3AgeWV0LgoKQ2xpY2sgIlNlYXJjaCIgYmVsb3cg
+dG8gc2VhcmNoIG9yIGZpbmQgbmVhcmJ5IGJ1cyBzdG9wcyBhbmQgYWRkIHRoZW0gYXMgZmF2b3JpdGVz
+IQ</string>
 						<int key="IBUITextAlignment">1</int>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -161,7 +162,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 								</object>
 							</array>
 						</array>
-						<reference key="NSColor" ref="670856415"/>
+						<reference key="NSColor" ref="971807141"/>
 					</object>
 					<string key="IBUIColorCocoaTouchKeyPath">groupTableViewBackgroundColor</string>
 				</object>
@@ -196,8 +197,8 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="255779567"/>
 							<reference ref="483052203"/>
+							<reference ref="255779567"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

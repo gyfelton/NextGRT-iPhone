@@ -14,7 +14,7 @@
 #define USER_DEFAULT_FAV_STOP_KEY @"FavoriteBusStops"
 
 @interface FavouriteStopsCentralManager : NSObject {
-    NSMutableArray *favStopDicts_; //use array of dictionaries because we need to remember the order of stops for future functionalities
+    NSMutableArray *_favStopDicts; //use array of dictionaries because we need to remember the order of stops for future functionalities
 }
 
 + (FavouriteStopsCentralManager*) sharedInstance;

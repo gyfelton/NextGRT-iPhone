@@ -16,7 +16,7 @@ static GRTDatabaseManager* sharedManager = nil;
 
 @implementation GRTDatabaseManager
 
-@synthesize databasePath = databasePath_;
+@synthesize databasePath = _databasePath;
 
 + (id) sharedManager {
     @synchronized(self) {
@@ -31,35 +31,43 @@ static GRTDatabaseManager* sharedManager = nil;
     self = [super init];
     if( self ) {
         // Setup some globals
-        databaseName_ = kDatabaseName;
+        _databaseName = kDatabaseName;
         
         // Get the path to the documents directory and append the databaseName
-        NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDir = [documentPaths objectAtIndex:0];
-        self.databasePath = [documentsDir stringByAppendingPathComponent:databaseName_];
+        self.databasePath = [[NSBundle mainBundle] pathForResource:@"GRTDataBase" ofType:@"sqlite"];
+//        NSLog(@"%@", self.databasePath);
         
-        //load database
-        // Check if the SQL database has already been saved to the users phone, if not then copy it over
-        BOOL success;
+        _db = [FMDatabase databaseWithPath:self.databasePath];
         
-        // Create a FileManager object, we will use this to check the status
-        // of the database and to copy it over if required
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        
-        // Check if the database has already been created in the users filesystem
-        success = [fileManager fileExistsAtPath:self.databasePath];
-        
-        // If the database already exists then return without doing anything
-        if( !success ) {
-            // If not then proceed to copy the database from the application to the users filesystem
-            
-            // Get the path to the database in the application package
-            NSString *databasePathFromApp = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseName_];
-            
-            // Copy the database from the package to the users filesystem
-            [fileManager copyItemAtPath:databasePathFromApp toPath:self.databasePath error:nil];
-            
+        if (!_db) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fatal error" message:@"Cannot find database, app cannot run anymore." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            return nil;
         }
+        [_db open];
+        
+//        //load database
+//        // Check if the SQL database has already been saved to the users phone, if not then copy it over
+//        BOOL success;
+//        
+//        // Create a FileManager object, we will use this to check the status
+//        // of the database and to copy it over if required
+//        NSFileManager *fileManager = [NSFileManager defaultManager];
+//        
+//        // Check if the database has already been created in the users filesystem
+//        success = [fileManager fileExistsAtPath:self.databasePath];
+//        
+//        // If the database already exists then return without doing anything
+//        if( !success ) {
+//            // If not then proceed to copy the database from the application to the users filesystem
+//            
+//            // Get the path to the database in the application package
+//            NSString *databasePathFromApp = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:_databaseName];
+//            
+//            // Copy the database from the package to the users filesystem
+//            [fileManager copyItemAtPath:databasePathFromApp toPath:self.databasePath error:nil];
+//            
+//        }
     }
     return self;
 }
@@ -74,7 +82,7 @@ static GRTDatabaseManager* sharedManager = nil;
  if there is any problem, feel free to email to gyfelton@gmail.com
 */
 
-- (void)queryStopIDs:(NSDictionary*)arg
+- (void)queryStopIDsHelper:(NSDictionary*)arg
 {
     NSMutableArray *stopIDs = [arg valueForKey:@"stopIDs"];
     
@@ -125,7 +133,7 @@ static GRTDatabaseManager* sharedManager = nil;
 
 - (void) queryStopIDs:(NSArray*) stopIDs withDelegate:(id)object groupByStopName:(bool) groupByStopname {
     NSDictionary *arg = [[NSDictionary alloc] initWithObjectsAndKeys:stopIDs, @"stopIDs", object, @"delegate", [NSNumber numberWithBool:groupByStopname], @"groupByStopName", nil];
-    [self performSelectorInBackground:@selector(queryStopIDs:) withObject:arg];
+    [self performSelectorOnMainThread:@selector(queryStopIDsHelper:) withObject:arg waitUntilDone:NO];
 }
 
 - (void) calculateLatLonBaseOffset:(CLLocation*)location {
@@ -134,15 +142,19 @@ static GRTDatabaseManager* sharedManager = nil;
     //based on uw's location, there is some offset needed to be added, turns out it is 0.0007
     //source: http://www.movable-type.co.uk/scripts/latlong.html
     
-    latLonBaseOffset_ = 0.1 / 6371 * sqrt(2) + 0.0007;
+    _latLonBaseOffset = 0.1 / 6371 * sqrt(2) + 0.0007;
 }
 
-- (void) queryNearbyStops:(CLLocation *)location withDelegate:(id)object  withSearchRadiusFactor:(double)factor {
+- (void)queryNearbyStopsHelper:(NSDictionary*)arg
+{
+    CLLocation *location = [arg valueForKey:@"location"];
+    id delegate = [arg valueForKey:@"delegate"];
+    double factor = [[arg valueForKey:@"searchRadiusFactor"] doubleValue];
     
     //for debug purpse:
-//    NSLog(@"ATTENTION! location is override!");
-//    CLLocation* temp = [[[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059] autorelease];
-//    location = temp;
+    NSLog(@"ATTENTION! location is override!");
+    CLLocation* temp = [[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059];
+    location = temp;
     
     //self.delegate = object;
     
@@ -156,45 +168,69 @@ static GRTDatabaseManager* sharedManager = nil;
     [self calculateLatLonBaseOffset:location]; //init latLonBaseOffset_
     
 	// Open the database from the users files sytem
-	if(sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
+	if (true) {//(sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
         //calculate radius needed
         double radius = 5 * factor; //500m * factor
         
 		// Setup the SQL Statement and compile it for faster access
         NSString* completeSQLStmt = 
-            [NSString stringWithFormat:kQueryNearbyStops
-                                        , location.coordinate.latitude - latLonBaseOffset_ * radius
-                                        , location.coordinate.latitude + latLonBaseOffset_ * radius
-                                        , location.coordinate.longitude - latLonBaseOffset_ * radius
-                                        , location.coordinate.longitude + latLonBaseOffset_ * radius];
-		sqlite3_stmt *compiledStatement;
-		if(sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL) == SQLITE_OK) {
-            while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
-				// Read the data from the result row
-                //TODO check char* return is null or not before format to string?
-                float lat = sqlite3_column_double(compiledStatement, 0);
-                float lon = sqlite3_column_double(compiledStatement, 2);
-                
-                double distance = 0;//[location distanceFromLocation:[[[CLLocation alloc] initWithLatitude:lat longitude:lon] autorelease]];
-                
-				NSString *stopID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
-				NSString *stopName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
-				
-				// Create a new stop object with the data from the database
-				Stop* aStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon distanceFromCurrPosition:distance];
-                [stops addObject:aStop];
-			}
-		}
-		// Release the compiled statement from memory
-		sqlite3_finalize(compiledStatement);
+        [NSString stringWithFormat:kQueryNearbyStops
+         , location.coordinate.latitude - _latLonBaseOffset * radius
+         , location.coordinate.latitude + _latLonBaseOffset * radius
+         , location.coordinate.longitude - _latLonBaseOffset * radius
+         , location.coordinate.longitude + _latLonBaseOffset * radius];
+        
+        FMResultSet *s = [_db executeQuery:completeSQLStmt];
+        while ([s next]) {
+            //retrieve values for each record
+            // Read the data from the result row
+            //TODO check char* return is null or not before format to string?
+            float lat = [s doubleForColumnIndex:0]; //sqlite3_column_double(compiledStatement, 0);
+            float lon = [s doubleForColumnIndex:2]; //sqlite3_column_double(compiledStatement, 2);
+            
+            double distance = [location distanceFromLocation:[[CLLocation alloc] initWithLatitude:lat longitude:lon]];
+            
+            NSString *stopID = [s stringForColumnIndex:3];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
+            NSString *stopName = [s stringForColumnIndex:4];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
+            
+            // Create a new stop object with the data from the database
+            Stop* aStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon distanceFromCurrPosition:distance];
+            [stops addObject:aStop];
+        }
+        
+//		sqlite3_stmt *compiledStatement;
+//        int resultCode = sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL);
+//		if( resultCode == SQLITE_OK ) {
+//            while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
+//				// Read the data from the result row
+//                //TODO check char* return is null or not before format to string?
+//                float lat = sqlite3_column_double(compiledStatement, 0);
+//                float lon = sqlite3_column_double(compiledStatement, 2);
+//                
+//                double distance = [location distanceFromLocation:[[CLLocation alloc] initWithLatitude:lat longitude:lon]];
+//                
+//				NSString *stopID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
+//				NSString *stopName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
+//				
+//				// Create a new stop object with the data from the database
+//				Stop* aStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon distanceFromCurrPosition:distance];
+//                [stops addObject:aStop];
+//			}
+//		}
+//		// Release the compiled statement from memory
+//		sqlite3_finalize(compiledStatement);
 	}
-	sqlite3_close(database);
+//	sqlite3_close(database);
     
     //sort the stops here since we gurantee that stops here all have a proper distance data
     [stops sortUsingSelector:@selector(compareDistanceWithStop:)];
     
-    //pass the data back to delegate
-    //[self.delegate nearbyStopsReceived: stops];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kQueryNearbyStopsDidFinishNotification object:stops userInfo:[NSDictionary dictionaryWithObjectsAndKeys:delegate, @"delegate", nil]];
+}
+
+- (void) queryNearbyStops:(CLLocation *)location withDelegate:(id)object withSearchRadiusFactor:(double)factor {
+    NSDictionary *arg = [NSDictionary dictionaryWithObjectsAndKeys:location, @"location", object, @"delegate", [NSNumber numberWithDouble:factor], @"searchRadiusFactor", nil];
+    [self performSelectorOnMainThread:@selector(queryNearbyStopsHelper:) withObject:arg waitUntilDone:NO];
 }
 
 - (NSString*) dayOfWeekHelper {
@@ -239,7 +275,7 @@ static GRTDatabaseManager* sharedManager = nil;
 	sqlite3 *database;
     
     // Open the database from the users files sytem
-	if(sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
+	if(true) {// sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
         for( Stop* aStop in ss) {
             //to store routes
             NSMutableArray* routes = [NSMutableArray arrayWithCapacity:0];
@@ -253,38 +289,67 @@ static GRTDatabaseManager* sharedManager = nil;
             
             // Setup the SQL Statement and compile it for faster access
             NSString* completeSQLStmt = [NSString stringWithFormat:kQueryRoutesTimes, [aStop stopID], currTime, serviceIDQuery];
-            sqlite3_stmt *compiledStatement;
-            if(sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL) == SQLITE_OK) {
-                NSString* currRoute = nil;
-                BusRoute* route = nil;
+            
+            FMResultSet *s = [_db executeQuery:completeSQLStmt];
+            NSString* currRoute = nil;
+            BusRoute* route = nil;
+            while ([s next]) {
                 
-                while (sqlite3_step(compiledStatement) == SQLITE_ROW) {
-                    // Read the data from the result row
-                    NSString* routeNum = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 0)];
-                    NSString* departureTime = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
-                    NSString* direction = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 2)];
-                    
-                    if( currRoute && [currRoute compare:routeNum] == NSOrderedSame ) {
-                        //just add the time and direction since it is the same bus
-                        [route addNextArrivalTime:departureTime Direction:direction];
-                    } else { //we encounter a new route, add route to array
-                        if( route ) {
-                            [routes addObject:route];
-                            //[route release];
-                        }
-                        currRoute = routeNum;
-                        
-                        //alloc a new route object for new route
-                        route = [[BusRoute alloc] initWithRouteNumber:currRoute routeID:currRoute direction:direction AndTime:departureTime];
+                // Read the data from the result row
+                NSString* routeNum = [s stringForColumnIndex:0];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 0)];
+                NSString* departureTime = [s stringForColumnIndex:1];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];r
+                NSString* direction = [s stringForColumnIndex:2];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 2)];
+                
+                if( currRoute && [currRoute compare:routeNum] == NSOrderedSame ) {
+                    //just add the time and direction since it is the same bus
+                    [route addNextArrivalTime:departureTime Direction:direction];
+                } else { //we encounter a new route, add route to array
+                    if( route ) {
+                        [routes addObject:route];
+                        //[route release];
                     }
-                }
-                //add last route to it
-                if (route) {
-                    [routes addObject:route];
+                    currRoute = routeNum;
+                    
+                    //alloc a new route object for new route
+                    route = [[BusRoute alloc] initWithRouteNumber:currRoute routeID:currRoute direction:direction AndTime:departureTime];
                 }
             }
+            //add last route to it
+            if (route) {
+                [routes addObject:route];
+            }
+//            sqlite3_stmt *compiledStatement;
+//            if(sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL) == SQLITE_OK) {
+//                NSString* currRoute = nil;
+//                BusRoute* route = nil;
+//                
+//                while (sqlite3_step(compiledStatement) == SQLITE_ROW) {
+//                    // Read the data from the result row
+//                    NSString* routeNum = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 0)];
+//                    NSString* departureTime = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
+//                    NSString* direction = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 2)];
+//                    
+//                    if( currRoute && [currRoute compare:routeNum] == NSOrderedSame ) {
+//                        //just add the time and direction since it is the same bus
+//                        [route addNextArrivalTime:departureTime Direction:direction];
+//                    } else { //we encounter a new route, add route to array
+//                        if( route ) {
+//                            [routes addObject:route];
+//                            //[route release];
+//                        }
+//                        currRoute = routeNum;
+//                        
+//                        //alloc a new route object for new route
+//                        route = [[BusRoute alloc] initWithRouteNumber:currRoute routeID:currRoute direction:direction AndTime:departureTime];
+//                    }
+//                }
+//                //add last route to it
+//                if (route) {
+//                    [routes addObject:route];
+//                }
+//            }
             // Release the compiled statement from memory
-            sqlite3_finalize(compiledStatement);
+//            sqlite3_finalize(compiledStatement);
             
             for( BusRoute* route in routes ) {
                 [route initNextArrivalCountDownBaesdOnTime:[NSDate date]];
@@ -292,7 +357,7 @@ static GRTDatabaseManager* sharedManager = nil;
             [aStop assignBusRoutes: routes];
         }
     }
-    sqlite3_close(database);
+    //sqlite3_close(database);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kBusRoutesForAllStopsReceivedNotificationName object:ss userInfo:[NSDictionary dictionaryWithObjectsAndKeys:object, @"delegate",nil]];
 //    [self.delegate busRoutesForAllStopsReceived];

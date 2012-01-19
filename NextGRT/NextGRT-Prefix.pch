@@ -14,7 +14,7 @@
 #endif
 
 //customized strings:
-#define kDatabaseName   @"GRTDataBase.sqlite"
+#define kDatabaseName   @"GRTDataBase_20Jan2012.sqlite"
 #define kStopInfoQuery @"stopInfoFor%@"
 
 #define kFavStopArrayDidUpdate @"FavStopArrayDidUpdate"
@@ -27,5 +27,7 @@
 #define kQueryNearbyStops @"SELECT * from Stops WHERE stop_lat >= %f AND stop_lat <= %f AND stop_lon >= %f AND stop_lon <= %f"
 
 #define kQueryRoutesTimes @"SELECT route_id, departure_time, trip_headsign FROM StopTimes INNER JOIN Trips ON StopTimes.trip_id = Trips.trip_id WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, departure_time"
+
+#define kQueryRoutesTimes_unused @"SELECT route_id, departure_time, trip_headsign FROM RoutesInfoCombined WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, departure_time"
 
 #define kQueryNormalServiceID @"SELECT service_id FROM Calendar WHERE %@ = 1"

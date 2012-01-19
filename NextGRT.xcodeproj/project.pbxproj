@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE22D0BD14C6888000429E91 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FE22D0B714C6888000429E91 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FE22D0BE14C6888000429E91 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = FE22D0B914C6888000429E91 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FE22D0C014C6888000429E91 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = FE22D0BC14C6888000429E91 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FE53B44314C307D900FAD3D2 /* cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B44114C307D900FAD3D2 /* cell_bg.png */; };
+		FE53B44414C307D900FAD3D2 /* cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B44214C307D900FAD3D2 /* cell_bg@2x.png */; };
+		FE53B44E14C30E3D00FAD3D2 /* route_detail_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B44C14C30E3D00FAD3D2 /* route_detail_arrow.png */; };
+		FE53B44F14C30E3D00FAD3D2 /* route_detail_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B44D14C30E3D00FAD3D2 /* route_detail_bg.png */; };
+		FEA5E8FA14C13C3800DCA3A0 /* GRTDataBase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F314C13C3800DCA3A0 /* GRTDataBase.sqlite */; };
+		FEA5E8FB14C13C3800DCA3A0 /* btnBus_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F514C13C3800DCA3A0 /* btnBus_64x64.png */; };
+		FEA5E8FC14C13C3800DCA3A0 /* btnBus_original.psd in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F614C13C3800DCA3A0 /* btnBus_original.psd */; };
+		FEA5E8FD14C13C3800DCA3A0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F714C13C3800DCA3A0 /* Default.png */; };
+		FEA5E8FE14C13C3800DCA3A0 /* star_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F814C13C3800DCA3A0 /* star_grey.png */; };
+		FEA5E8FF14C13C3800DCA3A0 /* star_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F914C13C3800DCA3A0 /* star_yellow.png */; };
 		FEACF03E14C027F8003CC962 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF03D14C027F8003CC962 /* UIKit.framework */; };
 		FEACF04014C027F8003CC962 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF03F14C027F8003CC962 /* Foundation.framework */; };
 		FEACF04214C027F8003CC962 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEACF04114C027F8003CC962 /* CoreGraphics.framework */; };
@@ -27,9 +40,38 @@
 		FEACF08414C02E98003CC962 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08314C02E98003CC962 /* Stop.m */; };
 		FEACF08714C02F08003CC962 /* BusRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08614C02F08003CC962 /* BusRoute.m */; };
 		FEACF08A14C02F63003CC962 /* CountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08914C02F63003CC962 /* CountDown.m */; };
+		FEACF09014C08F1E003CC962 /* BusStopBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08D14C08F1E003CC962 /* BusStopBaseTableViewController.m */; };
+		FEACF09114C08F1E003CC962 /* BusStopsPullToRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF08F14C08F1E003CC962 /* BusStopsPullToRefreshTableViewController.m */; };
+		FEACF09814C08F48003CC962 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF09414C08F48003CC962 /* blackArrow.png */; };
+		FEACF09914C08F49003CC962 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF09514C08F48003CC962 /* blueArrow.png */; };
+		FEACF09A14C08F49003CC962 /* blueArrow_new.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF09614C08F48003CC962 /* blueArrow_new.png */; };
+		FEACF09B14C08F49003CC962 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FEACF09714C08F48003CC962 /* whiteArrow.png */; };
+		FEACF0A114C08F5B003CC962 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF09E14C08F5B003CC962 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FEACF0A214C08F5B003CC962 /* PullToRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0A014C08F5B003CC962 /* PullToRefreshTableViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FEACF0AC14C08FA4003CC962 /* BusStopCellBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0A514C08FA4003CC962 /* BusStopCellBaseClass.m */; };
+		FEACF0AD14C08FA4003CC962 /* OpenedBusStopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0A714C08FA4003CC962 /* OpenedBusStopCell.m */; };
+		FEACF0AE14C08FA4003CC962 /* RouteDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0A914C08FA4003CC962 /* RouteDetailCell.m */; };
+		FEACF0AF14C08FA4003CC962 /* UnopenedBusStopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */; };
+		FEF5D83D14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE22D0B614C6888000429E91 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		FE22D0B714C6888000429E91 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		FE22D0B814C6888000429E91 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		FE22D0B914C6888000429E91 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		FE22D0BB14C6888000429E91 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		FE22D0BC14C6888000429E91 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		FE53B44114C307D900FAD3D2 /* cell_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_bg.png; sourceTree = "<group>"; };
+		FE53B44214C307D900FAD3D2 /* cell_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_bg@2x.png"; sourceTree = "<group>"; };
+		FE53B44C14C30E3D00FAD3D2 /* route_detail_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_detail_arrow.png; sourceTree = "<group>"; };
+		FE53B44D14C30E3D00FAD3D2 /* route_detail_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_detail_bg.png; sourceTree = "<group>"; };
+		FEA5E8F314C13C3800DCA3A0 /* GRTDataBase.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = GRTDataBase.sqlite; sourceTree = "<group>"; };
+		FEA5E8F514C13C3800DCA3A0 /* btnBus_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnBus_64x64.png; sourceTree = "<group>"; };
+		FEA5E8F614C13C3800DCA3A0 /* btnBus_original.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = btnBus_original.psd; sourceTree = "<group>"; };
+		FEA5E8F714C13C3800DCA3A0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		FEA5E8F814C13C3800DCA3A0 /* star_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_grey.png; sourceTree = "<group>"; };
+		FEA5E8F914C13C3800DCA3A0 /* star_yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_yellow.png; sourceTree = "<group>"; };
 		FEACF03914C027F8003CC962 /* NextGRT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextGRT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEACF03D14C027F8003CC962 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FEACF03F14C027F8003CC962 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -66,6 +108,27 @@
 		FEACF08614C02F08003CC962 /* BusRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusRoute.m; sourceTree = "<group>"; };
 		FEACF08814C02F63003CC962 /* CountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDown.h; sourceTree = "<group>"; };
 		FEACF08914C02F63003CC962 /* CountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDown.m; sourceTree = "<group>"; };
+		FEACF08C14C08F1E003CC962 /* BusStopBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusStopBaseTableViewController.h; sourceTree = "<group>"; };
+		FEACF08D14C08F1E003CC962 /* BusStopBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusStopBaseTableViewController.m; sourceTree = "<group>"; };
+		FEACF08E14C08F1E003CC962 /* BusStopsPullToRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusStopsPullToRefreshTableViewController.h; sourceTree = "<group>"; };
+		FEACF08F14C08F1E003CC962 /* BusStopsPullToRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusStopsPullToRefreshTableViewController.m; sourceTree = "<group>"; };
+		FEACF09414C08F48003CC962 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		FEACF09514C08F48003CC962 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		FEACF09614C08F48003CC962 /* blueArrow_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow_new.png; sourceTree = "<group>"; };
+		FEACF09714C08F48003CC962 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		FEACF09D14C08F5B003CC962 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		FEACF09E14C08F5B003CC962 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		FEACF09F14C08F5B003CC962 /* PullToRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullToRefreshTableViewController.h; sourceTree = "<group>"; };
+		FEACF0A014C08F5B003CC962 /* PullToRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRefreshTableViewController.m; sourceTree = "<group>"; };
+		FEACF0A414C08FA4003CC962 /* BusStopCellBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusStopCellBaseClass.h; sourceTree = "<group>"; };
+		FEACF0A514C08FA4003CC962 /* BusStopCellBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusStopCellBaseClass.m; sourceTree = "<group>"; };
+		FEACF0A614C08FA4003CC962 /* OpenedBusStopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenedBusStopCell.h; sourceTree = "<group>"; };
+		FEACF0A714C08FA4003CC962 /* OpenedBusStopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenedBusStopCell.m; sourceTree = "<group>"; };
+		FEACF0A814C08FA4003CC962 /* RouteDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDetailCell.h; sourceTree = "<group>"; };
+		FEACF0A914C08FA4003CC962 /* RouteDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteDetailCell.m; sourceTree = "<group>"; };
+		FEACF0AA14C08FA4003CC962 /* UnopenedBusStopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnopenedBusStopCell.h; sourceTree = "<group>"; };
+		FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnopenedBusStopCell.m; sourceTree = "<group>"; };
+		FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = GRTDataBase_20Jan2012.sqlite; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +148,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE22D0B514C6888000429E91 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				FE22D0B614C6888000429E91 /* FMDatabase.h */,
+				FE22D0B714C6888000429E91 /* FMDatabase.m */,
+				FE22D0B814C6888000429E91 /* FMDatabaseAdditions.h */,
+				FE22D0B914C6888000429E91 /* FMDatabaseAdditions.m */,
+				FE22D0BB14C6888000429E91 /* FMResultSet.h */,
+				FE22D0BC14C6888000429E91 /* FMResultSet.m */,
+			);
+			path = fmdb;
+			sourceTree = "<group>";
+		};
+		FEA5E8F214C13C3800DCA3A0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */,
+				FEA5E8F314C13C3800DCA3A0 /* GRTDataBase.sqlite */,
+				FEA5E8F414C13C3800DCA3A0 /* images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FEA5E8F414C13C3800DCA3A0 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				FE53B44114C307D900FAD3D2 /* cell_bg.png */,
+				FE53B44214C307D900FAD3D2 /* cell_bg@2x.png */,
+				FE53B44C14C30E3D00FAD3D2 /* route_detail_arrow.png */,
+				FE53B44D14C30E3D00FAD3D2 /* route_detail_bg.png */,
+				FEA5E8F514C13C3800DCA3A0 /* btnBus_64x64.png */,
+				FEA5E8F614C13C3800DCA3A0 /* btnBus_original.psd */,
+				FEA5E8F714C13C3800DCA3A0 /* Default.png */,
+				FEA5E8F814C13C3800DCA3A0 /* star_grey.png */,
+				FEA5E8F914C13C3800DCA3A0 /* star_yellow.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		FEACF02E14C027F8003CC962 = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +220,10 @@
 		FEACF04314C027F8003CC962 /* NextGRT */ = {
 			isa = PBXGroup;
 			children = (
+				FE22D0B514C6888000429E91 /* fmdb */,
+				FEACF09214C08F27003CC962 /* EGOTableViewController */,
+				FEACF08B14C08F0A003CC962 /* BusStopTableViewController */,
+				FEACF0A314C08F7F003CC962 /* BusStopCells */,
 				FEACF08114C02E85003CC962 /* Model */,
 				FEACF07A14C02DB7003CC962 /* Singleton Managers */,
 				FEACF04C14C027F8003CC962 /* AppDelegate.h */,
@@ -131,6 +237,7 @@
 				FEACF05D14C027F8003CC962 /* FavouritesViewController.xib */,
 				FEACF06014C027F8003CC962 /* SearchViewController.xib */,
 				FEACF07814C02A91003CC962 /* MoreViewController.xib */,
+				FEA5E8F214C13C3800DCA3A0 /* Resources */,
 				FEACF04414C027F8003CC962 /* Supporting Files */,
 			);
 			path = NextGRT;
@@ -169,6 +276,63 @@
 				FEACF08914C02F63003CC962 /* CountDown.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		FEACF08B14C08F0A003CC962 /* BusStopTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF08C14C08F1E003CC962 /* BusStopBaseTableViewController.h */,
+				FEACF08D14C08F1E003CC962 /* BusStopBaseTableViewController.m */,
+				FEACF08E14C08F1E003CC962 /* BusStopsPullToRefreshTableViewController.h */,
+				FEACF08F14C08F1E003CC962 /* BusStopsPullToRefreshTableViewController.m */,
+			);
+			name = BusStopTableViewController;
+			sourceTree = "<group>";
+		};
+		FEACF09214C08F27003CC962 /* EGOTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF09C14C08F5B003CC962 /* EGOTableViewPullRefresh-ClassesControllers */,
+				FEACF09314C08F48003CC962 /* EGOTableViewPullRefresh-Resources */,
+			);
+			name = EGOTableViewController;
+			sourceTree = "<group>";
+		};
+		FEACF09314C08F48003CC962 /* EGOTableViewPullRefresh-Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF09414C08F48003CC962 /* blackArrow.png */,
+				FEACF09514C08F48003CC962 /* blueArrow.png */,
+				FEACF09614C08F48003CC962 /* blueArrow_new.png */,
+				FEACF09714C08F48003CC962 /* whiteArrow.png */,
+			);
+			path = "EGOTableViewPullRefresh-Resources";
+			sourceTree = "<group>";
+		};
+		FEACF09C14C08F5B003CC962 /* EGOTableViewPullRefresh-ClassesControllers */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF09D14C08F5B003CC962 /* EGORefreshTableHeaderView.h */,
+				FEACF09E14C08F5B003CC962 /* EGORefreshTableHeaderView.m */,
+				FEACF09F14C08F5B003CC962 /* PullToRefreshTableViewController.h */,
+				FEACF0A014C08F5B003CC962 /* PullToRefreshTableViewController.m */,
+			);
+			path = "EGOTableViewPullRefresh-ClassesControllers";
+			sourceTree = "<group>";
+		};
+		FEACF0A314C08F7F003CC962 /* BusStopCells */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF0A414C08FA4003CC962 /* BusStopCellBaseClass.h */,
+				FEACF0A514C08FA4003CC962 /* BusStopCellBaseClass.m */,
+				FEACF0A614C08FA4003CC962 /* OpenedBusStopCell.h */,
+				FEACF0A714C08FA4003CC962 /* OpenedBusStopCell.m */,
+				FEACF0A814C08FA4003CC962 /* RouteDetailCell.h */,
+				FEACF0A914C08FA4003CC962 /* RouteDetailCell.m */,
+				FEACF0AA14C08FA4003CC962 /* UnopenedBusStopCell.h */,
+				FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */,
+			);
+			name = BusStopCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +390,21 @@
 				FEACF05F14C027F8003CC962 /* FavouritesViewController.xib in Resources */,
 				FEACF06214C027F8003CC962 /* SearchViewController.xib in Resources */,
 				FEACF07614C02A91003CC962 /* MoreViewController.xib in Resources */,
+				FEACF09814C08F48003CC962 /* blackArrow.png in Resources */,
+				FEACF09914C08F49003CC962 /* blueArrow.png in Resources */,
+				FEACF09A14C08F49003CC962 /* blueArrow_new.png in Resources */,
+				FEACF09B14C08F49003CC962 /* whiteArrow.png in Resources */,
+				FEA5E8FA14C13C3800DCA3A0 /* GRTDataBase.sqlite in Resources */,
+				FEA5E8FB14C13C3800DCA3A0 /* btnBus_64x64.png in Resources */,
+				FEA5E8FC14C13C3800DCA3A0 /* btnBus_original.psd in Resources */,
+				FEA5E8FD14C13C3800DCA3A0 /* Default.png in Resources */,
+				FEA5E8FE14C13C3800DCA3A0 /* star_grey.png in Resources */,
+				FEA5E8FF14C13C3800DCA3A0 /* star_yellow.png in Resources */,
+				FE53B44314C307D900FAD3D2 /* cell_bg.png in Resources */,
+				FE53B44414C307D900FAD3D2 /* cell_bg@2x.png in Resources */,
+				FE53B44E14C30E3D00FAD3D2 /* route_detail_arrow.png in Resources */,
+				FE53B44F14C30E3D00FAD3D2 /* route_detail_bg.png in Resources */,
+				FEF5D83D14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +425,17 @@
 				FEACF08414C02E98003CC962 /* Stop.m in Sources */,
 				FEACF08714C02F08003CC962 /* BusRoute.m in Sources */,
 				FEACF08A14C02F63003CC962 /* CountDown.m in Sources */,
+				FEACF09014C08F1E003CC962 /* BusStopBaseTableViewController.m in Sources */,
+				FEACF09114C08F1E003CC962 /* BusStopsPullToRefreshTableViewController.m in Sources */,
+				FEACF0A114C08F5B003CC962 /* EGORefreshTableHeaderView.m in Sources */,
+				FEACF0A214C08F5B003CC962 /* PullToRefreshTableViewController.m in Sources */,
+				FEACF0AC14C08FA4003CC962 /* BusStopCellBaseClass.m in Sources */,
+				FEACF0AD14C08FA4003CC962 /* OpenedBusStopCell.m in Sources */,
+				FEACF0AE14C08FA4003CC962 /* RouteDetailCell.m in Sources */,
+				FEACF0AF14C08FA4003CC962 /* UnopenedBusStopCell.m in Sources */,
+				FE22D0BD14C6888000429E91 /* FMDatabase.m in Sources */,
+				FE22D0BE14C6888000429E91 /* FMDatabaseAdditions.m in Sources */,
+				FE22D0C014C6888000429E91 /* FMResultSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +567,7 @@
 				FEACF06714C027F8003CC962 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

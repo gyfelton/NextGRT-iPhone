@@ -27,9 +27,9 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         NSArray* savedFavStops = [prefs objectForKey:USER_DEFAULT_FAV_STOP_KEY];
         if (savedFavStops != nil) {
-            favStopDicts_ = [[NSMutableArray alloc] initWithArray:savedFavStops];
+            _favStopDicts = [[NSMutableArray alloc] initWithArray:savedFavStops];
         } else {
-            favStopDicts_ = [[NSMutableArray alloc] init];
+            _favStopDicts = [[NSMutableArray alloc] init];
         }
     }
     return self;
@@ -37,7 +37,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
 
 - (BOOL)isFavouriteStop:(Stop*)stop {
     bool isFav = NO;
-    for( NSMutableDictionary* dict in favStopDicts_ ) {
+    for( NSMutableDictionary* dict in _favStopDicts ) {
         NSString* str = [dict objectForKey:STOP_ID_KEY];
         if( [str compare:[stop stopID]] == NSOrderedSame ) {
             isFav = YES;
@@ -50,7 +50,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
 
 - (NSString*)getCustomNameForStop:(Stop*)stop {
     NSString* name = @"";
-    for( NSMutableDictionary* dict in favStopDicts_ ) {
+    for( NSMutableDictionary* dict in _favStopDicts ) {
         NSString* str = [dict objectForKey:STOP_ID_KEY];
         if( [str compare:[stop stopID]] == NSOrderedSame ) {
             name = [dict objectForKey:STOP_CUSTOM_NAME_KEY];
@@ -66,7 +66,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
         NSMutableDictionary* stopDict = [[NSMutableDictionary alloc] initWithObjects:
                                     [NSArray arrayWithObjects:[stop stopID],name, nil] 
                                     forKeys:[NSArray arrayWithObjects: STOP_ID_KEY, STOP_CUSTOM_NAME_KEY, nil]];
-        [favStopDicts_ addObject:stopDict];
+        [_favStopDicts addObject:stopDict];
         [self saveFavStops];
         return YES;
     } else {
@@ -75,11 +75,11 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
 }
 
 - (void) deleteFavoriteStop:(Stop*)stop {
-    for( int i=0; i<[favStopDicts_ count]; i++ ) {
-        NSMutableDictionary* dict = [favStopDicts_ objectAtIndex:i];
+    for( int i=0; i<[_favStopDicts count]; i++ ) {
+        NSMutableDictionary* dict = [_favStopDicts objectAtIndex:i];
         NSString* str = [dict objectForKey:STOP_ID_KEY];
         if( [str compare:[stop stopID]] == NSOrderedSame ) {
-            [favStopDicts_ removeObjectAtIndex:i];
+            [_favStopDicts removeObjectAtIndex:i];
             [self saveFavStops];
             break;
         }
@@ -94,11 +94,11 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
 
 - (void)saveFavStops {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];    
-    [prefs setObject:favStopDicts_  forKey:USER_DEFAULT_FAV_STOP_KEY];
+    [prefs setObject:_favStopDicts  forKey:USER_DEFAULT_FAV_STOP_KEY];
 }
 
 - (NSMutableArray*) getFavoriteStopDict {
-    return favStopDicts_;
+    return _favStopDicts;
 }
 
 - (void)dealloc {

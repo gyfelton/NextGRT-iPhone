@@ -10,23 +10,29 @@
 #import "Stop.h"
 #import "CoreLocation/CLLocation.h"
 
+#import "FMDatabase.h"
+#import "FMDatabaseAdditions.h"
+
 #define kStopInfoReceivedNotificationName @"stopInfoArrayReceived"
 #define kBusRoutesForAllStopsReceivedNotificationName @"busRoutesForAllStopsReceived"
 
-//TODO should use delegate? seems that it doesn't help anything
-@protocol GRTDatabaseManagerDelegate <NSObject>
+#define kQueryNearbyStopsDidFinishNotification @"queryNearbyStopsDidFinish"
 
-@optional
-- (void)stopInfoArrayReceived:(NSArray*) stops;
-- (void)nearbyStopsReceived:(NSMutableArray*)stops;
-- (void)busRoutesForAllStopsReceived;
-@end
+//@protocol GRTDatabaseManagerDelegate <NSObject>
+//
+//@optional
+//- (void)stopInfoArrayReceived:(NSArray*) stops;
+//- (void)nearbyStopsReceived:(NSMutableArray*)stops;
+//- (void)busRoutesForAllStopsReceived;
+//@end
 
 @interface GRTDatabaseManager : NSObject {
-    NSString* databaseName_;
-    NSString* databasePath_;
+    NSString* _databaseName;
+    NSString* _databasePath;
     
-    double latLonBaseOffset_;
+    double _latLonBaseOffset;
+    
+    FMDatabase *_db;
 }
 
 
@@ -35,10 +41,12 @@
 
 + (id) sharedManager;
 
-- (void) calculateLatLonBaseOffset:(CLLocation*)location;
-
 - (void) queryStopIDs:(NSArray*) stopIDs withDelegate:(id)object groupByStopName:(bool) groupByStopname;
+
 - (void) queryNearbyStops:(CLLocation *) location withDelegate:(id)object withSearchRadiusFactor:(double)factor;
+
 - (void) queryBusRoutesForStops:(NSMutableArray*)stops withDelegate:(id)object;
+
 - (NSMutableArray*) queryAllStopsWithStopName:(NSString*)stopName;
+
 @end

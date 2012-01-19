@@ -20,7 +20,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"First", @"First");
+//        self.title = NSLocalizedString(@"First", @"First");
 //        self.tabBarItem.image = [UIImage imageNamed:@"first"];
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:1];
         self.title = @"Next GRT";
@@ -37,28 +37,28 @@
 #pragma mark - Notification selector
 - (void) updateView
 {
-    self.view.backgroundColor = [UIColor redColor];
+    if([_favStops count] != 0 ) {
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+        if( !_favStopsTableVC ) {
+            _favStopsTableVC = [[BusStopBaseTableViewController alloc] initWithTableWidth:self.view.frame.size.width Height:self.view.frame.size.height Stops:_favStops];
+            [self.view addSubview:_favStopsTableVC.tableView];
+            
+            //now we need to register this VC as a observer to "FavStopArrayDidUpdate" notification to reload fav stops
+            //favTableContainer_.hidden = NO;
+        } else {
+            _favStopsTableVC.stops = _favStops;
+            [_favStopsTableVC.tableView reloadData];
+        }
+    } else {
+        //favTableContainer_.hidden = YES;
+        _favStopsTableVC.view.hidden = YES;
+    }
 }
 
 - (void) busRoutesForAllStopsReceived:(NSNotification*)notification {
     id delegate = [[notification userInfo] valueForKey:@"delegate"];
     if (self == delegate)
     {
-        //    if([_favStops count] != 0 ) {
-        //        if( !favStopsTableVC_ ) {
-        //            favStopsTableVC_ = [[BusStopBaseTableViewController alloc] initWithTableWidth:320 Height:460 Stops:favStops_];
-        //            [self.view addSubview:favStopsTableVC_.tableView];
-        //            
-        //            //now we need to register this VC as a observer to "FavStopArrayDidUpdate" notification to reload fav stops
-        //            //favTableContainer_.hidden = NO;
-        //        } else {
-        //            favStopsTableVC_.stops = favStops_;
-        //            [favStopsTableVC_.tableView reloadData];
-        //        }
-        //    } else {
-        //        //favTableContainer_.hidden = YES;
-        //        favStopsTableVC_.view.hidden = YES;
-        //    }
         [self performSelectorOnMainThread:@selector(updateView) withObject:nil waitUntilDone:YES];
     }
 }
@@ -85,11 +85,36 @@
     [[GRTDatabaseManager sharedManager] queryStopIDs:stopIDs withDelegate:self groupByStopName:NO];
 }
 
+#pragma mark - BarItem Target
+
+- (void)initEditButton:(BOOL)animated
+{
+    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonClicked:)];
+    [self.navigationItem setLeftBarButtonItem:editItem animated:YES];
+}
+
+- (void)doneButtonClicked:(id)sender
+{
+    [self initEditButton:YES];  
+    [_favStopsTableVC setEditing:NO animated:YES];
+}
+
+- (void)editButtonClicked:(id)sender
+{
+    if (_favStopsTableVC) {
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonClicked:)];
+        [self.navigationItem setLeftBarButtonItem:doneButton animated:YES];
+        [_favStopsTableVC setEditing:YES animated:YES];
+    }
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initEditButton:NO];
+    self.navigationItem.leftBarButtonItem.enabled = NO;
 	// Do any additional setup after loading the view, typically from a nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFavStopTable) name:kFavStopArrayDidUpdate object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopInfoArrayReceived:) name:kStopInfoReceivedNotificationName object:nil];
