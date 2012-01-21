@@ -18,6 +18,7 @@
 
 @implementation AppDelegate
 
+@synthesize locationServiceBecomeActive;
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
 
@@ -33,10 +34,23 @@
     return locationManager_;
 }
 
+void uncaughtExceptionHandler(NSException *exception) {
+    NSArray *arr = [exception callStackSymbols];
+    NSString *reason = [exception reason];
+    NSString *name = [exception name];
+    NSString *urlStr = [NSString stringWithFormat:@"mailto:gyfelton@gmail.com?subject=NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)<br>"
+                        "Detail info:<br>%@<br>--------------------------<br>%@<br>---------------------<br>%@", 
+                        name,reason,[arr componentsJoinedByString:@"<br>"]];
+    NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] openURL:url];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+ 
+    NSSetUncaughtExceptionHandler (&uncaughtExceptionHandler);
     
     UIViewController *viewController1 = [[FavouritesViewController alloc] initWithNibName:@"FavouritesViewController" bundle:nil];
     UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:viewController1];
@@ -49,7 +63,7 @@
     
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:nav1, viewController2, nav3, nil];
-    
+
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

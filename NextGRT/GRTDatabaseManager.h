@@ -13,21 +13,15 @@
 #import "FMDatabase.h"
 #import "FMDatabaseAdditions.h"
 
-#define kStopInfoReceivedNotificationName @"stopInfoArrayReceived"
-#define kBusRoutesForAllStopsReceivedNotificationName @"busRoutesForAllStopsReceived"
+@protocol GRTDatabaseManagerDelegate <NSObject>
 
-#define kQueryNearbyStopsDidFinishNotification @"queryNearbyStopsDidFinish"
-
-//@protocol GRTDatabaseManagerDelegate <NSObject>
-//
-//@optional
-//- (void)stopInfoArrayReceived:(NSArray*) stops;
-//- (void)nearbyStopsReceived:(NSMutableArray*)stops;
-//- (void)busRoutesForAllStopsReceived;
-//@end
+@optional
+- (void)stopInfoArrayReceived:(NSArray*) stops;
+- (void)nearbyStopsReceived:(NSMutableArray*)stops;
+- (void)busRoutesForAllStopsReceived;
+@end
 
 @interface GRTDatabaseManager : NSObject {
-    NSString* _databaseName;
     NSString* _databasePath;
     
     double _latLonBaseOffset;

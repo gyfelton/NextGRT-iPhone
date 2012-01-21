@@ -14,20 +14,23 @@
 #endif
 
 //customized strings:
-#define kDatabaseName   @"GRTDataBase_20Jan2012.sqlite"
-#define kStopInfoQuery @"stopInfoFor%@"
+
+#define UITableBackgroundColor [UIColor colorWithRed:0.96f green:0.96f blue:0.96f alpha:1.0f];
+
+#define kDatabaseName   @"GRTDataBase_20Jan2012"
+//#define kStopInfoQuery  @"stopInfoFor%@"
 
 #define kFavStopArrayDidUpdate @"FavStopArrayDidUpdate"
 
-#define kQueryStopIDs @"SELECT * FROM Stops WHERE stop_id LIKE '%@%%'"
+#define kQueryStopIDs @"SELECT * FROM stops WHERE stop_id LIKE '%@%%'"
 #define kQueryFilterGroupByStopName @" GROUP BY stop_name "
 
-#define kQueryStopsWithStopName @"SELECT * FROM Stops WHERE stop_name = '%@' ORDER BY stop_id"
+#define kQueryStopsWithStopName @"SELECT * FROM stops WHERE stop_name = '%@' ORDER BY stop_id"
 
-#define kQueryNearbyStops @"SELECT * from Stops WHERE stop_lat >= %f AND stop_lat <= %f AND stop_lon >= %f AND stop_lon <= %f"
+#define kQueryNearbyStops @"SELECT * from stops WHERE stop_lat >= %f AND stop_lat <= %f AND stop_lon >= %f AND stop_lon <= %f"
 
-#define kQueryRoutesTimes @"SELECT route_id, departure_time, trip_headsign FROM StopTimes INNER JOIN Trips ON StopTimes.trip_id = Trips.trip_id WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, departure_time"
+#define kQueryRoutesTimes @"SELECT route_id, trip_headsign , departure_time FROM stop_times INNER JOIN trips ON stop_times.trip_id = trips.trip_id WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, trip_headsign, departure_time"
 
-#define kQueryRoutesTimes_unused @"SELECT route_id, departure_time, trip_headsign FROM RoutesInfoCombined WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, departure_time"
+//#define kQueryRoutesTimes_unused @"SELECT route_id, departure_time, trip_headsign FROM RoutesInfoCombined WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, departure_time"
 
-#define kQueryNormalServiceID @"SELECT service_id FROM Calendar WHERE %@ = 1"
+#define kQueryNormalServiceID @"SELECT service_id FROM calendar WHERE %@ = 1"

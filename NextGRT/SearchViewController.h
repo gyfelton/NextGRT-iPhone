@@ -8,31 +8,32 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "BusStopsPullToRefreshTableViewController.h"
 #import "GRTDatabaseManager.h"
+#import "MBProgressHUD.h"
 
-@interface SearchViewController : UIViewController <CLLocationManagerDelegate, PullToRefreshTableDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SearchViewController : UIViewController <CLLocationManagerDelegate, PullToRefreshTableDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, GRTDatabaseManagerDelegate, BusStopBaseTabeViewDelegate>
 {
     //IBOutlet UITableView* stopsList;
     IBOutlet UISearchBar* _searchBar;
     
-    IBOutlet UIActivityIndicatorView* _loadingIndicator;
-    IBOutlet UILabel* _mainTitle;
-    IBOutlet UITextView* _quickSearch;
-    
     IBOutlet UIView* _tableContainer;
     BusStopsPullToRefreshTableViewController* _stopTableVC;
     UISearchDisplayController* _searchDisplayVC;
+    
+    IBOutlet UIButton *_hintButton;
     
     BOOL _searchTextReachCriteria;
     BOOL _searchResultsReturned;
     //used to disable load more button in search result view
     BOOL _areNearbyStops;
     
+    MBProgressHUD *_hud;
+    
     CLLocationManager* _locationManager;
     CLLocation* _currLocation;
     double _currSearchRadiusFactor;
-    IBOutlet UISwitch* _locationUpdateSwitch;
 }
 
 @property (nonatomic, strong) NSMutableArray* stops;

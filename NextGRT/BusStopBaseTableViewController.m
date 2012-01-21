@@ -16,7 +16,7 @@
 
 @implementation BusStopBaseTableViewController
 
-@synthesize stops;
+@synthesize stops, customDelegate;
 
 #pragma mark - View lifecycle
 
@@ -72,6 +72,15 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)foldAllStops
+{
+    NSIndexPath *selectedIndexPathCopy = [selectedCellIndexPath_ copy];
+    selectedCellIndexPath_ = nil;
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:selectedIndexPathCopy, nil] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
+}
+
 #pragma mark - Table View DataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -80,8 +89,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //if there is only two cells, just open all of them
-    if( ([self.stops count] <= 2) || (selectedCellIndexPath_ && [selectedCellIndexPath_ compare:indexPath] == NSOrderedSame) ) {
+    if( (selectedCellIndexPath_ && [selectedCellIndexPath_ compare:indexPath] == NSOrderedSame) ) {
         //calculate height of opened cell based on number of routes
         //if 0 route: just the base
         //else : base + INTERNAL_CELL_HEIGHT * #routes
@@ -107,7 +115,8 @@
         gotTimer = YES;
     }
     
-    if( (!selectedCellIndexPath_ || [selectedCellIndexPath_ compare:indexPath] != NSOrderedSame) && [stops count] > 2 ) {
+    if( (!selectedCellIndexPath_ || [selectedCellIndexPath_ compare:indexPath] != NSOrderedSame) )//&& [stops count] > 2 ) {
+    {
         //if there are only two cells, just open all of them
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"unopenedStop"];
         if( !cell ) {
@@ -119,6 +128,7 @@
         [((UnopenedBusStopCell*)cell) initCellInfoWithStop:aStop];
         
     } else{
+        
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"openedStop"];
         if( !cell ) {
             cell = [[OpenedBusStopCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"openedStop"];
@@ -168,16 +178,21 @@
     if( selectedCellIndexPath_ ) {
         //this one only scroll if needed
         //TODO bug: sometimes this scrolling does not work as expected
-        [self.tableView scrollRectToVisible:[[self.tableView cellForRowAtIndexPath:selectedCellIndexPath_] frame] animated:YES];
+        [self.tableView scrollToRowAtIndexPath:selectedCellIndexPath_ atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+//        [self.tableView scrollRectToVisible:[[self.tableView cellForRowAtIndexPath:selectedCellIndexPath_] frame] animated:YES];
         //this one always scroll the row to the top, very irritating
         //[self.tableView scrollToRowAtIndexPath: selectedCellIndexPath_ atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
 
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return YES;
-//}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (customDelegate && [customDelegate respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)]) {
+        return [customDelegate tableView:tableView canEditRowAtIndexPath:indexPath];
+    }
+    return YES;
+}
+
 //
 //// Override to support editing the table view.
 //- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -188,12 +203,20 @@
 
 - (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (customDelegate && [customDelegate respondsToSelector:@selector(tableView:commitEditingStyle:forRowAtIndexPath:)]) {
+        [customDelegate tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-    
+    if (customDelegate && [customDelegate respondsToSelector:@selector(tableView:moveRowAtIndexPath:toIndexPath:)]) {
+        [customDelegate tableView:tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath

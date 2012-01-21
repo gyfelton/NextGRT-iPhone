@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "BusStopBaseTableViewController.h"
+#import "GRTDatabaseManager.h"
+#import "MBProgressHUD.h"
 
-@interface FavouritesViewController : UIViewController
+@interface FavouritesViewController : UIViewController <GRTDatabaseManagerDelegate, MBProgressHUDDelegate, BusStopBaseTabeViewDelegate>
 {
+    IBOutlet UILabel *_mainTitle;
+    IBOutlet UITextView *_secTitle;
     NSMutableArray* _favStops;
     BusStopBaseTableViewController* _favStopsTableVC;
+    
+    MBProgressHUD *_hud;
 }
 @property (nonatomic, strong) NSMutableArray* favStopsDict;
 

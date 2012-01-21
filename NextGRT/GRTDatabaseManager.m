@@ -31,10 +31,9 @@ static GRTDatabaseManager* sharedManager = nil;
     self = [super init];
     if( self ) {
         // Setup some globals
-        _databaseName = kDatabaseName;
         
         // Get the path to the documents directory and append the databaseName
-        self.databasePath = [[NSBundle mainBundle] pathForResource:@"GRTDataBase" ofType:@"sqlite"];
+        self.databasePath = [[NSBundle mainBundle] pathForResource:kDatabaseName ofType:@"sqlite"];
 //        NSLog(@"%@", self.databasePath);
         
         _db = [FMDatabase databaseWithPath:self.databasePath];
@@ -82,58 +81,39 @@ static GRTDatabaseManager* sharedManager = nil;
  if there is any problem, feel free to email to gyfelton@gmail.com
 */
 
-- (void)queryStopIDsHelper:(NSDictionary*)arg
-{
-    NSMutableArray *stopIDs = [arg valueForKey:@"stopIDs"];
-    
-    id d = [arg valueForKey:@"delegate"];
-    
-    BOOL groupByStopName = [[arg valueForKey:@"groupByStopName"] boolValue];
-    
+- (void) queryStopIDs:(NSArray*) stopIDs withDelegate:(id<GRTDatabaseManagerDelegate>)object groupByStopName:(bool) groupByStopName {
     // Setup the database object
-	sqlite3 *database;
     NSMutableArray* results = [[NSMutableArray alloc] init];
     
-	// Open the database from the users files sytem
-	if(sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
-        for( NSString* stopID in stopIDs ) {
-            
-            // Setup the SQL Statement and compile it for faster access
-            NSString* completeSQLStmt = [NSString stringWithFormat:kQueryStopIDs, stopID];
-            if (groupByStopName) {
-                completeSQLStmt = [completeSQLStmt stringByAppendingString:kQueryFilterGroupByStopName];
-            }
-            
-            sqlite3_stmt *compiledStatement;
-            if(sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL) == SQLITE_OK) {
-                // get all results
-                while (sqlite3_step(compiledStatement) == SQLITE_ROW) {
-                    // Read the data from the result row
-                    //TODO check char* return is null or not before format to string
-                    float lat = sqlite3_column_double(compiledStatement, 0);
-                    float lon = sqlite3_column_double(compiledStatement, 2);
-                    
-                    NSString *stopID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
-                    NSString *stopName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
-                    
-                    // Create a new animal object with the data from the database
-                    Stop* theStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon];
-                    [results addObject:theStop];
-                }
-            }
-            // Release the compiled statement from memory
-            sqlite3_finalize(compiledStatement);
+    for( NSString* stopID in stopIDs ) {
+        
+        // Setup the SQL Statement and compile it for faster access
+        NSString* completeSQLStmt = [NSString stringWithFormat:kQueryStopIDs, stopID];
+        if (groupByStopName) {
+            completeSQLStmt = [completeSQLStmt stringByAppendingString:kQueryFilterGroupByStopName];
         }
-	}
-	sqlite3_close(database);
+        
+        
+        FMResultSet *s = [_db executeQuery:completeSQLStmt];
+        while ([s next]) {
+                // Read the data from the result row
+                //TODO check char* return is null or not before format to string
+            float lat = [s doubleForColumn:@"stop_lat"];
+            float lon = [s doubleForColumn:@"stop_lon"];
+                
+            
+            NSString *stopID = [s stringForColumn:@"stop_id"];
+            NSString *stopName = [s stringForColumn:@"stop_name"];
+                
+            // Create a new animal object with the data from the database
+            Stop* theStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon];
+            [results addObject:theStop];
+        }
+    }
     
-    //[self.delegate stopInfoArrayReceived:results];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kStopInfoReceivedNotificationName object:results userInfo:[NSDictionary dictionaryWithObjectsAndKeys:d, @"delegate", nil]];
-}
-
-- (void) queryStopIDs:(NSArray*) stopIDs withDelegate:(id)object groupByStopName:(bool) groupByStopname {
-    NSDictionary *arg = [[NSDictionary alloc] initWithObjectsAndKeys:stopIDs, @"stopIDs", object, @"delegate", [NSNumber numberWithBool:groupByStopname], @"groupByStopName", nil];
-    [self performSelectorOnMainThread:@selector(queryStopIDsHelper:) withObject:arg waitUntilDone:NO];
+    if (object && [object respondsToSelector:@selector(stopInfoArrayReceived:)]) {
+        [object stopInfoArrayReceived:results];
+    }
 }
 
 - (void) calculateLatLonBaseOffset:(CLLocation*)location {
@@ -145,21 +125,12 @@ static GRTDatabaseManager* sharedManager = nil;
     _latLonBaseOffset = 0.1 / 6371 * sqrt(2) + 0.0007;
 }
 
-- (void)queryNearbyStopsHelper:(NSDictionary*)arg
-{
-    CLLocation *location = [arg valueForKey:@"location"];
-    id delegate = [arg valueForKey:@"delegate"];
-    double factor = [[arg valueForKey:@"searchRadiusFactor"] doubleValue];
-    
+
+- (void) queryNearbyStops:(CLLocation *)location withDelegate:(id<GRTDatabaseManagerDelegate>)object withSearchRadiusFactor:(double)factor {
     //for debug purpse:
     NSLog(@"ATTENTION! location is override!");
     CLLocation* temp = [[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059];
     location = temp;
-    
-    //self.delegate = object;
-    
-    // Setup the database object
-	sqlite3 *database;
     
     //init result array
     NSMutableArray* stops = [[NSMutableArray alloc] init];
@@ -167,70 +138,41 @@ static GRTDatabaseManager* sharedManager = nil;
     NSLog(@"current location -  lat:%f, lon:%f", location.coordinate.latitude, location.coordinate.longitude);
     [self calculateLatLonBaseOffset:location]; //init latLonBaseOffset_
     
-	// Open the database from the users files sytem
-	if (true) {//(sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
-        //calculate radius needed
-        double radius = 5 * factor; //500m * factor
+    //calculate radius needed
+    double radius = 5 * factor; //500m * factor
+    
+    // Setup the SQL Statement and compile it for faster access
+    NSString* completeSQLStmt = 
+    [NSString stringWithFormat:kQueryNearbyStops
+     , location.coordinate.latitude - _latLonBaseOffset * radius
+     , location.coordinate.latitude + _latLonBaseOffset * radius
+     , location.coordinate.longitude - _latLonBaseOffset * radius
+     , location.coordinate.longitude + _latLonBaseOffset * radius];
+    
+    FMResultSet *s = [_db executeQuery:completeSQLStmt];
+    while ([s next]) {
+        //retrieve values for each record
+        // Read the data from the result row
+        //TODO check char* return is null or not before format to string?
+        float lat = [s doubleForColumn:@"stop_lat"]; //sqlite3_column_double(compiledStatement, 0);
+        float lon = [s doubleForColumn:@"stop_lon"]; //sqlite3_column_double(compiledStatement, 2);
         
-		// Setup the SQL Statement and compile it for faster access
-        NSString* completeSQLStmt = 
-        [NSString stringWithFormat:kQueryNearbyStops
-         , location.coordinate.latitude - _latLonBaseOffset * radius
-         , location.coordinate.latitude + _latLonBaseOffset * radius
-         , location.coordinate.longitude - _latLonBaseOffset * radius
-         , location.coordinate.longitude + _latLonBaseOffset * radius];
+        double distance = [location distanceFromLocation:[[CLLocation alloc] initWithLatitude:lat longitude:lon]];
         
-        FMResultSet *s = [_db executeQuery:completeSQLStmt];
-        while ([s next]) {
-            //retrieve values for each record
-            // Read the data from the result row
-            //TODO check char* return is null or not before format to string?
-            float lat = [s doubleForColumnIndex:0]; //sqlite3_column_double(compiledStatement, 0);
-            float lon = [s doubleForColumnIndex:2]; //sqlite3_column_double(compiledStatement, 2);
-            
-            double distance = [location distanceFromLocation:[[CLLocation alloc] initWithLatitude:lat longitude:lon]];
-            
-            NSString *stopID = [s stringForColumnIndex:3];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
-            NSString *stopName = [s stringForColumnIndex:4];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
-            
-            // Create a new stop object with the data from the database
-            Stop* aStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon distanceFromCurrPosition:distance];
-            [stops addObject:aStop];
-        }
+        NSString *stopID = [s stringForColumn:@"stop_id"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
+        NSString *stopName = [s stringForColumn:@"stop_name"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
         
-//		sqlite3_stmt *compiledStatement;
-//        int resultCode = sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL);
-//		if( resultCode == SQLITE_OK ) {
-//            while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
-//				// Read the data from the result row
-//                //TODO check char* return is null or not before format to string?
-//                float lat = sqlite3_column_double(compiledStatement, 0);
-//                float lon = sqlite3_column_double(compiledStatement, 2);
-//                
-//                double distance = [location distanceFromLocation:[[CLLocation alloc] initWithLatitude:lat longitude:lon]];
-//                
-//				NSString *stopID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
-//				NSString *stopName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
-//				
-//				// Create a new stop object with the data from the database
-//				Stop* aStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon distanceFromCurrPosition:distance];
-//                [stops addObject:aStop];
-//			}
-//		}
-//		// Release the compiled statement from memory
-//		sqlite3_finalize(compiledStatement);
-	}
-//	sqlite3_close(database);
+        // Create a new stop object with the data from the database
+        Stop* aStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon distanceFromCurrPosition:distance];
+        [stops addObject:aStop];
+    }
     
     //sort the stops here since we gurantee that stops here all have a proper distance data
     [stops sortUsingSelector:@selector(compareDistanceWithStop:)];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kQueryNearbyStopsDidFinishNotification object:stops userInfo:[NSDictionary dictionaryWithObjectsAndKeys:delegate, @"delegate", nil]];
-}
-
-- (void) queryNearbyStops:(CLLocation *)location withDelegate:(id)object withSearchRadiusFactor:(double)factor {
-    NSDictionary *arg = [NSDictionary dictionaryWithObjectsAndKeys:location, @"location", object, @"delegate", [NSNumber numberWithDouble:factor], @"searchRadiusFactor", nil];
-    [self performSelectorOnMainThread:@selector(queryNearbyStopsHelper:) withObject:arg waitUntilDone:NO];
+    if (object && [object respondsToSelector:@selector(nearbyStopsReceived:)]) {
+        [object nearbyStopsReceived:stops];
+    }
 }
 
 - (NSString*) dayOfWeekHelper {
@@ -263,137 +205,90 @@ static GRTDatabaseManager* sharedManager = nil;
     }
 }
 
-- (void) queryBusRoutesForStops:(NSMutableArray*)stops withDelegate:(id)object {
-    NSMutableArray *ss = [stops copy];
+- (void) queryBusRoutesForStops:(NSMutableArray*)stops withDelegate:(id<GRTDatabaseManagerDelegate>)object {
+    
     //generate current time (truncate seconds)
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH':'mm':'00"];
     NSString* currTime = [formatter stringFromDate:[NSDate date]];
     NSLog(@"currTime: %@", currTime);
     
-    // Setup the database object
-	sqlite3 *database;
-    
-    // Open the database from the users files sytem
-	if(true) {// sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
-        for( Stop* aStop in ss) {
-            //to store routes
-            NSMutableArray* routes = [NSMutableArray arrayWithCapacity:0];
+    for( Stop* aStop in stops) {
+        //to store routes
+        NSMutableArray* routes = [NSMutableArray arrayWithCapacity:0];
+        
+        //TODO handle case on special days
+        //Firstly, construct the day of today
+        NSString* dayOfWeek = [self dayOfWeekHelper]; 
+        
+        //The, retrieve serviceID
+        NSString* serviceIDQuery = [NSString stringWithFormat:kQueryNormalServiceID, dayOfWeek];
+        
+        // Setup the SQL Statement and compile it for faster access
+        NSString* completeSQLStmt = [NSString stringWithFormat:kQueryRoutesTimes, [aStop stopID], currTime, serviceIDQuery];
+//        NSLog(@"%@", [aStop stopID]);
+        FMResultSet *s = [_db executeQuery:completeSQLStmt];
+        NSString* currRoute = nil;
+        BusRoute* route = nil;
+        while ([s next]) {
             
-            //TODO handle case on special days
-            //Firstly, construct the day of today
-            NSString* dayOfWeek = [self dayOfWeekHelper]; 
+            // Read the data from the result row
+            NSString* routeNum = [s stringForColumn:@"route_id"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 0)];
+            NSString* departureTime = [s stringForColumn:@"departure_time"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];r
+            NSString* direction = [s stringForColumn:@"trip_headsign"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 2)];
             
-            //The, retrieve serviceID
-            NSString* serviceIDQuery = [NSString stringWithFormat:kQueryNormalServiceID, dayOfWeek];
-            
-            // Setup the SQL Statement and compile it for faster access
-            NSString* completeSQLStmt = [NSString stringWithFormat:kQueryRoutesTimes, [aStop stopID], currTime, serviceIDQuery];
-            
-            FMResultSet *s = [_db executeQuery:completeSQLStmt];
-            NSString* currRoute = nil;
-            BusRoute* route = nil;
-            while ([s next]) {
-                
-                // Read the data from the result row
-                NSString* routeNum = [s stringForColumnIndex:0];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 0)];
-                NSString* departureTime = [s stringForColumnIndex:1];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];r
-                NSString* direction = [s stringForColumnIndex:2];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 2)];
-                
-                if( currRoute && [currRoute compare:routeNum] == NSOrderedSame ) {
-                    //just add the time and direction since it is the same bus
-                    [route addNextArrivalTime:departureTime Direction:direction];
-                } else { //we encounter a new route, add route to array
-                    if( route ) {
-                        [routes addObject:route];
-                        //[route release];
-                    }
-                    currRoute = routeNum;
-                    
-                    //alloc a new route object for new route
-                    route = [[BusRoute alloc] initWithRouteNumber:currRoute routeID:currRoute direction:direction AndTime:departureTime];
+//            NSString *numAndDirectionCombined = [NSString stringWithFormat:@"%@%@", routeNum, direction];
+            if( currRoute && [currRoute compare:routeNum] == NSOrderedSame ) {
+                //just add the time and direction since it is the same bus
+                [route addNextArrivalTime:departureTime Direction:direction];
+            } else { //we encounter a new route, add old route to array
+                if( route ) {
+                    [routes addObject:route];
+                    //[route release];
                 }
+                currRoute = routeNum;
+                
+                //alloc a new route object for new route
+                route = [[BusRoute alloc] initWithRouteNumber:routeNum routeID:routeNum direction:direction AndTime:departureTime];
             }
-            //add last route to it
-            if (route) {
-                [routes addObject:route];
-            }
-//            sqlite3_stmt *compiledStatement;
-//            if(sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL) == SQLITE_OK) {
-//                NSString* currRoute = nil;
-//                BusRoute* route = nil;
-//                
-//                while (sqlite3_step(compiledStatement) == SQLITE_ROW) {
-//                    // Read the data from the result row
-//                    NSString* routeNum = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 0)];
-//                    NSString* departureTime = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
-//                    NSString* direction = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 2)];
-//                    
-//                    if( currRoute && [currRoute compare:routeNum] == NSOrderedSame ) {
-//                        //just add the time and direction since it is the same bus
-//                        [route addNextArrivalTime:departureTime Direction:direction];
-//                    } else { //we encounter a new route, add route to array
-//                        if( route ) {
-//                            [routes addObject:route];
-//                            //[route release];
-//                        }
-//                        currRoute = routeNum;
-//                        
-//                        //alloc a new route object for new route
-//                        route = [[BusRoute alloc] initWithRouteNumber:currRoute routeID:currRoute direction:direction AndTime:departureTime];
-//                    }
-//                }
-//                //add last route to it
-//                if (route) {
-//                    [routes addObject:route];
-//                }
-//            }
-            // Release the compiled statement from memory
-//            sqlite3_finalize(compiledStatement);
-            
-            for( BusRoute* route in routes ) {
-                [route initNextArrivalCountDownBaesdOnTime:[NSDate date]];
-            }
-            [aStop assignBusRoutes: routes];
         }
+        //add last route to it
+        if (route) {
+            [routes addObject:route];
+        }
+        
+        for( BusRoute* route in routes ) {
+            [route initNextArrivalCountDownBaesdOnTime:[NSDate date]];
+        }
+        [aStop assignBusRoutes: routes];
     }
-    //sqlite3_close(database);
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kBusRoutesForAllStopsReceivedNotificationName object:ss userInfo:[NSDictionary dictionaryWithObjectsAndKeys:object, @"delegate",nil]];
-//    [self.delegate busRoutesForAllStopsReceived];
+    if (object && [object respondsToSelector:@selector(busRoutesForAllStopsReceived)]) {
+        [object busRoutesForAllStopsReceived];
+    }
 }
 
 - (NSMutableArray*) queryAllStopsWithStopName:(NSString*)stopName {
-    // Setup the database object
-	sqlite3 *database;
     NSMutableArray* results = [[NSMutableArray alloc] init];
     
 	// Open the database from the users files sytem
-	if(sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
-        // Setup the SQL Statement and compile it for faster access
-        NSString* completeSQLStmt = [NSString stringWithFormat:kQueryStopsWithStopName, stopName];
-
-        sqlite3_stmt *compiledStatement;
-        if(sqlite3_prepare_v2(database, [completeSQLStmt UTF8String], -1, &compiledStatement, NULL) == SQLITE_OK) {
-            // get all results
-            while (sqlite3_step(compiledStatement) == SQLITE_ROW) {
-                // Read the data from the result row
-                //TODO check char* return is null or not before format to string
-                float lat = sqlite3_column_double(compiledStatement, 0);
-                float lon = sqlite3_column_double(compiledStatement, 2);
-                
-                NSString *stopID = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
-                NSString *stopName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
-                
-                // Create a new stop object with the data from the database
-                Stop* theStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon];
-                [results addObject:theStop];
-            }
-        }
-        // Release the compiled statement from memory
-        sqlite3_finalize(compiledStatement);
-	}
-	sqlite3_close(database);
+    // Setup the SQL Statement and compile it for faster access
+    NSString* completeSQLStmt = [NSString stringWithFormat:kQueryStopsWithStopName, stopName];
+    
+    FMResultSet *s = [_db executeQuery:completeSQLStmt];
+    while ([s next]) {
+        // Read the data from the result row
+        //TODO check char* return is null or not before format to string
+        float lat = [s doubleForColumn:@"stop_lat"];
+        float lon = [s doubleForColumn:@"stop_lon"];//sqlite3_column_double(compiledStatement, 2);
+        
+        NSString *stopID = [s stringForColumn:@"stop_id"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
+        NSString *stopName = [s stringForColumn:@"stop_name"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
+        
+        // Create a new stop object with the data from the database
+        Stop* theStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon];
+        [results addObject:theStop];
+    }
     
     return results;
 }

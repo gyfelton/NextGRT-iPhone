@@ -68,29 +68,52 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
                                     forKeys:[NSArray arrayWithObjects: STOP_ID_KEY, STOP_CUSTOM_NAME_KEY, nil]];
         [_favStopDicts addObject:stopDict];
         [self saveFavStops];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
         return YES;
     } else {
         return NO;
     }
 }
 
-- (void) deleteFavoriteStop:(Stop*)stop {
+- (BOOL) swapStopAtIndex:(NSInteger)sourceIndex withIndex:(NSInteger)destIndex
+{
+    if ((sourceIndex < [_favStopDicts count]) && (destIndex < [_favStopDicts count])) {
+        [_favStopDicts exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destIndex];
+        //[self saveFavStops];
+        return YES;
+    } else
+    {
+        return NO;
+    }
+}
+
+- (BOOL) deleteFavoriteStop:(Stop*)stop {
     for( int i=0; i<[_favStopDicts count]; i++ ) {
         NSMutableDictionary* dict = [_favStopDicts objectAtIndex:i];
         NSString* str = [dict objectForKey:STOP_ID_KEY];
         if( [str compare:[stop stopID]] == NSOrderedSame ) {
             [_favStopDicts removeObjectAtIndex:i];
             [self saveFavStops];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+            return YES;
             break;
         }
     }
+    return NO;
 }
 
-//- (void)saveTeamOrder:(NSMutableArray*)teams {
-//    [teams_ release];
-//    teams_ = [teams retain];
-//    [self saveTeams];
-//}
+- (BOOL)deleteFavoriteStopAtIndex:(NSInteger)index
+{
+    if ([_favStopDicts count]>index) {
+        [_favStopDicts removeObjectAtIndex:index];
+        [self saveFavStops];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+        return YES;
+    } else
+    {
+        return NO;
+    }
+}
 
 - (void)saveFavStops {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];    

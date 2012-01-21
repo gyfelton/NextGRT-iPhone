@@ -44,12 +44,11 @@
         extraInfo_.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:extraInfo_];
         
-        fav_ = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, INSET_LEFT, INSET_LEFT)];
+        fav_ = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, INSET_LEFT, 80)];
         fav_.center = CGPointMake(fav_.center.x, self.contentView.center.y);
-        fav_.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-        [fav_ setImage:[UIImage imageNamed:@"star_grey"] forState:UIControlStateNormal];
-        [fav_ setImage:[UIImage imageNamed:@"star_yellow"] forState:UIControlStateHighlighted];
-        [fav_ setImage:[UIImage imageNamed:@"star_yellow"] forState:UIControlStateSelected];
+        [fav_ setImage:[UIImage imageNamed:@"star_empty_big"] forState:UIControlStateNormal];
+        [fav_ setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateHighlighted];
+        [fav_ setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateSelected];
         [fav_ addTarget:self action:@selector(favPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:fav_];
         
@@ -61,10 +60,16 @@
         [self.contentView addSubview:availableRoutes_];
         
         UIImage *cellBg = [UIImage imageNamed:@"cell_bg"];
-        cellBg = [cellBg stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        cellBg = [cellBg stretchableImageWithLeftCapWidth:0 topCapHeight:1];
         self.backgroundView = [[UIImageView alloc] initWithImage:cellBg];
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+     fav_.center = CGPointMake(fav_.center.x, 32); 
 }
 
 - (void)toggleFavButtonStatus {
@@ -149,7 +154,7 @@
         alert_.tag = ADD_FAV_ALERT_TAG;
         
         customNameField_ = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,30)];
-        customNameField_.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 13, 10)];
+//        customNameField_.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 13, 10)];
         customNameField_.borderStyle = UITextBorderStyleBezel;
         customNameField_.clearButtonMode = UITextFieldViewModeWhileEditing;
         customNameField_.leftViewMode = UITextFieldViewModeAlways;
@@ -159,7 +164,7 @@
         customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
         customNameField_.delegate = self;
         [customNameField_ setSelected:YES];
-        customNameField_.placeholder = @"Enter a nickname here...";
+        customNameField_.placeholder = @"Enter a nickname here";
         
         [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
         [alert_ show];
@@ -207,9 +212,6 @@
         //refresh the cell's name (replace name with custom name)
         [self initCellInfoWithStop:stop_];
         
-        //post notification so that fav tab gets refreshed table
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
-        
     } else if( alertView.tag == REMOVE_FAV_ALERT_TAG && buttonIndex == 1 ){
         //user confirmed to delete this fav
         [self toggleFavButtonStatus];
@@ -219,9 +221,6 @@
         
         //refresh the cell's name (remove custom name)
         [self initCellInfoWithStop:stop_];
-        
-        //post notification so that fav tab gets refreshed table
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
     }
 }
 

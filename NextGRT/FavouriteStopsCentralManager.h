@@ -21,7 +21,9 @@
 
 - (BOOL) isFavouriteStop: (Stop*) stop;
 - (BOOL) addFavoriteStop:(Stop*)stop Name:(NSString*)name;
-- (void) deleteFavoriteStop: (Stop*) stop;
+- (BOOL) swapStopAtIndex:(NSInteger)sourceIndex withIndex:(NSInteger)destIndex;
+- (BOOL) deleteFavoriteStop: (Stop*) stop;
+- (BOOL) deleteFavoriteStopAtIndex:(NSInteger)index;
 - (NSString*)getCustomNameForStop:(Stop*)stop;
 
 //- (void) saveStopOrder:(NSMutableArray*) stops;

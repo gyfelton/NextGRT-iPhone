@@ -33,7 +33,16 @@
 
 #pragma mark - Location delegate
 
+- (void) didResumeFromBackground:(NSNotification*)notification
+{
+    [_locationManager startUpdatingLocation];
+}
+
 - (void) startLoadingGeoLocation {
+    _hud.labelText = @"Searching neayby stops...";
+    _hud.detailsLabelText = @"You can also search bus stops above";
+    [_hud show:YES];
+    
     //the stops we have later will be nearby stops, so load more button is needed
     _areNearbyStops = YES;
     
@@ -51,13 +60,20 @@
     
     //if location change is significant
     if (!oldLocation || [newLocation distanceFromLocation:oldLocation]>100.0f) {
-        //change main title and hide quick search tip
-        _mainTitle.text = @"Processing stops and routes...";
-        _quickSearch.hidden = YES;
-        
         _currLocation = [newLocation copy];
         
         [self performSelector:@selector(queryStops:) withObject:newLocation afterDelay:0];
+        
+        _hud.mode = MBProgressHUDModeIndeterminate;
+        _hud.labelText = @"Processing...";
+        _hud.detailsLabelText = @"";
+//        _hud.dimBackground = YES;
+        if (_hud.isHidden) {
+            [_hud show:YES];
+        } else
+        {
+            [_hud show:NO];
+        }
     } else
     {
         [_stopTableVC reloadDataAndStopLoadingAnimation];
@@ -65,9 +81,10 @@
 }
 
 - (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    _mainTitle.text = @"Cannot get your current location.";
-    _loadingIndicator.hidden = YES;
-    
+//    _mainTitle.text = @"Cannot get your current location.";
+//    _loadingIndicator.hidden = YES;
+    _hintButton.hidden = NO;
+    [_hintButton setTitle:@"Fail to locate you\n click here to try again." forState:UIControlStateNormal];
     //for debug purpose only
     //    NSLog(@"ATTENTION: geo location manual override!");
     //    CLLocation* newLocation = [[[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059] autorelease];
@@ -81,37 +98,38 @@
     [[GRTDatabaseManager sharedManager] queryNearbyStops:newLocation withDelegate:self withSearchRadiusFactor:_currSearchRadiusFactor];   
 }
 
-#pragma mark - GRTDatabaseDelegate Notification Selector
+#pragma mark - GRTDatabaseDelegate
 
-- (void) nearbyStopsReceived:(NSNotification*)notification {
-    //self.stops = nil; //release old stops
-    id delegate = [[notification userInfo] valueForKey:@"delegate"];
-    if (self == delegate) {
-        self.stops = [notification object];
-        
-        //query for route info, it will go to busRoutesForAllStopsReceived
-        [[GRTDatabaseManager sharedManager] queryBusRoutesForStops:self.stops withDelegate:self];  
-    }
+- (void) nearbyStopsReceived:(NSMutableArray*)s {
+    self.stops = s;
+    //query for route info, it will go to busRoutesForAllStopsReceived
+    [[GRTDatabaseManager sharedManager] queryBusRoutesForStops:self.stops withDelegate:self];  
 }
 
 - (void)reloadTable
 {
+    [_hud hide:YES];
     //put stop to the table
     if( !_stopTableVC ) {
         _stopTableVC = [[BusStopsPullToRefreshTableViewController alloc] initWithTableWidth:320 Height:367 Stops:self.stops andDelegate:self needLoadMoreStopsButton:_areNearbyStops];
+        _stopTableVC.customDelegate = self;
         //Add table in animated way
+        _stopTableVC.tableView.backgroundColor = UITableBackgroundColor;
+        
         [_tableContainer addSubview:_stopTableVC.tableView];
-        _tableContainer.hidden = NO;
         _stopTableVC.tableView.hidden = NO;
-        [_tableContainer setFrame:CGRectMake(_tableContainer.frame.origin.x, 500, _tableContainer.frame.size.width, _tableContainer.frame.size.height)];
+//        [_tableContainer setFrame:CGRectMake(_tableContainer.frame.origin.x, 500, _tableContainer.frame.size.width, _tableContainer.frame.size.height)];
+        _stopTableVC.tableView.alpha = 0.6f;
+        _stopTableVC.tableView.transform = CGAffineTransformMakeScale(1.5f, 1.5f);
+        
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        [UIView setAnimationDuration:0.6];
-        [_tableContainer setFrame:CGRectMake(_tableContainer.frame.origin.x, 44, _tableContainer.frame.size.width, _tableContainer.frame.size.height)];
+        [UIView setAnimationDuration:0.3];
+//        [_tableContainer setFrame:CGRectMake(_tableContainer.frame.origin.x, 44, _tableContainer.frame.size.width, _tableContainer.frame.size.height)];
+        _stopTableVC.tableView.alpha = 1.0f;
+        _stopTableVC.tableView.transform = CGAffineTransformIdentity;
         [UIView commitAnimations];
-        _mainTitle.hidden = YES;
-        _quickSearch.hidden = YES;
-        _loadingIndicator.hidden = YES;
+
     } else {
         //enable/disable loadmorebutton accordingly
         _stopTableVC.needLoadMoreButton = _areNearbyStops;
@@ -123,22 +141,14 @@
 
 }
 
-- (void) busRoutesForAllStopsReceived:(NSNotification*)notification {
-    id delegate = [[notification userInfo] valueForKey:@"delegate"];
-    if (self == delegate) {
-        [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:YES];
-    }
+- (void) busRoutesForAllStopsReceived {
+    [self performSelectorOnMainThread:@selector(reloadTable) withObject:nil waitUntilDone:NO];
 }
 
-- (void)stopInfoArrayReceived:(NSNotification*)notification {
-    //used only for search result
-    id delegate = [[notification userInfo] valueForKey:@"delegate"];
-    if (delegate == self) {
-        NSArray *s = [notification object];
+- (void)stopInfoArrayReceived:(NSArray*)arr {
         _searchResultsReturned = YES;
-        self.searchResults = [NSMutableArray arrayWithArray:s];
+        self.searchResults = [NSMutableArray arrayWithArray:arr];
         [_searchDisplayVC.searchResultsTableView reloadData];
-    }
 }
 
 #pragma mark - PullToRefreshLoadMoreDelegate
@@ -179,12 +189,14 @@
     [_locationManager stopUpdatingLocation];
     
     //update main title, tips and show switch
-    _mainTitle.text = @"Location updating stopped";
-    _loadingIndicator.hidden = YES;
-    _quickSearch.text = @"Slide to start updating again:";
-    _locationUpdateSwitch.on = NO;
-    _locationUpdateSwitch.hidden = NO;
-    
+    _hintButton.hidden = NO;
+    [_hintButton setTitle:@"click here to resume \n locating your position" forState:UIControlStateNormal];
+//    _mainTitle.text = @"Location updating stopped";
+//    _loadingIndicator.hidden = YES;
+//    _quickSearch.text = @"Slide to start updating again:";
+//    _locationUpdateSwitch.on = NO;
+//    _locationUpdateSwitch.hidden = NO;
+    [_hud hide:YES];
 }
 
 
@@ -193,18 +205,25 @@
     searchResults = nil;
 }
 
-#pragma mark - Switch toggle IBAction
-
-- (IBAction) locationUpdateSwitchToggled:(id)sender {
-    NSLog(@"start update position again...");
-    
-    _mainTitle.text = @"Searching nearby stops...";
-    _quickSearch.text = @"You can also do quick search in the search bar above";
-    _locationUpdateSwitch.hidden = YES;
-    _loadingIndicator.hidden = YES;
-    
-    [self startLoadingGeoLocation];
+#pragma mark - UIButton IBAction
+- (void)hintButtonClicked:(UIButton*)btn
+{
+    if (true) {
+        [self startLoadingGeoLocation];
+        _hintButton.hidden = YES;
+    }
 }
+
+//- (IBAction) locationUpdateSwitchToggled:(id)sender {
+//    NSLog(@"start update position again...");
+//    
+////    _mainTitle.text = @"Searching nearby stops...";
+////    _quickSearch.text = @"You can also do quick search in the search bar above";
+////    _locationUpdateSwitch.hidden = YES;
+////    _loadingIndicator.hidden = YES;
+//    
+//    [self startLoadingGeoLocation];
+//}
 
 #pragma mark - SearchResultTable Date Source
 
@@ -254,6 +273,14 @@
 
 #pragma mark - UITableView Delegate
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == _stopTableVC.tableView) {
+        return NO;
+    }
+    return YES;
+}
+
 //this is for search results
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if( [searchResults count] != 0 && _searchTextReachCriteria ) {
@@ -279,6 +306,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _tableContainer.hidden = NO;
+    _tableContainer.backgroundColor = UITableBackgroundColor;    
+    _hud = [[MBProgressHUD alloc] initWithView:_tableContainer];
+    _hud.animationType = MBProgressHUDAnimationZoom;
+//    _hud.dimBackground = YES;
+    [_tableContainer addSubview:_hud];
+    
 	// Do any additional setup after loading the view, typically from a nib.
     //init the search bar and its controller
     _searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
@@ -294,9 +329,16 @@
     
     _currLocation = nil;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nearbyStopsReceived:) name:kQueryNearbyStopsDidFinishNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(busRoutesForAllStopsReceived:) name:kBusRoutesForAllStopsReceivedNotificationName object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopInfoArrayReceived:) name:kStopInfoReceivedNotificationName object:nil];
+    _hintButton.hidden = YES;
+    _hintButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    _hintButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    _hintButton.titleLabel.numberOfLines = 2;
+    [_hintButton addTarget:self action:@selector(hintButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:kFavStopArrayDidUpdate object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didResumeFromBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     [self startLoadingGeoLocation];
     
 }
@@ -304,12 +346,10 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kFavStopArrayDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kQueryNearbyStopsDidFinishNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kBusRoutesForAllStopsReceivedNotificationName object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kStopInfoReceivedNotificationName object:nil];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated

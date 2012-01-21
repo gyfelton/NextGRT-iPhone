@@ -15,14 +15,23 @@
 
 @class Stop;
 
+@protocol BusStopBaseTabeViewDelegate <NSObject>
+@optional
+- (void)tableView:(UITableView *)tableView  commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath;
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
 @interface BusStopBaseTableViewController : UITableViewController {
     bool gotTimer;
     NSTimer* timer_;
     NSIndexPath* selectedCellIndexPath_;
 }
 
-- (id)initWithTableWidth:(CGFloat)width Height:(CGFloat)height Stops:(NSMutableArray*)s;
-
 @property (nonatomic, retain) NSMutableArray* stops;
+@property (nonatomic, assign) id<BusStopBaseTabeViewDelegate> customDelegate;
+
+- (id)initWithTableWidth:(CGFloat)width Height:(CGFloat)height Stops:(NSMutableArray*)s;
+- (void)foldAllStops;
 
 @end
