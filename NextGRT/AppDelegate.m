@@ -66,6 +66,13 @@ void uncaughtExceptionHandler(NSException *exception) {
 
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
+    
+    //set to YES for countdown if never set before
+    NSDictionary *countDown = [[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULT_KEY_COUNTDOWN];
+    if (!countDown) { 
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"bool"] forKey:USER_DEFAULT_KEY_COUNTDOWN];
+    }
+    
     return YES;
 }
 

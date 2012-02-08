@@ -20,7 +20,13 @@
 #define NAME_FONT @"Helvetica"
 #define NAME_FONT_SIZE 20.0
 
-@interface BusStopCellBaseClass : UITableViewCell<UITextFieldDelegate,UIAlertViewDelegate> {
+enum BusStopCellType {
+    cellForFavVC = 0,
+    cellForSearchVC = 1
+    };
+typedef enum BusStopCellType BusStopCellType;
+
+@interface BusStopCellBaseClass : UITableViewCell <UITextFieldDelegate,UIAlertViewDelegate> {
     //Showing bus stop name or custom name
     UILabel* name_;
 
@@ -45,6 +51,7 @@
 - (void)refreshRoutesInCellWithSeconds:(NSTimeInterval) seconds;
 - (void)toggleFavButtonStatus;
 
+@property BusStopCellType cellType;
 @property (nonatomic, retain) UILabel* name;
 @property (nonatomic, retain) UILabel* extraInfo;
 

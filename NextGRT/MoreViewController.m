@@ -16,10 +16,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = NSLocalizedString(@"More", @"More");
+        self.title = _(@"More");
         //        self.tabBarItem.image = [UIImage imageNamed:@"first"];
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:3];
-        self.title = @"More";
+        self.title = _(@"More");
     }
     return self;
 }
@@ -50,9 +50,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -72,7 +71,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewDidAppear:animated];    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -103,7 +102,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -115,11 +114,94 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
-    cell.textLabel.text = @"About";
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    switch (indexPath.row) {
+        case 0:
+        {
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
+            cell.textLabel.text = _(@"Show Countdown");
+            _countDownSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [_countDownSwitch addTarget:self action:@selector(didToggleCountdownSwitch:) forControlEvents:UIControlEventValueChanged];
+            
+            NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULT_KEY_COUNTDOWN];
+            if (dict && [[dict objectForKey:@"bool"] boolValue]) {
+                _countDownSwitch.on = YES;
+            } else
+            {
+                _countDownSwitch.on = NO;
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //if actual time switch is no, should disable it
+            dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULT_KEY_ACTUAL_TIME];
+            if (dict && [[dict objectForKey:@"bool"] boolValue]) {
+                _countDownSwitch.enabled = YES;
+            } else
+            {
+                _countDownSwitch.enabled = NO;
+            }
+            
+            cell.accessoryView = _countDownSwitch;
+        }
+            break;
+        case 1:
+        {
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
+            cell.textLabel.text = _(@"Show Actual Time");
+            _actualTimeSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+            [_actualTimeSwitch addTarget:self action:@selector(didToggleActualTimeSwitch:) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = _actualTimeSwitch;
+            
+            NSDictionary *dict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULT_KEY_ACTUAL_TIME];
+            if (dict && [[dict objectForKey:@"bool"] boolValue]) {
+                _actualTimeSwitch.on = YES;
+            } else
+            {
+                _actualTimeSwitch.on = NO;
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+            break;
+        case 2:
+        {
+            cell.textLabel.text = _(@"About");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+            break;
+        case 3:
+        {
+            cell.textLabel.text = _(@"Rate this app");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        default:
+            break;
+    }
+
     
     return cell;
+}
+
+- (void)didToggleCountdownSwitch:(UISwitch*)uiSwitch
+{
+    BOOL value = uiSwitch.on;
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:value] forKey:@"bool"] forKey:USER_DEFAULT_KEY_COUNTDOWN];
+    
+    if (value) {
+        _actualTimeSwitch.enabled = YES;
+    }
+}
+
+- (void)didToggleActualTimeSwitch:(UISwitch*)uiSwitch
+{
+    BOOL value = uiSwitch.on;
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:value] forKey:@"bool"] forKey:USER_DEFAULT_KEY_ACTUAL_TIME];
+    if (!value) {
+        _countDownSwitch.on = YES;
+        _countDownSwitch.enabled = NO;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"bool"] forKey:USER_DEFAULT_KEY_COUNTDOWN];
+    } else
+    {
+        _countDownSwitch.enabled = YES;
+    }
 }
 
 /*
@@ -173,10 +255,30 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
-    AboutScreenViewController* about = [[AboutScreenViewController alloc] initWithNibName:@"AboutScreenViewController" bundle:nil];
-    
-    [self.navigationController pushViewController:about animated:YES];
-    
+    switch (indexPath.row) {
+        case 2:
+        {
+            AboutScreenViewController* about = [[AboutScreenViewController alloc] initWithNibName:@"AboutScreenViewController" bundle:nil];
+            
+            [self.navigationController pushViewController:about animated:YES];
+        }
+            break;
+        case 3:
+        {
+            NSString *str = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa";
+            str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str]; 
+            str = [NSString stringWithFormat:@"%@type=Purple+Software&id=", str];
+            
+            //TODO! change app id
+            // Here is the app id from itunesconnect
+            str = [NSString stringWithFormat:@"%@289382458", str]; 
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+        }
+            break;
+        default:
+            break;
+    }    
 }
 
 

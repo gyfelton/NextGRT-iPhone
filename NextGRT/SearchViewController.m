@@ -84,7 +84,8 @@
 //    _mainTitle.text = @"Cannot get your current location.";
 //    _loadingIndicator.hidden = YES;
     _hintButton.hidden = NO;
-    [_hintButton setTitle:@"Fail to locate you\n click here to try again." forState:UIControlStateNormal];
+    [_hintButton setTitle:@"Fail to locate your position\n click here to try again." forState:UIControlStateNormal];
+    [_hud hide:YES];
     //for debug purpose only
     //    NSLog(@"ATTENTION: geo location manual override!");
     //    CLLocation* newLocation = [[[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059] autorelease];

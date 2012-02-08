@@ -26,7 +26,7 @@
 
 @implementation BusStopCellBaseClass
 
-@synthesize name = name_, extraInfo = extraInfo_;
+@synthesize name = name_, extraInfo = extraInfo_, cellType;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -46,6 +46,7 @@
         
         fav_ = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, INSET_LEFT, 80)];
         fav_.center = CGPointMake(fav_.center.x, self.contentView.center.y);
+        fav_.showsTouchWhenHighlighted = YES;
         [fav_ setImage:[UIImage imageNamed:@"star_empty_big"] forState:UIControlStateNormal];
         [fav_ setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateHighlighted];
         [fav_ setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateSelected];
@@ -62,6 +63,9 @@
         UIImage *cellBg = [UIImage imageNamed:@"cell_bg"];
         cellBg = [cellBg stretchableImageWithLeftCapWidth:0 topCapHeight:1];
         self.backgroundView = [[UIImageView alloc] initWithImage:cellBg];
+        
+        //no use for now
+        cellType = cellForSearchVC; //by default
     }
     return self;
 }
@@ -144,40 +148,42 @@
 
 #pragma mark - fav button delegate
 - (void)favPressed {
-    if( !isStopFav_ ) {
-        [self toggleFavButtonStatus];
-        
-        alert_ = [[UIAlertView alloc] initWithTitle:@"Favourite Added!" 
-                                             message:@"You can give a nickname:\n\n\n" 
-                                            delegate:self 
-                                   cancelButtonTitle:@"Skip" otherButtonTitles:nil];
-        alert_.tag = ADD_FAV_ALERT_TAG;
-        
-        customNameField_ = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,30)];
-//        customNameField_.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 13, 10)];
-        customNameField_.borderStyle = UITextBorderStyleBezel;
-        customNameField_.clearButtonMode = UITextFieldViewModeWhileEditing;
-        customNameField_.leftViewMode = UITextFieldViewModeAlways;
-        customNameField_.layer.cornerRadius = 5.0f;
-        customNameField_.font = [UIFont systemFontOfSize:18];
-        customNameField_.backgroundColor = [UIColor whiteColor];
-        customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
-        customNameField_.delegate = self;
-        [customNameField_ setSelected:YES];
-        customNameField_.placeholder = @"Enter a nickname here";
-        
-        [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
-        [alert_ show];
-        
-        [alert_ addSubview:customNameField_];
-    } else {
-        alert_ = [[UIAlertView alloc] initWithTitle:@"Remove Favourite Stop" 
-                                             message:@"Are you sure to do so?" 
-                                            delegate:self 
-                                   cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
-        alert_.tag = REMOVE_FAV_ALERT_TAG;
-        
-        [alert_ show];
+    if (cellType == cellForSearchVC) {
+        if( !isStopFav_ ) {
+            [self toggleFavButtonStatus];
+            
+            alert_ = [[UIAlertView alloc] initWithTitle:@"Favourite Stop Added!" 
+                                                message:@"You can assign a nickname:\n\n\n" 
+                                               delegate:self 
+                                      cancelButtonTitle:@"Skip" otherButtonTitles:nil];
+            alert_.tag = ADD_FAV_ALERT_TAG;
+            
+            customNameField_ = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,30)];
+            //        customNameField_.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 13, 10)];
+            customNameField_.borderStyle = UITextBorderStyleBezel;
+            customNameField_.clearButtonMode = UITextFieldViewModeWhileEditing;
+            customNameField_.leftViewMode = UITextFieldViewModeAlways;
+            customNameField_.layer.cornerRadius = 5.0f;
+            customNameField_.font = [UIFont systemFontOfSize:18];
+            customNameField_.backgroundColor = [UIColor whiteColor];
+            customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
+            customNameField_.delegate = self;
+            [customNameField_ setSelected:YES];
+            customNameField_.placeholder = @"enter the nickname here";
+            
+            [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
+            [alert_ show];
+            
+            [alert_ addSubview:customNameField_];
+        } else {
+            alert_ = [[UIAlertView alloc] initWithTitle:@"Remove Favourite Stop" 
+                                                message:@"Are you sure to do so?" 
+                                               delegate:self 
+                                      cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+            alert_.tag = REMOVE_FAV_ALERT_TAG;
+            
+            [alert_ show];
+        }
     }
 }
 

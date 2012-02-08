@@ -31,6 +31,10 @@
 - (void) initNextArrivalCountDownBaesdOnTime:(NSDate*)time;
 - (NSString*) parseTimeInterval:(NSTimeInterval) diff;
 - (NSString*) getNextBusDirection;
+
 - (NSString*) getFirstArrivalTime;
 - (NSString*) getSecondArrivalTime;
+
+- (NSString*) getFirstArrivalActualTime;
+- (NSString*) getSecondArrivalActualTime;
 @end

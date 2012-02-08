@@ -45,7 +45,7 @@
 }
 
 - (NSString*) getArrivalTime:(int) index {
-    while( [nextBusCountDown_ count] > index+1 ) { //while there is a count down
+    while( [nextBusCountDown_ count] > index ) { //while there is a count down
         NSTimeInterval countDown = [[nextBusCountDown_ objectAtIndex:index] countDown];
         if( countDown < -30 ) {
             [nextBusCountDown_ removeObjectAtIndex:index];
@@ -53,13 +53,13 @@
             [nextArrivalDirection_ removeObjectAtIndex:index];
             [nextArrivalTimes_ removeObjectAtIndex:index];
         } else if( countDown < 30 ) {
-            return [NSString stringWithString:@"Due"];
+            return [NSString stringWithString:@" Arr"];
         } else {
-            return [self parseTimeInterval:countDown];
+            return [NSString stringWithFormat:@" %@", [self parseTimeInterval:countDown]];
         }
     }
     //no more buses available;
-    return [NSString stringWithString:@"No Service"];
+    return [NSString stringWithString:@"No more service"];
 }
 
 - (NSString*) getNextBusDirection {
@@ -73,13 +73,27 @@
     return [self getArrivalTime:0];
 }
 
+- (NSString*) getFirstArrivalActualTime {
+    if ([nextArrivalTimes_ count] > 0) {
+            return [nextArrivalTimes_ objectAtIndex:0];
+    }
+    return @"";
+}
+
 - (NSString*) getSecondArrivalTime {
     NSString* result = [self getArrivalTime:1];
     if( [result compare:[NSString stringWithString:@"No Service"]] == NSOrderedSame ) {
-        return [NSString stringWithString:@""];
+        return [NSString stringWithString:@"No more service"];
     } else {
         return result;
     }
+}
+
+- (NSString*) getSecondArrivalActualTime {
+    if ([nextArrivalTimes_ count] > 1) {
+        return [nextArrivalTimes_ objectAtIndex:1];
+    }
+    return @"";
 }
 
 - (void) initNextArrivalCountDownBaesdOnTime:(NSDate*)time {

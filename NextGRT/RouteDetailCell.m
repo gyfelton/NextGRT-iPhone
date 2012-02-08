@@ -13,7 +13,7 @@
 #define BUS_ICON_HEIGHT 50
 #define ROUTE_NUM_WIDTH 220
 #define ROUTE_NUM_HEIGHT 30
-#define FIRST_TIME_WIDTH 63
+#define FIRST_TIME_WIDTH 163
 #define FIRST_TIME_HEIGHT 30
 
 @implementation RouteDetailCell
@@ -40,7 +40,7 @@
 //        nextBusDirection_.font = [UIFont systemFontOfSize:14];
 //        [self addSubview:nextBusDirection_];
         
-        nextBusIn_  = [[UILabel alloc] initWithFrame:CGRectMake(busIcon_.bounds.origin.x + BUS_ICON_WIDTH + 10, ROUTE_NUM_HEIGHT-10, FIRST_TIME_WIDTH, FIRST_TIME_HEIGHT)];
+        nextBusIn_  = [[UILabel alloc] initWithFrame:CGRectMake(busIcon_.bounds.origin.x + BUS_ICON_WIDTH + 10, ROUTE_NUM_HEIGHT-10, 60, FIRST_TIME_HEIGHT)];
         nextBusIn_.text = @"next bus:";
         nextBusIn_.font = [UIFont systemFontOfSize:14];
         nextBusIn_.backgroundColor = [UIColor clearColor];
@@ -49,7 +49,6 @@
         firstTime_ = [[UILabel alloc] initWithFrame:CGRectMake(nextBusIn_.frame.origin.x + nextBusIn_.frame.size.width, ROUTE_NUM_HEIGHT-10, FIRST_TIME_WIDTH, FIRST_TIME_HEIGHT)];
         firstTime_.text = @"test";
         firstTime_.font = [UIFont boldSystemFontOfSize:18];
-        //firstTime_.textAlignment = UITextAlignmentCenter;
         firstTime_.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:firstTime_];
         

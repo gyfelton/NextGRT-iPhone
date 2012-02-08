@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  NextGRT
+
+  Created by Yuanfeng on 12-02-08.
+  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+*/
+
+//More
+"Show Countdown" = "以倒计时显示下一班";
+"Show Actual Time" = "以实际时间显示下一班";
+"About" = "关于";
+"More" = "更多";
+"Rate this app" = "给我们打分";
+
+"click here to resume \n locating your position" = "点击以重新载入当前位置";

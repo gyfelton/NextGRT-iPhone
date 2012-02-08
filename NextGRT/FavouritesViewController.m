@@ -10,6 +10,8 @@
 
 #import "FavouriteStopsCentralManager.h"
 
+#import "AppDelegate.h"
+
 @implementation FavouritesViewController
 
 @synthesize favStopsDict;
@@ -43,6 +45,15 @@
             _favStopsTableVC = [[BusStopBaseTableViewController alloc] initWithTableWidth:self.view.frame.size.width Height:self.view.frame.size.height Stops:_favStops];
             _favStopsTableVC.customDelegate = self;
             [self.view addSubview:_favStopsTableVC.tableView];
+            
+            _favStopsTableVC.tableView.hidden = YES;
+            CATransition *fade = [CATransition animation];
+            [fade setDuration:0.6f];
+            [fade setType:kCATransitionReveal];
+            //[fade setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+            [_favStopsTableVC.tableView.layer addAnimation:fade forKey:@"fadeAnimation"];
+            _favStopsTableVC.tableView.hidden = NO;
+            
             _favStopsTableVC.tableView.backgroundColor = UITableBackgroundColor;
             
             //now we need to register this VC as a observer to "FavStopArrayDidUpdate" notification to reload fav stops
@@ -52,8 +63,8 @@
             [_favStopsTableVC.tableView reloadData];
         }
     } else {
-        //favTableContainer_.hidden = YES;
         _favStopsTableVC.view.hidden = YES;
+        _welcomeHint.hidden = NO;
     }
 }
 
@@ -74,24 +85,44 @@
     //TODO mem management issue when it comes to ordering of the cells
     self.favStopsDict = [[FavouriteStopsCentralManager sharedInstance] getFavoriteStopDict];
     if ([self.favStopsDict count]>0) {
-        _mainTitle.hidden = YES;
-        _secTitle.hidden = YES;
-        
+        _welcomeHint.hidden = NO;
         NSMutableArray* stopIDs = [[NSMutableArray alloc] init];
         for( NSDictionary* dict in self.favStopsDict ) {
             [stopIDs addObject:[dict objectForKey:STOP_ID_KEY]];
         }
         
         [[GRTDatabaseManager sharedManager] queryStopIDs:stopIDs withDelegate:self groupByStopName:NO];
+    } else
+    {
+        _welcomeHint.hidden = NO;
+        [_favStops removeAllObjects];
+        _favStopsTableVC.stops = _favStops;
+        _favStopsTableVC.tableView.hidden = YES;
+        [_favStopsTableVC.tableView reloadData];
     }
 }
 
 #pragma mark - BarItem Target
+- (void)openMap:(UIButton*)btn
+{
+    NSString *defaultLatLong = @"43.472737,-80.541206";//UW Davis
+//    [AppDelegate sharedLocationManager] 
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?ll=%@", defaultLatLong]]];
+}
 
 - (void)initEditButton:(BOOL)animated
 {
     UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonClicked:)];
-    [self.navigationItem setLeftBarButtonItem:editItem animated:YES];
+    [self.navigationItem setLeftBarButtonItem:editItem animated:animated];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"map2"] forState:UIControlStateNormal];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 4)];
+    button.showsTouchWhenHighlighted = YES;
+    button.frame = CGRectMake(0, 0, 35, 31);
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button]; 
+    [button addTarget:self action:@selector(openMap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationItem setRightBarButtonItem:item animated:animated];
 }
 
 - (void)doneButtonClicked:(id)sender
@@ -122,6 +153,10 @@
         }
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationMiddle];
     }
+    if ([self.favStopsDict count]==0) {
+        _favStopsTableVC.tableView.hidden = YES;
+        _welcomeHint.hidden = NO;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
@@ -134,7 +169,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initEditButton:NO];
     self.view.backgroundColor = UITableBackgroundColor;
     
     self.navigationItem.leftBarButtonItem.enabled = NO;
@@ -160,6 +194,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self initEditButton:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

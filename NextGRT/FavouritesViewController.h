@@ -13,8 +13,7 @@
 
 @interface FavouritesViewController : UIViewController <GRTDatabaseManagerDelegate, MBProgressHUDDelegate, BusStopBaseTabeViewDelegate>
 {
-    IBOutlet UILabel *_mainTitle;
-    IBOutlet UITextView *_secTitle;
+    IBOutlet UIImageView *_welcomeHint;
     NSMutableArray* _favStops;
     BusStopBaseTableViewController* _favStopsTableVC;
     

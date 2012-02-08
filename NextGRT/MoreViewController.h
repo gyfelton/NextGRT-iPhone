@@ -10,5 +10,7 @@
 
 @interface MoreViewController : UITableViewController
 {
+    UISwitch *_countDownSwitch;
+    UISwitch *_actualTimeSwitch;
 }
 @end

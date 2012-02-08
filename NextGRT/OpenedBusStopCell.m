@@ -20,7 +20,7 @@
         //insert a grouped table showing detailed buses and stops
         self.clipsToBounds = YES;
         
-        detailTable_ = [[UITableView alloc] initWithFrame:CGRectMake(0, NAME_HEIGHT + EXTRA_INFO_HEIGHT + 5 + 32, self.contentView.frame.size.width, 145) style:UITableViewStyleGrouped];
+        detailTable_ = [[UITableView alloc] initWithFrame:CGRectMake(0, NAME_HEIGHT + EXTRA_INFO_HEIGHT + 32, self.contentView.frame.size.width, 145) style:UITableViewStyleGrouped];
 //        detailTable_.layer.cornerRadius = 5.0f;
         detailTable_.userInteractionEnabled = NO;
         detailTable_.scrollEnabled = NO;
@@ -28,13 +28,13 @@
         detailTable_.dataSource = self;
         detailTable_.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-        UIImage *bgImg = [UIImage imageNamed:@"route_detail_bg"];
-        bgImg = [bgImg stretchableImageWithLeftCapWidth:0 topCapHeight:16];
+        UIImage *bgImg = [UIImage imageNamed:@"route_detail_bg_shadow"];
+        bgImg = [bgImg stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         detailTable_.backgroundView = [[UIImageView alloc] initWithImage:bgImg];
         
-        UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"route_detail_arrow"]];
+        UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"route_detail_arrow_shadow"]];
         arrow.center = CGPointMake(self.contentView.center.x, 0);
-        arrow.frame = CGRectMake(arrow.frame.origin.x, detailTable_.frame.origin.y-arrow.frame.size.height*0.8, arrow.frame.size.width*0.8, arrow.frame.size.height*0.8);
+        arrow.frame = CGRectMake(arrow.frame.origin.x, detailTable_.frame.origin.y-arrow.frame.size.height, arrow.frame.size.width, arrow.frame.size.height);
         [self.contentView addSubview:arrow];
         
         //[self addSubview:distanceFromCurrPosition_];
@@ -113,6 +113,49 @@
     return [stop_.busRoutes count];//>3?3:[stop_.busRoutes count];
 }
 
+- (NSString*)generateTextForTime:(NSInteger)index busRoute:(BusRoute*)route
+{
+    BOOL showCountDown = [[[[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULT_KEY_COUNTDOWN] objectForKey:@"bool"] boolValue];
+    BOOL showActualTime = [[[[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULT_KEY_ACTUAL_TIME] objectForKey:@"bool"] boolValue];
+    if (!showActualTime) {
+        showCountDown = YES;
+    }
+    
+    NSString *actualTimeStr = nil;
+    if (showActualTime) {
+        if (index==1) {
+            actualTimeStr = [route getFirstArrivalActualTime];
+        } else
+        {
+            actualTimeStr = [route getSecondArrivalActualTime];
+        }
+    }
+    if (!actualTimeStr || [actualTimeStr isEqualToString:@""]) {
+        showActualTime = NO;
+        showCountDown = YES;
+        actualTimeStr = nil;
+    }
+    
+    NSString *countDownStr = nil;
+    if (index==1) {
+        countDownStr = [route getFirstArrivalTime];
+    } else
+    {
+        countDownStr = [route getSecondArrivalTime];
+    }
+    
+    NSString *formattedStr = nil;
+    if (showCountDown && !showActualTime) {
+        formattedStr = countDownStr;
+    } else if (showCountDown && showActualTime) {
+        formattedStr = [NSString stringWithFormat:@"%@ (%@)", countDownStr, actualTimeStr];
+    } else
+    {
+        formattedStr = actualTimeStr;
+    }
+    return formattedStr;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [detailTable_ dequeueReusableCellWithIdentifier:@"detailCell"];
     if( !cell ) {
@@ -121,8 +164,8 @@
     BusRoute* route = [stop_.busRoutes objectAtIndex:[indexPath row]];
     
     ((RouteDetailCell*)cell).routeNumber.text = [NSString stringWithFormat:@"%@ %@", route.fullRouteNumber, [route getNextBusDirection]];
-    ((RouteDetailCell*)cell).firstTime.text = [route getFirstArrivalTime];
-    ((RouteDetailCell*)cell).secondTime.text = [route getSecondArrivalTime];
+    ((RouteDetailCell*)cell).firstTime.text = [self generateTextForTime:1 busRoute:route];//[route getFirstArrivalTime];
+    ((RouteDetailCell*)cell).secondTime.text = [self generateTextForTime:2 busRoute:route];//[route getSecondArrivalTime];
     //((RouteDetailCell*)cell).nextBusDirection.text = [NSString stringWithFormat:@"To: %@", [route getNextBusDirection]];
     return cell;
 }

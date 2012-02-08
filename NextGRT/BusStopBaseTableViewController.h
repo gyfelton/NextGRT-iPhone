@@ -10,7 +10,7 @@
 #import "PullToRefreshTableViewController.h"
 
 #define UNOPENED_CELL_HEIGHT 65
-#define OPENED_CELL_HEIGHT_BASE 98
+#define OPENED_CELL_HEIGHT_BASE 91
 #define OPENED_CELL_INTERNAL_CELL_HEIGHT 65
 
 @class Stop;
