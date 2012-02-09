@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
-+ (id) sharedLocationManager;
++ (CLLocationManager*) sharedLocationManager;
 
 @property BOOL locationServiceBecomeActive;
 @property (strong, nonatomic) UIWindow *window;

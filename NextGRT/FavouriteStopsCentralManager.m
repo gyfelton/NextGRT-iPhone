@@ -41,7 +41,8 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
         NSString* str = [dict objectForKey:STOP_ID_KEY];
         if( [str compare:[stop stopID]] == NSOrderedSame ) {
             isFav = YES;
-            NSLog(@"%@ is a fav stop!", [stop stopID]);
+            //for debug
+            //NSLog(@"%@ is a fav stop!", [stop stopID]);
             break;
         }
     }
@@ -75,11 +76,14 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
     }
 }
 
-- (BOOL) swapStopAtIndex:(NSInteger)sourceIndex withIndex:(NSInteger)destIndex
+- (BOOL) moveStopAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destIndex
 {
     if ((sourceIndex < [_favStopDicts count]) && (destIndex < [_favStopDicts count])) {
-        [_favStopDicts exchangeObjectAtIndex:sourceIndex withObjectAtIndex:destIndex];
-        //[self saveFavStops];
+        NSMutableDictionary *stopDict = [_favStopDicts objectAtIndex:sourceIndex];
+        [_favStopDicts removeObjectAtIndex:sourceIndex];
+        [_favStopDicts insertObject:stopDict atIndex:destIndex];
+        [self saveFavStops];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
         return YES;
     } else
     {

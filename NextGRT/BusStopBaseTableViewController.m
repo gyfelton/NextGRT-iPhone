@@ -16,7 +16,7 @@
 
 @implementation BusStopBaseTableViewController
 
-@synthesize stops, customDelegate;
+@synthesize stops, customDelegate, forFavStopVC;
 
 #pragma mark - View lifecycle
 
@@ -28,6 +28,7 @@
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.tableView.showsVerticalScrollIndicator = NO;
+        self.forFavStopVC = NO;
         self.stops = s;
     }
     
@@ -141,9 +142,13 @@
         [((OpenedBusStopCell*)cell) initCellInfoWithStop:aStop];
     }
     
+    if (self.forFavStopVC) {
+        ((BusStopCellBaseClass*)cell).cellType = cellForFavVC;
+    }
+
     cell.showsReorderControl = YES;
     cell.shouldIndentWhileEditing = NO;
-    
+
     assert(cell);
     return cell;
 }

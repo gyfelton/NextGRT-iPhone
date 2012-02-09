@@ -50,7 +50,7 @@
 "Never Updated" = "从未更新";
 "Last Updated: %@" = "上一次更新: %@";
 "Release for nearby buses..." = "松开以查找附近车站";
-"Pull down for nearby buses..." = "拉下开始查找附近车站";
+"Pull down for nearby buses..." = "下拉开始查找附近车站";
 "Searching..." = "搜索中...";
 "Up-to-date." = "以更新";
 

@@ -644,10 +644,14 @@
 		FEACF06614C027F8003CC962 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
 				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "77B80C28-0F72-488B-9461-3C4B42002288";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "734F38F8-0EA6-4D97-98E2-8364B9CD312D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

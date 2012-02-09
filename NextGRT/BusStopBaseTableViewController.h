@@ -28,6 +28,7 @@
     NSIndexPath* selectedCellIndexPath_;
 }
 
+@property BOOL forFavStopVC;
 @property (nonatomic, retain) NSMutableArray* stops;
 @property (nonatomic, assign) id<BusStopBaseTabeViewDelegate> customDelegate;
 

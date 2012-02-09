@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
+
 #import "FavouritesViewController.h"
 
 #import "FavouriteStopsCentralManager.h"
@@ -43,6 +45,7 @@
         self.navigationItem.leftBarButtonItem.enabled = YES;
         if( !_favStopsTableVC ) {
             _favStopsTableVC = [[BusStopBaseTableViewController alloc] initWithTableWidth:self.view.frame.size.width Height:self.view.frame.size.height Stops:_favStops];
+            _favStopsTableVC.forFavStopVC = YES;
             _favStopsTableVC.customDelegate = self;
             [self.view addSubview:_favStopsTableVC.tableView];
             
@@ -70,7 +73,7 @@
 
 - (void) busRoutesForAllStopsReceived
 {
-    [self performSelectorOnMainThread:@selector(updateView) withObject:nil waitUntilDone:NO];
+    [self updateView];
 }
 
 - (void) stopInfoArrayReceived:(NSMutableArray*)stops {
@@ -85,7 +88,8 @@
     //TODO mem management issue when it comes to ordering of the cells
     self.favStopsDict = [[FavouriteStopsCentralManager sharedInstance] getFavoriteStopDict];
     if ([self.favStopsDict count]>0) {
-        _welcomeHint.hidden = NO;
+        _welcomeHint.hidden = YES;
+        _favStopsTableVC.tableView.hidden = NO;
         NSMutableArray* stopIDs = [[NSMutableArray alloc] init];
         for( NSDictionary* dict in self.favStopsDict ) {
             [stopIDs addObject:[dict objectForKey:STOP_ID_KEY]];
@@ -106,23 +110,26 @@
 - (void)openMap:(UIButton*)btn
 {
     NSString *defaultLatLong = @"43.472737,-80.541206";//UW Davis
-//    [AppDelegate sharedLocationManager] 
+    CLLocation *currLocation = [AppDelegate sharedLocationManager].location;
+    if (currLocation) {
+        defaultLatLong = [NSString stringWithFormat:@"%f, %f", currLocation.coordinate.latitude, currLocation.coordinate.longitude];
+    }
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?ll=%@", defaultLatLong]]];
 }
 
 - (void)initEditButton:(BOOL)animated
 {
     UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonClicked:)];
-    [self.navigationItem setLeftBarButtonItem:editItem animated:animated];
+    [self.navigationItem setRightBarButtonItem:editItem animated:animated];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:[UIImage imageNamed:@"map2"] forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 4)];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(1, 4, 0, 0)];
     button.showsTouchWhenHighlighted = YES;
-    button.frame = CGRectMake(0, 0, 35, 31);
+    button.frame = CGRectMake(0, 0, 35, 32);
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button]; 
     [button addTarget:self action:@selector(openMap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationItem setRightBarButtonItem:item animated:animated];
+    [self.navigationItem setLeftBarButtonItem:item animated:animated];
 }
 
 - (void)doneButtonClicked:(id)sender
@@ -136,7 +143,7 @@
 {
     if (_favStopsTableVC) {
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonClicked:)];
-        [self.navigationItem setLeftBarButtonItem:doneButton animated:YES];
+        [self.navigationItem setRightBarButtonItem:doneButton animated:YES];
         [_favStopsTableVC foldAllStops];
         [_favStopsTableVC setEditing:YES animated:YES];
     }
@@ -146,22 +153,13 @@
 - (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        if ([[FavouriteStopsCentralManager sharedInstance] deleteFavoriteStopAtIndex:[indexPath row]] )
-        {
-            //need refractor!
-            _favStopsTableVC.stops = self.favStopsDict; //should point directly to sharedManager instance
-        }
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationMiddle];
-    }
-    if ([self.favStopsDict count]==0) {
-        _favStopsTableVC.tableView.hidden = YES;
-        _welcomeHint.hidden = NO;
+        [[FavouriteStopsCentralManager sharedInstance] deleteFavoriteStopAtIndex:[indexPath row]];
     }
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
-    [[FavouriteStopsCentralManager sharedInstance] swapStopAtIndex:sourceIndexPath.row withIndex:destinationIndexPath.row];
+    [[FavouriteStopsCentralManager sharedInstance] moveStopAtIndex:sourceIndexPath.row toIndex:destinationIndexPath.row];
 }
 
 #pragma mark - View lifecycle
@@ -171,7 +169,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = UITableBackgroundColor;
     
-    self.navigationItem.leftBarButtonItem.enabled = NO;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 	// Do any additional setup after loading the view, typically from a nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFavStopTable) name:kFavStopArrayDidUpdate object:nil];
     //now load the list of fav stops
