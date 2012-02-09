@@ -99,14 +99,14 @@
             //otherwise, still put original stop name
             //TODO refractor this method(duplication)
             name_.text = stop.stopName;
-            extraInfo_.text = [NSString stringWithFormat:@"Stop Number: %@", stop.stopID];
+            extraInfo_.text = [NSString stringWithFormat:local(@"Stop Number: %@"), stop.stopID];
         }
     } else {
         isStopFav_ = NO;
         fav_.selected = NO;
         
         name_.text = stop.stopName;
-        extraInfo_.text = [NSString stringWithFormat:@"Stop Number: %@", stop.stopID];
+        extraInfo_.text = [NSString stringWithFormat:local(@"Stop Number: %@"), stop.stopID];
     }
 }
 
@@ -122,7 +122,7 @@
     //numRoutesToDisplay = numRoutesToDisplay>=3 ? 3:numRoutesToDisplay;
     
     if (numRoutesToDisplay != 0) {
-        availableRoutes_.text = @"Bus routes: ";
+        availableRoutes_.text = local(@"Bus routes: ");
         for (int i=0; i<numRoutesToDisplay; i++) {
             //        if( i != 2 ) {
             //            UILabel* label = [routesAndTimes_ objectAtIndex:i];
@@ -142,7 +142,7 @@
             availableRoutes_.text = [NSString stringWithFormat:@"%@%@%@ ", availableRoutes_.text, route.shortRouteNumber, comma];
         }
     } else {
-        availableRoutes_.text = @"No bus route available.";
+        availableRoutes_.text = local(@"No bus route available.");
     }
 }
 
@@ -152,10 +152,10 @@
         if( !isStopFav_ ) {
             [self toggleFavButtonStatus];
             
-            alert_ = [[UIAlertView alloc] initWithTitle:@"Favourite Stop Added!" 
-                                                message:@"You can assign a nickname:\n\n\n" 
+            alert_ = [[UIAlertView alloc] initWithTitle:local(@"Favourite Stop Added!")
+                                                message:local(@"You can assign a nickname:\n\n\n")
                                                delegate:self 
-                                      cancelButtonTitle:@"Skip" otherButtonTitles:nil];
+                                      cancelButtonTitle:local(@"Skip") otherButtonTitles:local(@"Done"), nil];
             alert_.tag = ADD_FAV_ALERT_TAG;
             
             customNameField_ = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,30)];
@@ -169,17 +169,17 @@
             customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
             customNameField_.delegate = self;
             [customNameField_ setSelected:YES];
-            customNameField_.placeholder = @"enter the nickname here";
+            customNameField_.placeholder = local(@"enter the nickname here");
             
             [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
             [alert_ show];
             
             [alert_ addSubview:customNameField_];
         } else {
-            alert_ = [[UIAlertView alloc] initWithTitle:@"Remove Favourite Stop" 
-                                                message:@"Are you sure to do so?" 
+            alert_ = [[UIAlertView alloc] initWithTitle:local(@"Remove Favourite Stop")
+                                                message:local(@"Are you sure to do so?")
                                                delegate:self 
-                                      cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+                                      cancelButtonTitle:local(@"Cancel") otherButtonTitles:local(@"Confirm"), nil];
             alert_.tag = REMOVE_FAV_ALERT_TAG;
             
             [alert_ show];
@@ -192,7 +192,7 @@
     if( [[textField text] length] != 0 ) {
         [alert_ dismissWithClickedButtonIndex:0 animated:YES];
     } else {
-        textField.placeholder = @"Please enter a name!";
+        textField.placeholder = local(@"Please enter a name!");
     }
     return YES;
 }
@@ -211,7 +211,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if( alertView.tag == ADD_FAV_ALERT_TAG ) {
+    if( alertView.tag == ADD_FAV_ALERT_TAG && buttonIndex == 1) {
         //save the stop to userDefault
         [[FavouriteStopsCentralManager sharedInstance] addFavoriteStop:stop_ Name:[customNameField_ text]];
         

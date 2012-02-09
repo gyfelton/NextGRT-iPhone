@@ -39,12 +39,9 @@
 }
 
 - (void) startLoadingGeoLocation {
-    _hud.labelText = @"Searching neayby stops...";
-    _hud.detailsLabelText = @"You can also search bus stops above";
+    _hud.labelText = local(@"Searching neayby stops...");
+    _hud.detailsLabelText = local(@"You can also search bus stops above");
     [_hud show:YES];
-    
-    //the stops we have later will be nearby stops, so load more button is needed
-    _areNearbyStops = YES;
     
     //start updating gps location
     _currSearchRadiusFactor = 1;
@@ -59,13 +56,16 @@
     [manager stopUpdatingLocation];
     
     //if location change is significant
-    if (!oldLocation || [newLocation distanceFromLocation:oldLocation]>100.0f) {
+    if (!_areNearbyStops || !oldLocation || [newLocation distanceFromLocation:oldLocation]>100.0f) {
         _currLocation = [newLocation copy];
+        
+        //the stops we have later will be nearby stops, so load more button is needed
+        _areNearbyStops = YES;
         
         [self performSelector:@selector(queryStops:) withObject:newLocation afterDelay:0];
         
         _hud.mode = MBProgressHUDModeIndeterminate;
-        _hud.labelText = @"Processing...";
+        _hud.labelText = local(@"Processing...");
         _hud.detailsLabelText = @"";
 //        _hud.dimBackground = YES;
         if (_hud.isHidden) {
@@ -84,7 +84,7 @@
 //    _mainTitle.text = @"Cannot get your current location.";
 //    _loadingIndicator.hidden = YES;
     _hintButton.hidden = NO;
-    [_hintButton setTitle:@"Fail to locate your position\n click here to try again." forState:UIControlStateNormal];
+    [_hintButton setTitle:local(@"Fail to locate your position\n click here to try again.") forState:UIControlStateNormal];
     [_hud hide:YES];
     //for debug purpose only
     //    NSLog(@"ATTENTION: geo location manual override!");
@@ -191,7 +191,7 @@
     
     //update main title, tips and show switch
     _hintButton.hidden = NO;
-    [_hintButton setTitle:@"click here to resume \n locating your position" forState:UIControlStateNormal];
+    [_hintButton setTitle:local(@"click here to resume \n locating your position") forState:UIControlStateNormal];
 //    _mainTitle.text = @"Location updating stopped";
 //    _loadingIndicator.hidden = YES;
 //    _quickSearch.text = @"Slide to start updating again:";
@@ -252,17 +252,17 @@
             cell.selectionStyle = UITableViewCellSelectionStyleBlue;
             
         } else if (_searchResultsReturned ) {
-            cell.textLabel.text = @"No result found";
+            cell.textLabel.text = local(@"No result found");
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         } else if (_searchTextReachCriteria) {
-            cell.textLabel.text = @"Loading...";
+            cell.textLabel.text = local(@"Loading...");
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         } else {
-            cell.textLabel.text = @"Type a 4-digit Bus Stop Number";
+            cell.textLabel.text = local(@"Type a 4-digit Bus Stop Number");
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             

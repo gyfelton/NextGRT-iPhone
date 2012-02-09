@@ -17,7 +17,7 @@
     if (self) {
         // Custom initialization
     }
-    [self setTitle:@"About"]; 
+    [self setTitle:local(@"About")]; 
     return self;
 }
 

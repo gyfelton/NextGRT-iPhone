@@ -53,13 +53,13 @@
             [nextArrivalDirection_ removeObjectAtIndex:index];
             [nextArrivalTimes_ removeObjectAtIndex:index];
         } else if( countDown < 30 ) {
-            return [NSString stringWithString:@" Arr"];
+            return [NSString stringWithString:local(@"Arriving")];
         } else {
-            return [NSString stringWithFormat:@" %@", [self parseTimeInterval:countDown]];
+            return [self parseTimeInterval:countDown];
         }
     }
     //no more buses available;
-    return [NSString stringWithString:@"No more service"];
+    return [NSString stringWithString:local(@"No more service")];
 }
 
 - (NSString*) getNextBusDirection {
@@ -82,8 +82,8 @@
 
 - (NSString*) getSecondArrivalTime {
     NSString* result = [self getArrivalTime:1];
-    if( [result compare:[NSString stringWithString:@"No Service"]] == NSOrderedSame ) {
-        return [NSString stringWithString:@"No more service"];
+    if( [result compare:[NSString stringWithString:@"No service"]] == NSOrderedSame ) {
+        return [NSString stringWithString:local(@"No more service")];
     } else {
         return result;
     }
@@ -122,8 +122,7 @@
                 offset = hour % 23;
                 hour = 23; //adjust time to 23:min:sec, then add the missing hours back later
                 adjustedTime = [NSString stringWithFormat:@"%d:%@:%@", hour, [timeComponents objectAtIndex:1], [timeComponents objectAtIndex:2]];
-                //adjust currDateString by adding number of days indicated in offset
-                currDateString = [dateFormat stringFromDate:[time dateByAddingTimeInterval:offset*3600]];
+                currDateString = [dateFormat stringFromDate:time];
             }
         }
         
@@ -133,6 +132,7 @@
         NSDate* nextArrivalTimeInNSDate = [inputFormatter dateFromString:combined];
         
         if( nextArrivalTimeInNSDate ) {
+            //countdown will be negative if next arrival is like 24:14:00
             NSTimeInterval countDown = [nextArrivalTimeInNSDate timeIntervalSinceDate:time];
             countDown += offset * 3600; //add the missing hours back to countDown
             CountDown* c = [[CountDown alloc] initWithTimeInterval:countDown];
@@ -156,10 +156,10 @@
     }
     NSString* result;
     if( hour != 0 ) {
-        result = [[NSString alloc] initWithFormat:@"%dh%02dm", hour, min]; //%02dh%02dm
+        result = [[NSString alloc] initWithFormat:@"%d%@%02d%@", hour, local(@"h"), min, local(@"m")]; //%02dh%02dm
     } else {
         //just output hour
-        result = [[NSString alloc] initWithFormat:@"%dmin", min];
+        result = [[NSString alloc] initWithFormat:@"%d%@", min, local(@"min")];
     }
     return result;
 }

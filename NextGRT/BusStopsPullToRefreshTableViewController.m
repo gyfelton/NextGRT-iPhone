@@ -108,9 +108,9 @@
         }
         
         if( [[super stops] count] == 0 ) { //if there is no stop found, ask user to expand search radius
-            cell.textLabel.text = @"No stop nearby. Click to expand search radius.";
+            cell.textLabel.text = local(@"No stop nearby. Click to expand search radius.");
         } else {
-            cell.textLabel.text = @"Load more stops...";
+            cell.textLabel.text = local(@"Load more stops...");
         }
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.textAlignment = UITextAlignmentCenter;
@@ -168,7 +168,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //first check whether it is the need more button
     if( [indexPath row] >= [[super stops] count] ) {
-        [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text = @"Loading...";
+        [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text = local(@"Loading...");
         //TODO what the heck? if not use this UI will freeze....
         [self performSelector:@selector(requestForMoreStops) withObject:nil afterDelay:0.01];
     } else {

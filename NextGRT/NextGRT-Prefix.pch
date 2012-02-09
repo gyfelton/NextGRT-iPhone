@@ -14,7 +14,7 @@
 #endif
 
 //rename method:
-#define _(a) NSLocalizedString(a,a)
+#define local(a) NSLocalizedString(a,a)
 
 //customized strings:
 

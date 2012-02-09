@@ -16,10 +16,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = _(@"More");
+        self.title = local(@"More");
         //        self.tabBarItem.image = [UIImage imageNamed:@"first"];
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:3];
-        self.title = _(@"More");
+        self.title = local(@"More");
     }
     return self;
 }
@@ -51,7 +51,7 @@
 {
     [super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
-    self.clearsSelectionOnViewWillAppear = NO;
+    self.clearsSelectionOnViewWillAppear = YES;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -118,7 +118,7 @@
         case 0:
         {
             cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.textLabel.text = _(@"Show Countdown");
+            cell.textLabel.text = local(@"Show Countdown");
             _countDownSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
             [_countDownSwitch addTarget:self action:@selector(didToggleCountdownSwitch:) forControlEvents:UIControlEventValueChanged];
             
@@ -145,7 +145,7 @@
         case 1:
         {
             cell.textLabel.adjustsFontSizeToFitWidth = YES;
-            cell.textLabel.text = _(@"Show Actual Time");
+            cell.textLabel.text = local(@"Show Actual Time");
             _actualTimeSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
             [_actualTimeSwitch addTarget:self action:@selector(didToggleActualTimeSwitch:) forControlEvents:UIControlEventValueChanged];
             cell.accessoryView = _actualTimeSwitch;
@@ -162,13 +162,13 @@
             break;
         case 2:
         {
-            cell.textLabel.text = _(@"About");
+            cell.textLabel.text = local(@"About");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
             break;
         case 3:
         {
-            cell.textLabel.text = _(@"Rate this app");
+            cell.textLabel.text = local(@"Rate this app");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         default:

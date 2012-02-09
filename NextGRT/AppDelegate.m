@@ -38,9 +38,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSArray *arr = [exception callStackSymbols];
     NSString *reason = [exception reason];
     NSString *name = [exception name];
-    NSString *urlStr = [NSString stringWithFormat:@"mailto:gyfelton@gmail.com?subject=NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)<br>"
+    NSString *intro = local(@"NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)");
+    
+    NSString *urlStr = [NSString stringWithFormat:@"mailto:gyfelton@gmail.com?subject=%@<br>"
                         "Detail info:<br>%@<br>--------------------------<br>%@<br>---------------------<br>%@", 
-                        name,reason,[arr componentsJoinedByString:@"<br>"]];
+                        intro,name,reason,[arr componentsJoinedByString:@"<br>"]];
+    
     NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [[UIApplication sharedApplication] openURL:url];
 }

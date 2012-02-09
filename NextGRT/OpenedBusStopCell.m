@@ -47,7 +47,7 @@
     [super refreshRoutesInCellWithSeconds:seconds];
     int distance = [stop_ distanceFromCurrPositionInMeter];
     if( distance != -1 ) {
-        availableRoutes_.text = [NSString stringWithFormat:@"Distance from here: %dm", distance];
+        availableRoutes_.text = [NSString stringWithFormat:local(@"Distance from here: %dm"), distance];
     } else {
         //        availableRoutes_.text = @"";
     }
