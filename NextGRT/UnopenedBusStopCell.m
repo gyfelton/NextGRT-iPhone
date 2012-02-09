@@ -34,7 +34,7 @@
 }
 
 - (void)initCellInfoWithStop:(Stop*)stop{
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [super initCellInfoWithStop:stop];
     

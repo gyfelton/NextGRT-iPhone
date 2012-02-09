@@ -11,7 +11,8 @@
 
 #import "Stop.h"
 
-#define INSET_LEFT 30
+#define INSET_LEFT 13
+#define INSET_RIGHT 30
 #define NAME_WIDTH 280
 #define NAME_HEIGHT 22
 #define EXTRA_INFO_WIDTH 280

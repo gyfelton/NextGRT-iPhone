@@ -11,13 +11,6 @@
 #import "BusRoute.h"
 #import "FavouriteStopsCentralManager.h"
 
-#define INSET_LEFT 30
-#define NAME_WIDTH 280
-#define EXTRA_INFO_WIDTH 280
-#define NAME_FONT @"Helvetica"
-#define NAME_FONT_SIZE 20.0
-#define EXTRA_INFO_FONT_SIZE 14.0
-
 #define BUTTON_SIZE_WIDTH 280
 #define BUTTON_SIZE_HEIGHT 15
 
@@ -44,8 +37,9 @@
         extraInfo_.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:extraInfo_];
         
-        fav_ = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, INSET_LEFT, 80)];
+        fav_ = [[UIButton alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width-INSET_RIGHT-10, 0, INSET_RIGHT, 80)];
         fav_.center = CGPointMake(fav_.center.x, self.contentView.center.y);
+        fav_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         fav_.showsTouchWhenHighlighted = YES;
         [fav_ setImage:[UIImage imageNamed:@"star_empty_big"] forState:UIControlStateNormal];
         [fav_ setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateHighlighted];
@@ -64,7 +58,6 @@
         cellBg = [cellBg stretchableImageWithLeftCapWidth:0 topCapHeight:1];
         self.backgroundView = [[UIImageView alloc] initWithImage:cellBg];
         
-        //no use for now
         cellType = cellForSearchVC; //by default
     }
     return self;
@@ -73,6 +66,9 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    if (cellType == cellForFavVC) {
+        fav_.userInteractionEnabled = NO;
+    }
      fav_.center = CGPointMake(fav_.center.x, 32); 
 }
 
