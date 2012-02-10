@@ -26,6 +26,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         name_ = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, 2, NAME_WIDTH, NAME_HEIGHT)];
+        name_.shadowOffset = CGSizeMake(0, 1);
+        name_.shadowColor = [UIColor whiteColor];
         name_.backgroundColor = [UIColor clearColor];
         name_.font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
         [self.contentView addSubview:name_];
@@ -52,6 +54,8 @@
         availableRoutes_.backgroundColor = [UIColor clearColor];
         availableRoutes_.textAlignment = UITextAlignmentLeft;
         availableRoutes_.text = @"";
+        availableRoutes_.shadowOffset = CGSizeMake(0, 1);
+        availableRoutes_.shadowColor = [UIColor whiteColor];
         [self.contentView addSubview:availableRoutes_];
         
         UIImage *cellBg = [UIImage imageNamed:@"cell_bg"];

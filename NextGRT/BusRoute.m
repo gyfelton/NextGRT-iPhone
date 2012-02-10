@@ -21,7 +21,13 @@
         self.fullRouteNumber = @"";
     } else {
         self.shortRouteNumber = routeNumber;
-        self.fullRouteNumber = routeNumber;
+        if ([routeNumber compare:@"7"] == NSOrderedSame || [routeNumber compare:@"8"] == NSOrderedSame) { //add more stop here for special cases
+            self.fullRouteNumber = routeNumber;
+        } else
+        {
+            //add a space to last number to separate route number and description, and iXps will not have a space at the front
+            self.fullRouteNumber = [routeNumber stringByAppendingString:@" "];
+        }
     }
     
     self.routeID = routeID;
@@ -103,7 +109,6 @@
     [dateFormat setDateFormat:@"yyyy-MM-dd"];
     NSString* currDateString = [dateFormat stringFromDate:time];
     
-    //combination of currDateString and nextArrivalTime TODO: how abt time that is tmr?
     NSDateFormatter* inputFormatter = [[NSDateFormatter alloc] init];
     [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"]; 
     

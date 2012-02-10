@@ -11,7 +11,7 @@
 #define BUS_ICON_LEFT_OFFSET 6
 #define BUS_ICON_WIDTH 50
 #define BUS_ICON_HEIGHT 50
-#define ROUTE_NUM_WIDTH 220
+#define ROUTE_NUM_WIDTH 230
 #define ROUTE_NUM_HEIGHT 30
 #define FIRST_TIME_WIDTH 163
 #define FIRST_TIME_HEIGHT 30
@@ -29,10 +29,11 @@
         busIcon_.image = [UIImage imageNamed:@"btnBus_64x64"];
         [self.contentView addSubview:busIcon_];
         
-        routeNumber_ = [[UILabel alloc] initWithFrame:CGRectMake( busIcon_.bounds.origin.x + BUS_ICON_WIDTH + 10, 0, ROUTE_NUM_WIDTH, ROUTE_NUM_HEIGHT)];
+        routeNumber_ = [[MarqueeLabel alloc] initWithFrame:CGRectMake( busIcon_.bounds.origin.x + BUS_ICON_WIDTH + 8, 4, ROUTE_NUM_WIDTH, ROUTE_NUM_HEIGHT) andSpeed:3 andBuffer:3.0f];
+        routeNumber_.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
         routeNumber_.text = @"12";
         routeNumber_.textAlignment = UITextAlignmentLeft;
-        //routeNumber_.font = [UIFont boldSystemFontOfSize:18];
+        routeNumber_.font = [UIFont boldSystemFontOfSize:18];
         routeNumber_.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:routeNumber_];
         
@@ -65,6 +66,15 @@
         secondTime_.font = [UIFont systemFontOfSize:14];
         secondTime_.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:secondTime_];
+        
+        firstTime_.shadowOffset = CGSizeMake(0, 1);
+        firstTime_.shadowColor = [UIColor whiteColor];
+//        secondTime_.shadowOffset = CGSizeMake(0, 1);
+//        secondTime_.shadowColor = [UIColor whiteColor];
+//        _subsequentBusIn.shadowOffset = CGSizeMake(0, 1);
+//        _subsequentBusIn.shadowColor = [UIColor whiteColor];
+        routeNumber_.shadowOffset = CGSizeMake(0, 1);
+        routeNumber_.shadowColor = [UIColor whiteColor];
     }
     return self;
 }

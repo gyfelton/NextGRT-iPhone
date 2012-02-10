@@ -163,7 +163,7 @@
     }
     BusRoute* route = [stop_.busRoutes objectAtIndex:[indexPath row]];
     
-    ((RouteDetailCell*)cell).routeNumber.text = [NSString stringWithFormat:@"%@ %@", route.fullRouteNumber, [route getNextBusDirection]];
+    ((RouteDetailCell*)cell).routeNumber.text = [NSString stringWithFormat:@"%@%@", route.fullRouteNumber, [route getNextBusDirection]];
     ((RouteDetailCell*)cell).firstTime.text = [self generateTextForTime:1 busRoute:route];//[route getFirstArrivalTime];
     ((RouteDetailCell*)cell).secondTime.text = [self generateTextForTime:2 busRoute:route];//[route getSecondArrivalTime];
     //((RouteDetailCell*)cell).nextBusDirection.text = [NSString stringWithFormat:@"To: %@", [route getNextBusDirection]];

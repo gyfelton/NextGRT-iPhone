@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FE017AE214E21555006C6DA3 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = FE017AE114E21554006C6DA3 /* map.png */; };
 		FE017AE414E21603006C6DA3 /* map2.png in Resources */ = {isa = PBXBuildFile; fileRef = FE017AE314E21603006C6DA3 /* map2.png */; };
+		FE12D57414E4FB1F00AAA725 /* MarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FE12D57314E4FB1F00AAA725 /* MarqueeLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FE1E6A6814CA772100730B54 /* AboutScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1E6A6714CA772100730B54 /* AboutScreenViewController.m */; };
 		FE1E6A6D14CA776200730B54 /* AboutScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE1E6A6F14CA776200730B54 /* AboutScreenViewController.xib */; };
 		FE22D0BD14C6888000429E91 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = FE22D0B714C6888000429E91 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -75,6 +76,8 @@
 /* Begin PBXFileReference section */
 		FE017AE114E21554006C6DA3 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		FE017AE314E21603006C6DA3 /* map2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map2.png; sourceTree = "<group>"; };
+		FE12D57214E4FB1E00AAA725 /* MarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarqueeLabel.h; sourceTree = "<group>"; };
+		FE12D57314E4FB1F00AAA725 /* MarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarqueeLabel.m; sourceTree = "<group>"; };
 		FE1E6A6614CA772100730B54 /* AboutScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutScreenViewController.h; sourceTree = "<group>"; };
 		FE1E6A6714CA772100730B54 /* AboutScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutScreenViewController.m; sourceTree = "<group>"; };
 		FE1E6A6E14CA776200730B54 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/AboutScreenViewController.xib; sourceTree = "<group>"; };
@@ -292,6 +295,8 @@
 		FEACF04314C027F8003CC962 /* NextGRT */ = {
 			isa = PBXGroup;
 			children = (
+				FE12D57214E4FB1E00AAA725 /* MarqueeLabel.h */,
+				FE12D57314E4FB1F00AAA725 /* MarqueeLabel.m */,
 				FE23BD0F14C96CD5009154C0 /* MBProgressHUD */,
 				FE22D0B514C6888000429E91 /* FMDB */,
 				FEACF09214C08F27003CC962 /* EGOTableViewController */,
@@ -527,6 +532,7 @@
 				FE22D0C014C6888000429E91 /* FMResultSet.m in Sources */,
 				FE23BD1214C96CE5009154C0 /* MBProgressHUD.m in Sources */,
 				FE1E6A6814CA772100730B54 /* AboutScreenViewController.m in Sources */,
+				FE12D57414E4FB1F00AAA725 /* MarqueeLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

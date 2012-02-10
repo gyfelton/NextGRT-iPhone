@@ -28,6 +28,7 @@
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.tableView.showsVerticalScrollIndicator = NO;
+        self.tableView.allowsSelectionDuringEditing = YES;
         self.forFavStopVC = NO;
         self.stops = s;
     }
@@ -111,7 +112,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //refresh timer if needed
-    //TODO need to exe this after table finish loading
     UITableViewCell* cell = nil;
     if( !gotTimer ) {
         timer_ = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_IN_SECONDS target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
@@ -157,38 +157,43 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //strongly check whether selectedCellIndexPath is valid or not
-    if( ![self.tableView cellForRowAtIndexPath:selectedCellIndexPath_] ) {
-        selectedCellIndexPath_ = nil;
-    }
-    
-    NSMutableArray *indexPathsToReload = [[NSMutableArray alloc] init];
-    
-    if( selectedCellIndexPath_ && [selectedCellIndexPath_ compare:indexPath] == NSOrderedSame ) {
-        selectedCellIndexPath_ = nil;
-        //TODO animation not nice enough
-    } else if( selectedCellIndexPath_ ) {
-        NSIndexPath* temp = [selectedCellIndexPath_ copy];
-        selectedCellIndexPath_ = nil;
-        [indexPathsToReload addObject:temp];
-        selectedCellIndexPath_ = [indexPath copy]; 
-    } else {
-        selectedCellIndexPath_ = [indexPath copy];
-    }
-
-    [self.tableView beginUpdates];
-    //ready to animate the selected row (expand or shrink)
-    [indexPathsToReload addObject:indexPath];
-    [self.tableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
-    
-    if( selectedCellIndexPath_ ) {
-        //this one only scroll if needed
-        //TODO bug: sometimes this scrolling does not work as expected
-        [self.tableView scrollToRowAtIndexPath:selectedCellIndexPath_ atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-//        [self.tableView scrollRectToVisible:[[self.tableView cellForRowAtIndexPath:selectedCellIndexPath_] frame] animated:YES];
-        //this one always scroll the row to the top, very irritating
-        //[self.tableView scrollToRowAtIndexPath: selectedCellIndexPath_ atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    if (!tableView.isEditing) {
+        //strongly check whether selectedCellIndexPath is valid or not
+        if( ![tableView cellForRowAtIndexPath:selectedCellIndexPath_] ) {
+            selectedCellIndexPath_ = nil;
+        }
+        
+        NSMutableArray *indexPathsToReload = [[NSMutableArray alloc] init];
+        
+        if( selectedCellIndexPath_ && [selectedCellIndexPath_ compare:indexPath] == NSOrderedSame ) {
+            selectedCellIndexPath_ = nil;
+        } else if( selectedCellIndexPath_ ) {
+            NSIndexPath* temp = [selectedCellIndexPath_ copy];
+            selectedCellIndexPath_ = nil;
+            [indexPathsToReload addObject:temp];
+            selectedCellIndexPath_ = [indexPath copy]; 
+        } else {
+            selectedCellIndexPath_ = [indexPath copy];
+        }
+        
+        [tableView beginUpdates];
+        //ready to animate the selected row (expand or shrink)
+        [indexPathsToReload addObject:indexPath];
+        [tableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationFade];
+        [tableView endUpdates];
+        
+        if( selectedCellIndexPath_ ) {
+            //this one only scroll if needed
+            //TODO bug: sometimes this scrolling does not work as expected
+            [tableView scrollToRowAtIndexPath:selectedCellIndexPath_ atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+            //        [self.tableView scrollRectToVisible:[[self.tableView cellForRowAtIndexPath:selectedCellIndexPath_] frame] animated:YES];
+            //this one always scroll the row to the top, very irritating
+            //[self.tableView scrollToRowAtIndexPath: selectedCellIndexPath_ atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
+    } else
+    {
+        //TODO during editing, clicking on it causes editing of title
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     }
 }
 
@@ -235,11 +240,9 @@
 
 - (void) updateTime {
     //this just send a REFRESH_INTERVAL_IN_SECONDS signal to all routes telling them REFRESH_INTERVAL_IN_SECONDS has passed
-    //TODO when scrolling, don't update data! use scroll delegate to enable/disable
     NSArray* visibleCells = [self.tableView indexPathsForVisibleRows];
     for( NSIndexPath *indexPath in visibleCells ) {
         UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        //TODO delay in refresh of time?
         if( [cell isKindOfClass:[BusStopCellBaseClass class]] )
            [((BusStopCellBaseClass*)cell) refreshRoutesInCellWithSeconds:REFRESH_INTERVAL_IN_SECONDS];
     }

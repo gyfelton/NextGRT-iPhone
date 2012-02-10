@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MarqueeLabel.h"
 
 @interface RouteDetailCell : UITableViewCell {
     UIImageView* busIcon_;
-    UILabel* routeNumber_;
+    MarqueeLabel* routeNumber_;
     
     UILabel* nextBusIn_;
     UILabel* _subsequentBusIn;
@@ -19,7 +20,7 @@
     //UILabel* nextBusDirection_; //direction now merge with route number
 }
 
-@property (nonatomic, strong) UILabel* routeNumber;
+@property (nonatomic, strong) MarqueeLabel* routeNumber;
 @property (nonatomic, strong) UILabel* firstTime;
 @property (nonatomic, strong) UILabel* secondTime;
 //@property (nonatomic, assign) UILabel* nextBusDirection;

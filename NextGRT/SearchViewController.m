@@ -84,7 +84,7 @@
 //    _mainTitle.text = @"Cannot get your current location.";
 //    _loadingIndicator.hidden = YES;
     _hintButton.hidden = NO;
-    [_hintButton setTitle:local(@"Fail to locate your position\n click here to try again.") forState:UIControlStateNormal];
+    [_hintButton setTitle:local(@"Fail to locate your position\n click here to try again.\nOr search bus stops above") forState:UIControlStateNormal];
     [_hud hide:YES];
     //for debug purpose only
     //    NSLog(@"ATTENTION: geo location manual override!");
@@ -333,7 +333,7 @@
     _hintButton.hidden = YES;
     _hintButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     _hintButton.titleLabel.textAlignment = UITextAlignmentCenter;
-    _hintButton.titleLabel.numberOfLines = 2;
+    _hintButton.titleLabel.numberOfLines = 3;
     [_hintButton addTarget:self action:@selector(hintButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:kFavStopArrayDidUpdate object:nil];
