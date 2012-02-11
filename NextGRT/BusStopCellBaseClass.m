@@ -14,6 +14,8 @@
 #define BUTTON_SIZE_WIDTH 280
 #define BUTTON_SIZE_HEIGHT 15
 
+#define CONFIRM_INDEX 1
+
 #define ADD_FAV_ALERT_TAG 0
 #define REMOVE_FAV_ALERT_TAG 1
 
@@ -25,7 +27,7 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        name_ = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, 2, NAME_WIDTH, NAME_HEIGHT)];
+        name_ = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, 3, NAME_WIDTH, NAME_HEIGHT)];
         name_.shadowOffset = CGSizeMake(0, 1);
         name_.shadowColor = [UIColor whiteColor];
         name_.backgroundColor = [UIColor clearColor];
@@ -190,7 +192,7 @@
 #pragma mark - Text Field Delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if( [[textField text] length] != 0 ) {
-        [alert_ dismissWithClickedButtonIndex:0 animated:YES];
+        [alert_ dismissWithClickedButtonIndex:CONFIRM_INDEX animated:YES];
     } else {
         textField.placeholder = local(@"Please enter a name!");
     }
@@ -211,7 +213,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if( alertView.tag == ADD_FAV_ALERT_TAG && buttonIndex == 1) {
+    if( alertView.tag == ADD_FAV_ALERT_TAG && buttonIndex == CONFIRM_INDEX) {
         //save the stop to userDefault
         [[FavouriteStopsCentralManager sharedInstance] addFavoriteStop:stop_ Name:[customNameField_ text]];
         
