@@ -66,6 +66,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:nav1, viewController2, nav3, nil];
 
     self.window.rootViewController = self.tabBarController;
+    self.window.backgroundColor = UITableBackgroundColor;
     [self.window makeKeyAndVisible];
     
     //set to YES for countdown if never set before

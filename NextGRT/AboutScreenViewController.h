@@ -10,7 +10,8 @@
 
 
 @interface AboutScreenViewController : UIViewController {
-    
+    IBOutlet UILabel *_mainTitle;
+    IBOutlet UITextView *_textView;
 }
 
 @end

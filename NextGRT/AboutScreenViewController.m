@@ -39,6 +39,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _mainTitle.backgroundColor = UITableBackgroundColor;
+    _textView.backgroundColor = UITableBackgroundColor;
     // Do any additional setup after loading the view from its nib.
 }
 

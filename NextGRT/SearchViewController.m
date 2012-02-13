@@ -114,6 +114,11 @@
     if( !_stopTableVC ) {
         _stopTableVC = [[BusStopsPullToRefreshTableViewController alloc] initWithTableWidth:320 Height:367 Stops:self.stops andDelegate:self needLoadMoreStopsButton:_areNearbyStops];
         _stopTableVC.customDelegate = self;
+        
+        if (SHOW_MAP) {
+            _stopTableVC.tableView.tableHeaderView = _mapTogglerBaseForList;
+        }
+        
         //Add table in animated way
         _stopTableVC.tableView.backgroundColor = UITableBackgroundColor;
         
@@ -227,6 +232,26 @@
 //}
 
 #pragma mark - SearchResultTable Date Source
+
+//- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    if (tableView == _stopTableVC.tableView) {
+//        if (SHOW_MAP && section == 0) {
+//            return _mapToggler;
+//        }
+//    }
+//    return nil;
+//}
+
+//- (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    if (tableView == _stopTableVC.tableView) {
+//        if (SHOW_MAP && section == 0) {
+//            return _mapToggler.frame.size.height;
+//        }
+//    }
+//    return 0;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if( [searchResults count] == 0 ) {
@@ -379,4 +404,50 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+#pragma mark - UISegmentControl
+- (IBAction)segmentControlValueChanged:(UISegmentedControl*)segmentControl
+{
+    if (segmentControl.selectedSegmentIndex ==  0) {
+        segmentControl.selectedSegmentIndex = 1; //need to revert back
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.6f];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
+        [_mapBaseView removeFromSuperview];
+        [UIView commitAnimations];
+    } else if (segmentControl.selectedSegmentIndex == 1) {
+        segmentControl.selectedSegmentIndex = 0;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.6f];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:YES];
+        
+        MKCoordinateRegion region;
+        region.center = _mapView.userLocation.coordinate;  
+        
+        MKCoordinateSpan span; 
+        span.latitudeDelta  = 0.01; // Change these values to change the zoom
+        span.longitudeDelta = 0.01; 
+        region.span = span;
+
+        [_mapView setRegion:region];
+        
+        [self.view addSubview:_mapBaseView];
+        
+        [UIView commitAnimations];
+        
+//        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionTransitionFlipFromRight animations:^
+//        {
+//            [self.view addSubview:_mapBaseView];
+//            [_mapBaseView addSubview:_mapTogglerBase];
+//        } completion:^(BOOL finished)
+//        {
+//            
+//        }];
+    }
+}
+
+#pragma mark - MapView Delegate
+- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
+{
+
+}
 @end

@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
+#import <MapKit/MapKit.h>
 #import "BusStopsPullToRefreshTableViewController.h"
 #import "GRTDatabaseManager.h"
 #import "MBProgressHUD.h"
 
-@interface SearchViewController : UIViewController <CLLocationManagerDelegate, PullToRefreshTableDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, GRTDatabaseManagerDelegate, BusStopBaseTabeViewDelegate>
+@interface SearchViewController : UIViewController <CLLocationManagerDelegate, PullToRefreshTableDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, GRTDatabaseManagerDelegate, BusStopBaseTabeViewDelegate, MKMapViewDelegate>
 {
     //IBOutlet UITableView* stopsList;
     IBOutlet UISearchBar* _searchBar;
@@ -23,6 +24,13 @@
     UISearchDisplayController* _searchDisplayVC;
     
     IBOutlet UIButton *_hintButton;
+    
+    IBOutlet UIToolbar *_mapTogglerBaseForList;
+    IBOutlet UIToolbar *_mapTogglerBaseForMap;
+    IBOutlet UISegmentedControl *_segmentControl;
+    IBOutlet UIView *_mapBaseView;
+    
+    IBOutlet MKMapView *_mapView;
     
     BOOL _searchTextReachCriteria;
     BOOL _searchResultsReturned;
@@ -36,6 +44,7 @@
     double _currSearchRadiusFactor;
 }
 
+- (IBAction)segmentControlValueChanged:(UISegmentedControl*)segmentControl;
 @property (nonatomic, strong) NSMutableArray* stops;
 @property (nonatomic, strong) NSMutableArray* searchResults;
 

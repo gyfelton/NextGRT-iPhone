@@ -27,7 +27,7 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.tableView.showsVerticalScrollIndicator = NO;
+        self.tableView.showsVerticalScrollIndicator = YES;
         self.tableView.allowsSelectionDuringEditing = YES;
         self.forFavStopVC = NO;
         self.stops = s;
@@ -86,6 +86,22 @@
 }
 
 #pragma mark - Table View DataSource
+
+//- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    if (customDelegate && [customDelegate respondsToSelector:@selector(tableView:viewForHeaderInSection:)]) {
+//        return [customDelegate tableView:self.tableView viewForHeaderInSection:section];
+//    }
+//    return nil;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    if (customDelegate && [customDelegate respondsToSelector:@selector(tableView:heightForHeaderInSection:)]) {
+//        return [customDelegate tableView:self.tableView heightForHeaderInSection:section];
+//    }
+//    return 0;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.stops count];

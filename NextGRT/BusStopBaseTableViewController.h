@@ -20,6 +20,8 @@
 - (void)tableView:(UITableView *)tableView  commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath;
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath;
+//- (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section;
+//- (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section;
 @end
 
 @interface BusStopBaseTableViewController : UITableViewController {

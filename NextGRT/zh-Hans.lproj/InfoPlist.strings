@@ -1,1 +1,4 @@
 /* Localized versions of Info.plist keys */
+
+CFBundleDisplayName = "Next GRT";
+CFBundleName = "Next GRT";

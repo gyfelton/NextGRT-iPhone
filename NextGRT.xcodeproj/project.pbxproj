@@ -66,6 +66,9 @@
 		FEACF0AD14C08FA4003CC962 /* OpenedBusStopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0A714C08FA4003CC962 /* OpenedBusStopCell.m */; };
 		FEACF0AE14C08FA4003CC962 /* RouteDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0A914C08FA4003CC962 /* RouteDetailCell.m */; };
 		FEACF0AF14C08FA4003CC962 /* UnopenedBusStopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */; };
+		FEAEBCBF14E77A02003D59FF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAEBCBE14E77A02003D59FF /* icon@2x.png */; };
+		FEAEBCC114E77A05003D59FF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAEBCC014E77A05003D59FF /* icon.png */; };
+		FEE7117214E6C683000EFE94 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE7117114E6C683000EFE94 /* MapKit.framework */; };
 		FEF5D83D14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */; };
 		FEFCC15C14C9265C0037B0D9 /* star_empty_big.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15814C9265C0037B0D9 /* star_empty_big.png */; };
 		FEFCC15D14C9265C0037B0D9 /* star_empty_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15914C9265C0037B0D9 /* star_empty_big@2x.png */; };
@@ -165,6 +168,9 @@
 		FEACF0A914C08FA4003CC962 /* RouteDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteDetailCell.m; sourceTree = "<group>"; };
 		FEACF0AA14C08FA4003CC962 /* UnopenedBusStopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnopenedBusStopCell.h; sourceTree = "<group>"; };
 		FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnopenedBusStopCell.m; sourceTree = "<group>"; };
+		FEAEBCBE14E77A02003D59FF /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		FEAEBCC014E77A05003D59FF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		FEE7117114E6C683000EFE94 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = GRTDataBase_20Jan2012.sqlite; sourceTree = "<group>"; };
 		FEFCC15814C9265C0037B0D9 /* star_empty_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_empty_big.png; sourceTree = "<group>"; };
 		FEFCC15914C9265C0037B0D9 /* star_empty_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_empty_big@2x.png"; sourceTree = "<group>"; };
@@ -177,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEE7117214E6C683000EFE94 /* MapKit.framework in Frameworks */,
 				FEACF06D14C02828003CC962 /* libsqlite3.0.dylib in Frameworks */,
 				FEACF06B14C02819003CC962 /* QuartzCore.framework in Frameworks */,
 				FEACF06914C02810003CC962 /* CoreLocation.framework in Frameworks */,
@@ -265,6 +272,9 @@
 		FEACF02E14C027F8003CC962 = {
 			isa = PBXGroup;
 			children = (
+				FEAEBCC014E77A05003D59FF /* icon.png */,
+				FEAEBCBE14E77A02003D59FF /* icon@2x.png */,
+				FEE7117114E6C683000EFE94 /* MapKit.framework */,
 				FEACF04314C027F8003CC962 /* NextGRT */,
 				FEACF03C14C027F8003CC962 /* Frameworks */,
 				FEACF03A14C027F8003CC962 /* Products */,
@@ -499,6 +509,8 @@
 				FE45733B14E27F19000ABBC6 /* Localizable.strings in Resources */,
 				FE4AF27014E2FC80008E21B4 /* welcomeHint_chinese.png in Resources */,
 				FE4AF27114E2FC80008E21B4 /* welcomeHint_chinese@2x.png in Resources */,
+				FEAEBCBF14E77A02003D59FF /* icon@2x.png in Resources */,
+				FEAEBCC114E77A05003D59FF /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

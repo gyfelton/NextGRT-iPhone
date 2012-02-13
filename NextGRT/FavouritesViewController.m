@@ -112,7 +112,7 @@
     NSString *defaultLatLong = @"43.472737,-80.541206";//UW Davis
     CLLocation *currLocation = [AppDelegate sharedLocationManager].location;
     if (currLocation) {
-        defaultLatLong = [NSString stringWithFormat:@"%f, %f", currLocation.coordinate.latitude, currLocation.coordinate.longitude];
+        defaultLatLong = [NSString stringWithFormat:@"%f,%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude];
     }
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.google.com/maps?ll=%@", defaultLatLong]]];
 }
@@ -122,6 +122,8 @@
     UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonClicked:)];
     [self.navigationItem setRightBarButtonItem:editItem animated:animated];
     
+    //add a open map item
+    /*
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:[UIImage imageNamed:@"map2"] forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(1, 4, 0, 0)];
@@ -130,6 +132,7 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button]; 
     [button addTarget:self action:@selector(openMap:) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationItem setLeftBarButtonItem:item animated:animated];
+     */
 }
 
 - (void)doneButtonClicked:(id)sender
