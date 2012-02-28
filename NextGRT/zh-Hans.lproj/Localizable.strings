@@ -23,7 +23,7 @@
 "next bus: " = "下一班: ";
 "subsequent bus:" = "下下班:";
 "Distance from here: %dm" = "距离这里有: %d米";
-"Stop Number: %@" = "车站编号: %@";
+"Bus Stop ID: %@" = "车站编号: %@";
 "Bus routes: " = "巴士车次: ";
 "No bus route available." = "没有任何巴士服务";
 

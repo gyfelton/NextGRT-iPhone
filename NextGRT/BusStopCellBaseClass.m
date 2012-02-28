@@ -14,6 +14,7 @@
 #define BUTTON_SIZE_WIDTH 280
 #define BUTTON_SIZE_HEIGHT 15
 
+#define SKIP_INDEX 0
 #define CONFIRM_INDEX 1
 
 #define ADD_FAV_ALERT_TAG 0
@@ -101,14 +102,14 @@
             //otherwise, still put original stop name
             //TODO refractor this method(duplication)
             name_.text = stop.stopName;
-            extraInfo_.text = [NSString stringWithFormat:local(@"Stop Number: %@"), stop.stopID];
+            extraInfo_.text = [NSString stringWithFormat:local(@"Bus Stop ID: %@"), stop.stopID];
         }
     } else {
         isStopFav_ = NO;
         fav_.selected = NO;
         
         name_.text = stop.stopName;
-        extraInfo_.text = [NSString stringWithFormat:local(@"Stop Number: %@"), stop.stopID];
+        extraInfo_.text = [NSString stringWithFormat:local(@"Bus Stop ID: %@"), stop.stopID];
     }
 }
 
@@ -213,9 +214,16 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if( alertView.tag == ADD_FAV_ALERT_TAG && buttonIndex == CONFIRM_INDEX) {
-        //save the stop to userDefault
-        [[FavouriteStopsCentralManager sharedInstance] addFavoriteStop:stop_ Name:[customNameField_ text]];
+    if( alertView.tag == ADD_FAV_ALERT_TAG) {
+        NSString *nickName = nil;
+        if (buttonIndex == SKIP_INDEX) {
+            nickName = @"";
+        } else
+        {
+            nickName = [customNameField_ text];
+        }
+        
+        [[FavouriteStopsCentralManager sharedInstance] addFavoriteStop:stop_ Name:nickName];
         
         //refresh the cell's name (replace name with custom name)
         [self initCellInfoWithStop:stop_];

@@ -166,6 +166,29 @@
 }
 
 #pragma mark - View lifecycle
+- (void)scheduleLocalNotification
+{
+    /* Here we cancel all previously scheduled notifications */
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+    //    NSLog(@"Notification will be shown on: %@",localNotification.fireDate);
+    
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.alertBody = [NSString stringWithFormat:
+                                   @"Your notification message"];
+    localNotification.hasAction = YES;
+    localNotification.alertAction = NSLocalizedString(@"View details", nil);
+    
+    /* Here we set notification sound and badge on the app's icon "-1" 
+     means that number indicator on the badge will be decreased by one 
+     - so there will be no badge on the icon */
+    
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
 
 - (void)viewDidLoad
 {
@@ -177,6 +200,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFavStopTable) name:kFavStopArrayDidUpdate object:nil];
     //now load the list of fav stops
     [self loadFavStopTable];
+    
+    //[self scheduleLocalNotification];
 }
 
 - (void)viewDidUnload

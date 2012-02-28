@@ -271,7 +271,8 @@
             
             //TODO! change app id
             // Here is the app id from itunesconnect
-            str = [NSString stringWithFormat:@"%@289382458", str]; 
+            NSString *appID = @"506292406";
+            str = [NSString stringWithFormat:@"%@%@", str, appID]; 
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
         }

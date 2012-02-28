@@ -68,7 +68,7 @@
 		FEACF0AF14C08FA4003CC962 /* UnopenedBusStopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */; };
 		FEAEBCBF14E77A02003D59FF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAEBCBE14E77A02003D59FF /* icon@2x.png */; };
 		FEAEBCC114E77A05003D59FF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAEBCC014E77A05003D59FF /* icon.png */; };
-		FEE7117214E6C683000EFE94 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE7117114E6C683000EFE94 /* MapKit.framework */; };
+		FEE7117214E6C683000EFE94 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE7117114E6C683000EFE94 /* MapKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		FEF5D83D14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */; };
 		FEFCC15C14C9265C0037B0D9 /* star_empty_big.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15814C9265C0037B0D9 /* star_empty_big.png */; };
 		FEFCC15D14C9265C0037B0D9 /* star_empty_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15914C9265C0037B0D9 /* star_empty_big@2x.png */; };
@@ -667,6 +667,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
 				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "77B80C28-0F72-488B-9461-3C4B42002288";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "734F38F8-0EA6-4D97-98E2-8364B9CD312D";
@@ -684,6 +685,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
 				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

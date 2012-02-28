@@ -13,7 +13,7 @@
 #import "UnopenedBusStopCell.h"
 
 #define REFRESH_INTERVAL_IN_SECONDS 30
-
+#define REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS 33
 @implementation BusStopBaseTableViewController
 
 @synthesize stops, customDelegate, forFavStopVC;
@@ -47,7 +47,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTime) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateView) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -130,7 +130,8 @@
     //refresh timer if needed
     UITableViewCell* cell = nil;
     if( !gotTimer ) {
-        timer_ = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_IN_SECONDS target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+        _timerForUpdateTime = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_IN_SECONDS target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+        _timerForRefreshView = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS target:self selector:@selector(updateView) userInfo:nil repeats:NO];
         gotTimer = YES;
     }
     
@@ -253,15 +254,21 @@
 }
 
 #pragma mark - Timer
-
-- (void) updateTime {
-    //this just send a REFRESH_INTERVAL_IN_SECONDS signal to all routes telling them REFRESH_INTERVAL_IN_SECONDS has passed
+- (void) updateView
+{
     NSArray* visibleCells = [self.tableView indexPathsForVisibleRows];
     for( NSIndexPath *indexPath in visibleCells ) {
         UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
         if( [cell isKindOfClass:[BusStopCellBaseClass class]] )
-           [((BusStopCellBaseClass*)cell) refreshRoutesInCellWithSeconds:REFRESH_INTERVAL_IN_SECONDS];
+            [((BusStopCellBaseClass*)cell) refreshRoutesInCellWithSeconds:_timeTracking];
     }
+    _timeTracking = 0;
+    _timerForRefreshView = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS target:self selector:@selector(updateView) userInfo:nil repeats:NO];
+}
+
+- (void) updateTime {
+    //this just send a REFRESH_INTERVAL_IN_SECONDS signal to all routes telling them REFRESH_INTERVAL_IN_SECONDS has passed
+    _timeTracking += REFRESH_INTERVAL_IN_SECONDS;
 }
 
 /*
@@ -308,7 +315,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-    [timer_ invalidate];
+    [_timerForUpdateTime invalidate];
 }
 
 - (void)didReceiveMemoryWarning

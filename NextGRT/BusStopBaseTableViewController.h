@@ -26,7 +26,9 @@
 
 @interface BusStopBaseTableViewController : UITableViewController {
     bool gotTimer;
-    NSTimer* timer_;
+    NSTimer *_timerForUpdateTime;
+    NSTimer *_timerForRefreshView;
+    NSTimeInterval _timeTracking;
     NSIndexPath* selectedCellIndexPath_;
 }
 

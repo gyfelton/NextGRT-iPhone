@@ -29,6 +29,15 @@
         busIcon_.image = [UIImage imageNamed:@"btnBus_64x64"];
         [self.contentView addSubview:busIcon_];
         
+//        UIScrollView *slider = [[UIScrollView alloc] initWithFrame:CGRectMake(BUS_ICON_LEFT_OFFSET, 5, 290, BUS_ICON_HEIGHT)];
+//        busIcon_.frame = CGRectMake(0, 0, busIcon_.frame.size.width, busIcon_.frame.size.height);
+//        slider.contentSize = CGSizeMake(600, slider.frame.size.height);
+//        slider.scrollEnabled = YES;
+//        slider.contentOffset = CGPointMake(-30, 0);
+//        slider.maximumZoomScale = 1.0f;
+//        slider.backgroundColor = [UIColor redColor];
+//        [slider addSubview:busIcon_];
+        
         routeNumber_ = [[MarqueeLabel alloc] initWithFrame:CGRectMake( busIcon_.bounds.origin.x + BUS_ICON_WIDTH + 8, 4, ROUTE_NUM_WIDTH, ROUTE_NUM_HEIGHT) andSpeed:3 andBuffer:3.0f];
         routeNumber_.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
         routeNumber_.text = @"12";
@@ -41,7 +50,7 @@
 //        nextBusDirection_.font = [UIFont systemFontOfSize:14];
 //        [self addSubview:nextBusDirection_];
         
-        nextBusIn_  = [[UILabel alloc] initWithFrame:CGRectMake(busIcon_.bounds.origin.x + BUS_ICON_WIDTH + 10, ROUTE_NUM_HEIGHT-10, 60, FIRST_TIME_HEIGHT)];
+        nextBusIn_  = [[UILabel alloc] initWithFrame:CGRectMake(busIcon_.bounds.origin.x + BUS_ICON_WIDTH + 10, ROUTE_NUM_HEIGHT-10, 62, FIRST_TIME_HEIGHT)];
         nextBusIn_.text = local(@"next bus: ");
         nextBusIn_.font = [UIFont systemFontOfSize:14];
         nextBusIn_.backgroundColor = [UIColor clearColor];
@@ -91,4 +100,9 @@
 
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint pt = [touch locationInView:busIcon_];
+}
 @end
