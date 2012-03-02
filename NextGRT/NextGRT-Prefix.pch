@@ -14,7 +14,7 @@
 #endif
 
 //variables:
-#define SHOW_MAP false
+#define SHOW_MAP NO
 
 //rename method:
 #define local(a) NSLocalizedString(a,a)

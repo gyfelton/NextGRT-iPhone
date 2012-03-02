@@ -274,7 +274,6 @@
 			children = (
 				FEAEBCC014E77A05003D59FF /* icon.png */,
 				FEAEBCBE14E77A02003D59FF /* icon@2x.png */,
-				FEE7117114E6C683000EFE94 /* MapKit.framework */,
 				FEACF04314C027F8003CC962 /* NextGRT */,
 				FEACF03C14C027F8003CC962 /* Frameworks */,
 				FEACF03A14C027F8003CC962 /* Products */,
@@ -292,6 +291,7 @@
 		FEACF03C14C027F8003CC962 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FEE7117114E6C683000EFE94 /* MapKit.framework */,
 				FEACF06C14C02828003CC962 /* libsqlite3.0.dylib */,
 				FEACF06A14C02819003CC962 /* QuartzCore.framework */,
 				FEACF06814C02810003CC962 /* CoreLocation.framework */,
@@ -617,7 +617,8 @@
 					armv6,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -632,6 +633,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PROVISIONING_PROFILE = "77B80C28-0F72-488B-9461-3C4B42002288";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77B80C28-0F72-488B-9461-3C4B42002288";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -645,7 +648,8 @@
 					armv6,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -654,6 +658,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "77B80C28-0F72-488B-9461-3C4B42002288";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77B80C28-0F72-488B-9461-3C4B42002288";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -269,7 +269,6 @@
             str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str]; 
             str = [NSString stringWithFormat:@"%@type=Purple+Software&id=", str];
             
-            //TODO! change app id
             // Here is the app id from itunesconnect
             NSString *appID = @"506292406";
             str = [NSString stringWithFormat:@"%@%@", str, appID]; 
