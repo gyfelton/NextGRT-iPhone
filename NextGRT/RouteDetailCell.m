@@ -19,6 +19,7 @@
 @implementation RouteDetailCell
 
 @synthesize routeNumber = routeNumber_, firstTime = firstTime_, secondTime = secondTime_; //, nextBusDirection = nextBusDirection_;
+//@synthesize timerBtn = _timerBtn;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -27,6 +28,14 @@
         
         busIcon_ = [[UIImageView alloc] initWithFrame:CGRectMake(BUS_ICON_LEFT_OFFSET, 5, BUS_ICON_WIDTH, BUS_ICON_HEIGHT)];
         busIcon_.image = [UIImage imageNamed:@"btnBus_64x64"];
+        
+//        _timerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        _timerBtn.showsTouchWhenHighlighted = YES;
+//        
+//        _timerBtn.frame = CGRectMake(BUS_ICON_LEFT_OFFSET, 5, BUS_ICON_WIDTH, BUS_ICON_HEIGHT);
+//        [_timerBtn setImage:[UIImage imageNamed:@"btnBus_64x64"] forState:UIControlStateNormal];
+//        [self.contentView addSubview:_timerBtn];
+        
         [self.contentView addSubview:busIcon_];
         
 //        UIScrollView *slider = [[UIScrollView alloc] initWithFrame:CGRectMake(BUS_ICON_LEFT_OFFSET, 5, 290, BUS_ICON_HEIGHT)];
@@ -98,11 +107,5 @@
 - (void)dealloc
 {
 
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    CGPoint pt = [touch locationInView:busIcon_];
 }
 @end

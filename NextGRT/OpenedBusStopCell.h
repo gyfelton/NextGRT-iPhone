@@ -18,6 +18,11 @@
     //UILabel* distanceFromCurrPosition_;
     
     NSTimeInterval timeElapsed_;
+    
+    NSMutableArray *_detailCellTimerOverlay;
 }
 
+@property (nonatomic, readonly) NSMutableArray *detailCellTimerOverlay;
+//used for timer
+@property (nonatomic, unsafe_unretained) UITableViewController *parentTableViewController;
 @end

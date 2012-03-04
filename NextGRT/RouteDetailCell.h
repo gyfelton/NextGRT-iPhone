@@ -17,11 +17,14 @@
     UILabel* _subsequentBusIn;
     UILabel* firstTime_;
     UILabel* secondTime_;
+    
+//    UIButton *_timerBtn;
     //UILabel* nextBusDirection_; //direction now merge with route number
 }
 
 @property (nonatomic, strong) MarqueeLabel* routeNumber;
 @property (nonatomic, strong) UILabel* firstTime;
 @property (nonatomic, strong) UILabel* secondTime;
+//@property (nonatomic, readonly) UIButton *timerBtn;
 //@property (nonatomic, assign) UILabel* nextBusDirection;
 @end

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PullToRefreshTableViewController.h"
 
+#import "UserTouchCaptureView.h"
+
 #define UNOPENED_CELL_HEIGHT 65
 #define OPENED_CELL_HEIGHT_BASE 91
 #define OPENED_CELL_INTERNAL_CELL_HEIGHT 65
@@ -24,7 +26,7 @@
 //- (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section;
 @end
 
-@interface BusStopBaseTableViewController : UITableViewController {
+@interface BusStopBaseTableViewController : UITableViewController<UserTouchEventDelegate> {
     bool gotTimer;
     NSTimer *_timerForUpdateTime;
     NSTimer *_timerForRefreshView;

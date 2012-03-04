@@ -10,8 +10,11 @@
 #import "BusRoute.h"
 #import "RouteDetailCell.h"
 #import "BusStopBaseTableViewController.h"
+#import "UserTouchCaptureView.h"
 
 @implementation OpenedBusStopCell
+
+@synthesize detailCellTimerOverlay = _detailCellTimerOverlay, parentTableViewController;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -22,7 +25,10 @@
         
         detailTable_ = [[UITableView alloc] initWithFrame:CGRectMake(0, NAME_HEIGHT + EXTRA_INFO_HEIGHT + 32, self.contentView.frame.size.width, 145) style:UITableViewStyleGrouped];
 //        detailTable_.layer.cornerRadius = 5.0f;
+        
+        //disable this to let cell collapse even user touches on the detail table
         detailTable_.userInteractionEnabled = NO;
+        
         detailTable_.scrollEnabled = NO;
         detailTable_.delegate = self;
         detailTable_.dataSource = self;
@@ -39,6 +45,8 @@
         
         //[self addSubview:distanceFromCurrPosition_];
         [self.contentView addSubview:detailTable_];
+        
+        _detailCellTimerOverlay = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -166,7 +174,27 @@
     ((RouteDetailCell*)cell).routeNumber.text = [NSString stringWithFormat:@"%@%@", route.fullRouteNumber, [route getNextBusDirection]];
     ((RouteDetailCell*)cell).firstTime.text = [self generateTextForTime:1 busRoute:route];//[route getFirstArrivalTime];
     ((RouteDetailCell*)cell).secondTime.text = [self generateTextForTime:2 busRoute:route];//[route getSecondArrivalTime];
+    
     //((RouteDetailCell*)cell).nextBusDirection.text = [NSString stringWithFormat:@"To: %@", [route getNextBusDirection]];
+    
+    //get or alloc timer overlay
+    UserTouchCaptureView *view = nil;
+    if (indexPath.row < _detailCellTimerOverlay.count) {
+        view = [_detailCellTimerOverlay objectAtIndex:indexPath.row];
+    } else
+    {
+        view = [[UserTouchCaptureView alloc] initWithFrame:CGRectMake(12,7, 55, 55)];
+        view.backgroundColor = [UIColor redColor];
+        [_detailCellTimerOverlay addObject:view];
+        view.customDelegate = self.parentTableViewController;
+    }
+    
+    //calcuate the position to put the overlay, since the table is shown fully, does not scroll, the position is static
+    CGFloat yOrigin = 85 + OPENED_CELL_INTERNAL_CELL_HEIGHT*indexPath.row;
+    view.frame = CGRectMake(view.frame.origin.x, yOrigin, view.frame.size.width, view.frame.size.height);
+    
+    [self.contentView addSubview:view];
+    
     return cell;
 }
 

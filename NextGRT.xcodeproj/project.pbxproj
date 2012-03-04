@@ -69,6 +69,7 @@
 		FEAEBCBF14E77A02003D59FF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAEBCBE14E77A02003D59FF /* icon@2x.png */; };
 		FEAEBCC114E77A05003D59FF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FEAEBCC014E77A05003D59FF /* icon.png */; };
 		FEE7117214E6C683000EFE94 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE7117114E6C683000EFE94 /* MapKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		FEE82D351500E998004AEEF6 /* UserTouchCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE82D341500E998004AEEF6 /* UserTouchCaptureView.m */; };
 		FEF5D83D14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */; };
 		FEFCC15C14C9265C0037B0D9 /* star_empty_big.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15814C9265C0037B0D9 /* star_empty_big.png */; };
 		FEFCC15D14C9265C0037B0D9 /* star_empty_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15914C9265C0037B0D9 /* star_empty_big@2x.png */; };
@@ -171,6 +172,8 @@
 		FEAEBCBE14E77A02003D59FF /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		FEAEBCC014E77A05003D59FF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		FEE7117114E6C683000EFE94 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FEE82D331500E998004AEEF6 /* UserTouchCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTouchCaptureView.h; sourceTree = "<group>"; };
+		FEE82D341500E998004AEEF6 /* UserTouchCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTouchCaptureView.m; sourceTree = "<group>"; };
 		FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = GRTDataBase_20Jan2012.sqlite; sourceTree = "<group>"; };
 		FEFCC15814C9265C0037B0D9 /* star_empty_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_empty_big.png; sourceTree = "<group>"; };
 		FEFCC15914C9265C0037B0D9 /* star_empty_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_empty_big@2x.png"; sourceTree = "<group>"; };
@@ -420,6 +423,8 @@
 				FEACF0A914C08FA4003CC962 /* RouteDetailCell.m */,
 				FEACF0AA14C08FA4003CC962 /* UnopenedBusStopCell.h */,
 				FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */,
+				FEE82D331500E998004AEEF6 /* UserTouchCaptureView.h */,
+				FEE82D341500E998004AEEF6 /* UserTouchCaptureView.m */,
 			);
 			name = BusStopCells;
 			sourceTree = "<group>";
@@ -545,6 +550,7 @@
 				FE23BD1214C96CE5009154C0 /* MBProgressHUD.m in Sources */,
 				FE1E6A6814CA772100730B54 /* AboutScreenViewController.m in Sources */,
 				FE12D57414E4FB1F00AAA725 /* MarqueeLabel.m in Sources */,
+				FEE82D351500E998004AEEF6 /* UserTouchCaptureView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

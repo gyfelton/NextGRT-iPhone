@@ -29,6 +29,7 @@
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.tableView.showsVerticalScrollIndicator = YES;
         self.tableView.allowsSelectionDuringEditing = YES;
+        
         self.forFavStopVC = NO;
         self.stops = s;
     }
@@ -157,8 +158,11 @@
         Stop* aStop = [self.stops objectAtIndex:[indexPath row]];
         
         [((OpenedBusStopCell*)cell) initCellInfoWithStop:aStop];
+        
+        //link the delegate so that when it is touched, scrollEnabled set to false
+        ((OpenedBusStopCell*)cell).parentTableViewController = self;
     }
-    
+
     if (self.forFavStopVC) {
         ((BusStopCellBaseClass*)cell).cellType = cellForFavVC;
     }
@@ -216,6 +220,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //if the cell is opened cell, don't pass it to delegate
+    if (selectedCellIndexPath_ && selectedCellIndexPath_.row == indexPath.row && selectedCellIndexPath_.section == indexPath.section) {
+        return NO;
+    }
     if (customDelegate && [customDelegate respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)]) {
         return [customDelegate tableView:tableView canEditRowAtIndexPath:indexPath];
     }
@@ -334,4 +342,14 @@
     // e.g. self.myOutlet = nil;
 }
 
+#pragma mark - UserTouchEventDelegate
+- (void)userDidBeginTouchOnView:(id)view
+{
+    self.tableView.scrollEnabled = NO;
+}
+
+- (void)userDidEndTouchOnView:(id)view
+{
+    self.tableView.scrollEnabled = YES;
+}
 @end
