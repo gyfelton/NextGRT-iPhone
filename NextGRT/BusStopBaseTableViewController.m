@@ -5,7 +5,6 @@
 //  Created by Yuanfeng on 11-07-15.
 //  Copyright 2011 Elton(Yuanfeng) Gao. All rights reserved.
 //
-
 #import "BusStopBaseTableViewController.h"
 #import "Stop.h"
 #import "BusRoute.h"
@@ -153,6 +152,10 @@
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"openedStop"];
         if( !cell ) {
             cell = [[OpenedBusStopCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"openedStop"];
+        } else
+        {
+            //need to remove all timer overlay from superview first
+            [((OpenedBusStopCell*)cell) removeAllTimerOverlayFromSuperView];
         }
         
         Stop* aStop = [self.stops objectAtIndex:[indexPath row]];
@@ -168,6 +171,7 @@
     }
 
     cell.showsReorderControl = YES;
+
     cell.shouldIndentWhileEditing = NO;
 
     assert(cell);
@@ -213,8 +217,9 @@
         }
     } else
     {
-        //TODO during editing, clicking on it causes editing of title
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        //during editing, clicking on it causes editing of title (assuming under search, we cannnot edit!!!
+        BusStopCellBaseClass *cell = (BusStopCellBaseClass*)[tableView cellForRowAtIndexPath:indexPath];
+        [cell askForEditingOfNickName];
     }
 }
 
@@ -246,6 +251,16 @@
 {
     if (customDelegate && [customDelegate respondsToSelector:@selector(tableView:commitEditingStyle:forRowAtIndexPath:)]) {
         [customDelegate tableView:tableView commitEditingStyle:editingStyle forRowAtIndexPath:indexPath];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 4.1) {
+        return YES;
+    } else
+    {
+        return NO; //for iOS 4.0 and 4.1, reorder are causing strange problem
     }
 }
 

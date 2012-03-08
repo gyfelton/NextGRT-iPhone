@@ -51,7 +51,7 @@ typedef enum BusStopCellType BusStopCellType;
 - (void)initCellInfoWithStop:(Stop*)stop;
 - (void)refreshRoutesInCellWithSeconds:(NSTimeInterval) seconds;
 - (void)toggleFavButtonStatus;
-
+- (void)askForEditingOfNickName;
 @property BusStopCellType cellType;
 @property (nonatomic, retain) UILabel* name;
 @property (nonatomic, retain) UILabel* extraInfo;

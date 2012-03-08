@@ -177,25 +177,35 @@
     
     //((RouteDetailCell*)cell).nextBusDirection.text = [NSString stringWithFormat:@"To: %@", [route getNextBusDirection]];
     
-    //get or alloc timer overlay
-    UserTouchCaptureView *view = nil;
-    if (indexPath.row < _detailCellTimerOverlay.count) {
-        view = [_detailCellTimerOverlay objectAtIndex:indexPath.row];
-    } else
-    {
-        view = [[UserTouchCaptureView alloc] initWithFrame:CGRectMake(12,7, 55, 55)];
-        view.backgroundColor = [UIColor redColor];
-        [_detailCellTimerOverlay addObject:view];
-        view.customDelegate = self.parentTableViewController;
+    if (ENABLE_NEW_FEATURES) {
+        //get or alloc timer overlay
+        UserTouchCaptureView *view = nil;
+        if (indexPath.row < _detailCellTimerOverlay.count) {
+            view = [_detailCellTimerOverlay objectAtIndex:indexPath.row];
+            [view removeFromSuperview];
+        } else
+        {
+            view = [[UserTouchCaptureView alloc] initWithFrame:CGRectMake(12,7, 55, 55)];
+            view.backgroundColor = [UIColor redColor];
+            [_detailCellTimerOverlay addObject:view];
+            view.customDelegate = self.parentTableViewController;
+        }
+    
+        //calcuate the position to put the overlay, since the table is shown fully, does not scroll, the position is static
+        CGFloat yOrigin = 85 + OPENED_CELL_INTERNAL_CELL_HEIGHT*indexPath.row;
+        view.frame = CGRectMake(view.frame.origin.x, yOrigin, view.frame.size.width, view.frame.size.height);
+        
+        [self.contentView addSubview:view];
     }
     
-    //calcuate the position to put the overlay, since the table is shown fully, does not scroll, the position is static
-    CGFloat yOrigin = 85 + OPENED_CELL_INTERNAL_CELL_HEIGHT*indexPath.row;
-    view.frame = CGRectMake(view.frame.origin.x, yOrigin, view.frame.size.width, view.frame.size.height);
-    
-    [self.contentView addSubview:view];
-    
     return cell;
+}
+
+- (void)removeAllTimerOverlayFromSuperView
+{
+    for (UserTouchCaptureView *view in _detailCellTimerOverlay) {
+        [view removeFromSuperview];
+    }
 }
 
 - (void)dealloc

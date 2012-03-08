@@ -21,6 +21,7 @@
 
 - (BOOL) isFavouriteStop: (Stop*) stop;
 - (BOOL) addFavoriteStop:(Stop*)stop Name:(NSString*)name;
+- (BOOL)editFavoriteStop:(Stop*)stop Name:(NSString*)name;
 - (BOOL) moveStopAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destIndex;
 - (BOOL) deleteFavoriteStop: (Stop*) stop;
 - (BOOL) deleteFavoriteStopAtIndex:(NSInteger)index;

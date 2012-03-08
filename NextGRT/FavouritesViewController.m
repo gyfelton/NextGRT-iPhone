@@ -150,6 +150,8 @@
         [_favStopsTableVC foldAllStops];
         [_favStopsTableVC setEditing:YES animated:YES];
     }
+    StatusBarMsgAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate showMessageAtStatusBarWithText:local(@"Tab a stop to change nickname") duration:3.3f animated:YES];
 }
 
 #pragma mark - BusStopTableView Delegate
@@ -220,7 +222,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self initEditButton:YES];
+    if (!_favStopsTableVC.isEditing) {
+        [self initEditButton:YES]; //TODO: shouldn't show edit when no entry
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

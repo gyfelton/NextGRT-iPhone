@@ -18,6 +18,7 @@
 		FE23BD1214C96CE5009154C0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23BD1114C96CE5009154C0 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FE23BD1B14C9B41B009154C0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FE23BD1914C9B41A009154C0 /* Default.png */; };
 		FE23BD1C14C9B41B009154C0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE23BD1A14C9B41A009154C0 /* Default@2x.png */; };
+		FE2D7C5F1508FF7E0080A5D6 /* StatusBarMsgAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2D7C5E1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.m */; };
 		FE45732914E25952000ABBC6 /* route_detail_bg_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE45732814E25952000ABBC6 /* route_detail_bg_shadow.png */; };
 		FE45732F14E25E30000ABBC6 /* route_detail_arrow_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE45732D14E25E2F000ABBC6 /* route_detail_arrow_shadow.png */; };
 		FE45733014E25E30000ABBC6 /* route_detail_arrow_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE45732E14E25E2F000ABBC6 /* route_detail_arrow_shadow@2x.png */; };
@@ -96,6 +97,8 @@
 		FE23BD1114C96CE5009154C0 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		FE23BD1914C9B41A009154C0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		FE23BD1A14C9B41A009154C0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		FE2D7C5D1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarMsgAppDelegate.h; sourceTree = "<group>"; };
+		FE2D7C5E1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusBarMsgAppDelegate.m; sourceTree = "<group>"; };
 		FE45732814E25952000ABBC6 /* route_detail_bg_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_detail_bg_shadow.png; sourceTree = "<group>"; };
 		FE45732D14E25E2F000ABBC6 /* route_detail_arrow_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_detail_arrow_shadow.png; sourceTree = "<group>"; };
 		FE45732E14E25E2F000ABBC6 /* route_detail_arrow_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "route_detail_arrow_shadow@2x.png"; sourceTree = "<group>"; };
@@ -317,6 +320,8 @@
 				FEACF0A314C08F7F003CC962 /* BusStopCells */,
 				FEACF08114C02E85003CC962 /* Model */,
 				FEACF07A14C02DB7003CC962 /* Singleton Managers */,
+				FE2D7C5D1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.h */,
+				FE2D7C5E1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.m */,
 				FEACF04C14C027F8003CC962 /* AppDelegate.h */,
 				FEACF04D14C027F8003CC962 /* AppDelegate.m */,
 				FEACF04F14C027F8003CC962 /* FavouritesViewController.h */,
@@ -551,6 +556,7 @@
 				FE1E6A6814CA772100730B54 /* AboutScreenViewController.m in Sources */,
 				FE12D57414E4FB1F00AAA725 /* MarqueeLabel.m in Sources */,
 				FEE82D351500E998004AEEF6 /* UserTouchCaptureView.m in Sources */,
+				FE2D7C5F1508FF7E0080A5D6 /* StatusBarMsgAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,6 +680,10 @@
 		FEACF06614C027F8003CC962 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -692,7 +702,7 @@
 			buildSettings = {
 				ARCHS = (
 					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
+					armv7,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";

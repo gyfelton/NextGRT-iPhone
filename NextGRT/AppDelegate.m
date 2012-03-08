@@ -17,7 +17,6 @@
 @implementation AppDelegate
 
 @synthesize locationServiceBecomeActive;
-@synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
 
 + (CLLocationManager*)sharedLocationManager {
@@ -48,7 +47,11 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    if (![super application:application didFinishLaunchingWithOptions:launchOptions])
+    {
+        return NO; //super is not ready, we cannot continue launch
+    }
+    
     // Override point for customization after application launch.
  
     NSSetUncaughtExceptionHandler (&uncaughtExceptionHandler);
@@ -66,7 +69,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:nav1, viewController2, nav3, nil];
 
     self.window.rootViewController = self.tabBarController;
-    self.window.backgroundColor = UITableBackgroundColor;
+//    self.window.backgroundColor = UITableBackgroundColor;
     [self.window makeKeyAndVisible];
     
     //set to YES for countdown if never set before

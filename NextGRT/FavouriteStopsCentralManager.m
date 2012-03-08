@@ -61,7 +61,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
     return name; //if empty string is returned, that means there is no custom name added
 }
 
-- (BOOL) addFavoriteStop:(Stop*)stop Name:(NSString*)name {
+- (BOOL)addFavoriteStop:(Stop*)stop Name:(NSString*)name {
     if (![self isFavouriteStop:stop]) {
         //use mutable dictionary so that we can modify custom name in the future
         NSMutableDictionary* stopDict = [[NSMutableDictionary alloc] initWithObjects:
@@ -74,6 +74,23 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
     } else {
         return NO;
     }
+}
+
+- (BOOL)editFavoriteStop:(Stop*)stop Name:(NSString*)name {
+    if ([self isFavouriteStop:stop]) {
+        for( NSMutableDictionary* dict in _favStopDicts ) {
+            NSString* str = [dict objectForKey:STOP_ID_KEY];
+            if( [str compare:[stop stopID]] == NSOrderedSame ) {
+                [dict setValue:name forKey:STOP_CUSTOM_NAME_KEY];
+                [self saveFavStops];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+                return YES;
+            }
+        }
+       
+    } else {
+    }
+    return NO;
 }
 
 - (BOOL) moveStopAtIndex:(NSInteger)sourceIndex toIndex:(NSInteger)destIndex

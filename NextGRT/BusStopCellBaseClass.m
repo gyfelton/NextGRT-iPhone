@@ -19,6 +19,7 @@
 
 #define ADD_FAV_ALERT_TAG 0
 #define REMOVE_FAV_ALERT_TAG 1
+#define EDIT_FAV_ALERT_TAG 2
 
 @implementation BusStopCellBaseClass
 
@@ -172,7 +173,7 @@
             customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
             customNameField_.delegate = self;
             [customNameField_ setSelected:YES];
-            customNameField_.placeholder = local(@"enter the nickname here");
+            //customNameField_.placeholder = local(@"enter the nickname here");
             
             [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
             [alert_ show];
@@ -187,7 +188,39 @@
             
             [alert_ show];
         }
+    } else
+    {
+        //edit the nickname!
+        alert_ = [[UIAlertView alloc] initWithTitle:local(@"Change Nickname")
+                                            message:local(@"Or leave it blank to erase nickname\n\n\n")
+                                           delegate:self 
+                                  cancelButtonTitle:local(@"Cancel") otherButtonTitles:local(@"Done"), nil];
+        alert_.tag = EDIT_FAV_ALERT_TAG;
+        
+        customNameField_ = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,30)];
+        //        customNameField_.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 13, 10)];
+        customNameField_.borderStyle = UITextBorderStyleBezel;
+        customNameField_.clearButtonMode = UITextFieldViewModeWhileEditing;
+        customNameField_.leftViewMode = UITextFieldViewModeAlways;
+        customNameField_.layer.cornerRadius = 5.0f;
+        customNameField_.font = [UIFont systemFontOfSize:18];
+        customNameField_.backgroundColor = [UIColor whiteColor];
+        customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
+        customNameField_.delegate = self;
+        [customNameField_ setSelected:YES];
+        customNameField_.placeholder = name_.text;
+        //customNameField_.placeholder = local(@"enter the nickname here");
+        
+        [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
+        [alert_ show];
+        
+        [alert_ addSubview:customNameField_];
     }
+}
+
+- (void)askForEditingOfNickName
+{
+    [self favPressed]; //as if fav is pressed to trigger editing
 }
 
 #pragma mark - Text Field Delegate
@@ -237,6 +270,14 @@
         
         //refresh the cell's name (remove custom name)
         [self initCellInfoWithStop:stop_];
+    } else
+    {
+        if (buttonIndex == SKIP_INDEX) {
+            //do nothing
+        } else
+        {
+            [[FavouriteStopsCentralManager sharedInstance] editFavoriteStop:stop_ Name:[customNameField_ text]];
+        }
     }
 }
 
@@ -250,6 +291,7 @@
 
 - (void)dealloc
 {
+    
 }
 
 @end

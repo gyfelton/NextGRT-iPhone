@@ -136,6 +136,15 @@
         _stopTableVC.tableView.transform = CGAffineTransformIdentity;
         [UIView commitAnimations];
 
+        //add msg to guide user to open the stop during first launch
+        NSString *alreadySeenKey = [NSString stringWithFormat:@"ALREADY_SHOW_CLICK_CELL_EXPAND_HINT_KEY_FOR_%@", [NSString stringWithFormat:@"Version_%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]];
+        
+        BOOL hasShown = [[NSUserDefaults standardUserDefaults] boolForKey:alreadySeenKey];
+        if (!hasShown) {
+            StatusBarMsgAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate showMessageAtStatusBarWithText:local(@"Click any stop below to reveal bus list") duration:3.3f animated:YES];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:alreadySeenKey];
+        }
     } else {
         //enable/disable loadmorebutton accordingly
         _stopTableVC.needLoadMoreButton = _areNearbyStops;

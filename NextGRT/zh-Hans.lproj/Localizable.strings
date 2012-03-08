@@ -6,6 +6,10 @@
   Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 */
 
+//StatusBarMsg
+"Tab a stop to change nickname" = "点击车站可以更改备注名称";
+"Click any stop below to reveal bus list" = "点击下面任何一个车站即可展开车次信息";
+
 //More
 "Show Countdown" = "以倒计时显示下一班";
 "Show Actual Time" = "以实际时间显示下一班";
@@ -31,7 +35,12 @@
 "You can assign a nickname:\n\n\n" = "你可以给一个备注:\n\n\n";
 "Skip" = "跳过";
 "Done" = "完成";
-"enter the nickname here" = "在这里输入昵称";
+"enter the nickname here" = "在这里输入备注";
+
+//Edit nickname msgs
+"Change Nickname" = "更改备注";
+"Or leave it blank to erase nickname\n\n\n" = "或留空点击“完成”即可清除当前备注\n\n\n";
+
 "Remove Favourite Stop" = "从收藏中删除这个车站";
 "Are you sure to do so?" = "确定吗？";
 "Cancel" = "取消";

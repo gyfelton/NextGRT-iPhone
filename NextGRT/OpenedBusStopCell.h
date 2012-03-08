@@ -22,6 +22,8 @@
     NSMutableArray *_detailCellTimerOverlay;
 }
 
+- (void)removeAllTimerOverlayFromSuperView;
+
 @property (nonatomic, readonly) NSMutableArray *detailCellTimerOverlay;
 //used for timer
 @property (nonatomic, unsafe_unretained) UITableViewController *parentTableViewController;
