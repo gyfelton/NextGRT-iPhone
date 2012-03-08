@@ -57,7 +57,7 @@
     _statusBarMsgViewLabel.textColor = [UIColor whiteColor];
     _statusBarMsgViewLabel.shadowColor = [UIColor blackColor];
     _statusBarMsgViewLabel.shadowOffset = CGSizeMake(0, 1);
-    _statusBarMsgViewLabel.font = [UIFont boldSystemFontOfSize:16];
+    _statusBarMsgViewLabel.font = [UIFont boldSystemFontOfSize:15];
     _statusBarMsgView.backgroundColor = [UIColor colorWithRed:0.12f green:0.69f blue:0.99f alpha:1.0f];
     
     _statusBarMsgView.hidden = NO;
