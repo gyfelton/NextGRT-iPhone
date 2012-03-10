@@ -21,7 +21,7 @@
 "click here to resume \n locating your position" = "点击这里以继续定位您的位置";
 "Loading..." = "载入中...";
 "No result found" = "没有找到对应的车站";
-"Type a 4-digit Bus Stop Number" = "输入4位车站编号以搜索";
+"Type road name or 4-digit bus stop ID" = "输入车站名或4位车站编号";
 
 //bus stop
 "next bus: " = "下一班: ";
@@ -39,7 +39,7 @@
 
 //Edit nickname msgs
 "Change Nickname" = "更改备注";
-"Or leave it blank to erase nickname\n\n\n" = "或留空点击“完成”即可清除当前备注\n\n\n";
+"Or leave it blank to erase nickname\n\n\n" = "或留空再点击“完成”即可清除当前备注\n\n\n";
 
 "Remove Favourite Stop" = "从收藏中删除这个车站";
 "Are you sure to do so?" = "确定吗？";
@@ -67,6 +67,8 @@
 "NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)" = "NextGRT 崩溃报告&body=NextGRT 因为意外事件必须退出，请点击“发送”发送这封邮件以协助我们改善这个应用 :-)";
 
 //Search
+"Search Result" = "搜索结果";
+"Enter stop name, road name or bus stop ID" = "输入车站名、路名或者车站ID";
 "Searching neayby stops..." = "寻找附近的车站中...";
 "You can also search bus stops above" = "您也可以直接点击上方的搜索框搜索车站";
 "click here to resume \n locating your position" = "点击以重新载入当前位置";

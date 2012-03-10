@@ -203,6 +203,9 @@
     //stop geolocation updating
     [_locationManager stopUpdatingLocation];
     
+    [self.view bringSubviewToFront:_searchBar];
+    controller.searchBar.prompt = local(@"Enter stop name, road name or bus stop ID");
+    
     //update main title, tips and show switch
     _hintButton.hidden = NO;
     [_hintButton setTitle:local(@"click here to resume \n locating your position") forState:UIControlStateNormal];
@@ -217,6 +220,7 @@
 
 - (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
     //controller.searchBar.placeholder = @"Bus Stop Quick Search";
+    controller.searchBar.prompt = @"";
     searchResults = nil;
 }
 
@@ -262,6 +266,14 @@
 //    return 0;
 //}
 
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if ([searchResults count] != 0) {
+        return local(@"Search Result");
+    }
+    return nil;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if( [searchResults count] == 0 ) {
         return 1;
@@ -296,12 +308,10 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         } else {
-            cell.textLabel.text = local(@"Type a 4-digit Bus Stop Number");
+            cell.textLabel.text = local(@"Type road name or 4-digit bus stop ID");
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
         }
-        
     }
     return cell;
 }
@@ -332,6 +342,7 @@
         [[GRTDatabaseManager sharedManager] queryBusRoutesForStops:self.stops withDelegate:self];
         
         //dismiss the search display VC
+        _searchDisplayVC.searchBar.prompt = @"";
         [_searchDisplayVC setActive:NO animated:YES];
     }
 }
@@ -351,16 +362,18 @@
     
 	// Do any additional setup after loading the view, typically from a nib.
     //init the search bar and its controller
-    _searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
     
+    _searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
+//    [_searchDisplayVC performSelector:@selector(setSearchBar:)withObject:_searchBar];
     _searchDisplayVC.delegate = self;
     _searchDisplayVC.searchResultsDataSource = self;
     _searchDisplayVC.searchResultsDelegate = self;
+    //[_searchBar setTintColor:[UIColor colorWithRed:0.427f green:0.514f blue:0.637 alpha:1.0f]];
     _searchTextReachCriteria = NO;
     _searchResultsReturned = NO;
     
     //as we search stop number only by now
-    _searchDisplayVC.searchBar.keyboardType = UIKeyboardTypeNumberPad;
+    _searchDisplayVC.searchBar.keyboardType = UIKeyboardTypeDefault;
     
     _currLocation = nil;
     

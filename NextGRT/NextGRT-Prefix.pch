@@ -33,6 +33,7 @@
 #define kFavStopArrayDidUpdate @"FavStopArrayDidUpdate"
 
 #define kQueryStopIDs @"SELECT * FROM stops WHERE stop_id LIKE '%@%%'"
+#define kQueryStopName @"SELECT * FROM stops WHERE stop_name LIKE '%%%@%%'"
 #define kQueryFilterGroupByStopName @" GROUP BY stop_name "
 
 #define kQueryStopsWithStopName @"SELECT * FROM stops WHERE stop_name = '%@' ORDER BY stop_id"
