@@ -186,7 +186,15 @@
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
     if( [searchString length] > 1 ) {
         self.searchResults = nil;
-        [[GRTDatabaseManager sharedManager] queryStopIDs:[[NSArray alloc] initWithObjects:searchString, nil] withDelegate:self groupByStopName:YES];
+        //pre-process the string to determine search by ID or search by name
+        if ([searchString intValue] > 9) {
+            //its a number, search by ID
+            [[GRTDatabaseManager sharedManager] queryStopIDs:[[NSArray alloc] initWithObjects:searchString, nil] withDelegate:self groupByStopName:YES];
+        } else
+        {
+            //search by name
+            [[GRTDatabaseManager sharedManager] queryStopIDsUsingName:searchString withDelegate:self groupByStopName:YES];
+        }
         _searchTextReachCriteria  = YES;
         _searchResultsReturned = YES;
     } else {

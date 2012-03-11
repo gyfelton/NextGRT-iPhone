@@ -106,9 +106,11 @@
         if( !cell ) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"needMoreButton"];
         }
-        
+        cell.textLabel.numberOfLines = 2;
         if( [[super stops] count] == 0 ) { //if there is no stop found, ask user to expand search radius
-            cell.textLabel.text = local(@"No stop nearby. Click to expand search radius.");
+            cell.textLabel.text = local(@"No stops nearby. Click here to expand search radius.");
+            cell.textLabel.textColor = [UIColor darkGrayColor];
+            cell.textLabel.font = [UIFont systemFontOfSize:14];
         } else {
             cell.textLabel.text = local(@"Load more stops...");
         }

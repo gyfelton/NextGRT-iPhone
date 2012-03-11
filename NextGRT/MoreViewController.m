@@ -8,6 +8,7 @@
 
 #import "MoreViewController.h"
 #import "AboutScreenViewController.h"
+#import "AppDelegate.h"
 
 @implementation MoreViewController
 
@@ -20,15 +21,6 @@
         //        self.tabBarItem.image = [UIImage imageNamed:@"first"];
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:3];
         self.title = local(@"More");
-    }
-    return self;
-}
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -99,10 +91,57 @@
 //    return 0;
 //}
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    switch (section) {
+        case 0:
+            return 2;
+            break;
+        case 1:
+            return 1;
+            break;
+        case 2:
+            return 2;
+            break;
+        default:
+            break;
+    }
     // Return the number of rows in the section.
-    return 4;
+    return 0;
+}
+
+- (void)segmentedControlDidToggle:(UISegmentedControl*)sender
+{
+    if (sender.selectedSegmentIndex == 0) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"en", nil] forKey:@"AppleLanguages"];
+        AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+        [delegate showMessageAtStatusBarWithText:@"Restart Next GRT to change language" duration:3.3f animated:YES];
+    } else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithObjects:@"zh-Hans", nil] forKey:@"AppleLanguages"];
+        AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+        [delegate showMessageAtStatusBarWithText:@"请重新启动 Next GRT 使设置生效" duration:3.3f animated:YES];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return local(@"Settings");
+            break;
+        case 2:
+            return local(@"Recommendations");
+        default:
+            break;
+    }
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,7 +153,34 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    switch (indexPath.row) {
+    int switchCase = -1;
+    switch (indexPath.section) {
+        case 0:
+            if (indexPath.row == 0) {
+                switchCase=0;
+            }
+            if (indexPath.row == 1) {
+                switchCase = 1;
+            }
+            break;
+        case 1:
+            if (indexPath.row == 0) {
+                switchCase = 2;
+            }
+            break;
+        case 2:
+            if (indexPath.row == 0) {
+                switchCase=3;
+            }
+            if (indexPath.row == 1) {
+                switchCase = 4;
+            }
+            break;
+        default:
+            break;
+    }
+    
+    switch (switchCase) {
         case 0:
         {
             cell.textLabel.adjustsFontSizeToFitWidth = YES;
@@ -162,11 +228,27 @@
             break;
         case 2:
         {
+            UISegmentedControl *segmentControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"English", @"中文", nil]];
+            segmentControl.segmentedControlStyle = UISegmentedControlStyleBar;
+            NSArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
+            if ([[array objectAtIndex:0] isEqualToString:@"zh-Hans"]) {
+                segmentControl.selectedSegmentIndex = 1;
+            } else
+            {
+                segmentControl.selectedSegmentIndex = 0;
+            }
+            cell.textLabel.text = local(@"Change language");
+            cell.accessoryView = segmentControl;
+            [segmentControl addTarget:self action:@selector(segmentedControlDidToggle:) forControlEvents:UIControlEventValueChanged];
+        }
+            break;
+        case 3:
+        {
             cell.textLabel.text = local(@"About");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
             break;
-        case 3:
+        case 4:
         {
             cell.textLabel.text = local(@"Rate this app");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -255,15 +337,21 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
-    switch (indexPath.row) {
-        case 2:
+    
+    int switchCase = -1;
+    if (indexPath.section == 2) {
+        switchCase = indexPath.row;
+    }
+    
+    switch (switchCase) {
+        case 0:
         {
             AboutScreenViewController* about = [[AboutScreenViewController alloc] initWithNibName:@"AboutScreenViewController" bundle:nil];
             
             [self.navigationController pushViewController:about animated:YES];
         }
             break;
-        case 3:
+        case 1:
         {
             NSString *str = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa";
             str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str]; 
@@ -274,6 +362,7 @@
             str = [NSString stringWithFormat:@"%@%@", str, appID]; 
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+            [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO animated:YES];
         }
             break;
         default:

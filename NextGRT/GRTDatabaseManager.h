@@ -41,6 +41,9 @@
 
 - (void) queryBusRoutesForStops:(NSMutableArray*)stops withDelegate:(id)object;
 
+//used solely for search using name for now
+- (void) queryStopIDsUsingName:(NSString*)name withDelegate:(id<GRTDatabaseManagerDelegate>)object groupByStopName:(BOOL) groupByStopName;
+
 - (NSMutableArray*) queryAllStopsWithStopName:(NSString*)stopName;
 
 @end

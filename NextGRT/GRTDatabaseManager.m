@@ -116,6 +116,36 @@ static GRTDatabaseManager* sharedManager = nil;
     }
 }
 
+- (void) queryStopIDsUsingName:(NSString*)name withDelegate:(id<GRTDatabaseManagerDelegate>)object groupByStopName:(BOOL) groupByStopName {
+    // Setup the database object
+    NSMutableArray* results = [[NSMutableArray alloc] init];
+    
+    // Setup the SQL Statement and compile it for faster access
+    NSString* completeSQLStmt = [NSString stringWithFormat:kQueryStopName, name];
+    if (groupByStopName) {
+        completeSQLStmt = [completeSQLStmt stringByAppendingString:kQueryFilterGroupByStopName];
+    }
+    
+    FMResultSet *s = [_db executeQuery:completeSQLStmt];
+    while ([s next]) {
+        // Read the data from the result row
+        //TODO check char* return is null or not before format to string
+        float lat = [s doubleForColumn:@"stop_lat"];
+        float lon = [s doubleForColumn:@"stop_lon"];
+        
+        
+        NSString *stopID = [s stringForColumn:@"stop_id"];
+        NSString *stopName = [s stringForColumn:@"stop_name"];
+        
+        // Create a new animal object with the data from the database
+        Stop* theStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon];
+        [results addObject:theStop];
+    }
+    if (object && [object respondsToSelector:@selector(stopInfoArrayReceived:)]) {
+        [object stopInfoArrayReceived:results];
+    }
+}
+
 - (void) calculateLatLonBaseOffset:(CLLocation*)location {
     //base on 100m and 45 degree bearing, 200m,300m and so on is linear relationship(approximation)
     //6371:earth's radius

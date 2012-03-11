@@ -11,6 +11,9 @@
 "Click any stop below to reveal bus list" = "点击下面任何一个车站即可展开车次信息";
 
 //More
+"Settings" = "设置";
+"Recommendations" = "推荐";
+"Change language" = "更改语言";
 "Show Countdown" = "以倒计时显示下一班";
 "Show Actual Time" = "以实际时间显示下一班";
 "About" = "关于这个应用";
@@ -53,7 +56,7 @@
 "h" = "小时";
 "min" = "分钟";
 
-"No stop nearby. Click to expand search radius." = "找不到车站，点击这里扩大搜索范围";
+"No stops nearby. Click here to expand search radius." = "找不到车站，点击这里扩大搜索范围";
 "Load more stops..." = "载入更多车站...";
 
 "Never Updated" = "从未更新";

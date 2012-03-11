@@ -78,6 +78,12 @@ void uncaughtExceptionHandler(NSException *exception) {
         [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"bool"] forKey:USER_DEFAULT_KEY_COUNTDOWN];
     }
     
+    //set YES to show actual time if never set before
+    NSDictionary *actualTime = [[NSUserDefaults standardUserDefaults] dictionaryForKey:USER_DEFAULT_KEY_ACTUAL_TIME];
+    if (!actualTime) { 
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"bool"] forKey:USER_DEFAULT_KEY_ACTUAL_TIME];
+    }
+    
     return YES;
 }
 
