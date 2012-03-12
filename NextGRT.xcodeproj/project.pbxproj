@@ -72,6 +72,7 @@
 		FEE7117214E6C683000EFE94 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE7117114E6C683000EFE94 /* MapKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		FEE82D351500E998004AEEF6 /* UserTouchCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE82D341500E998004AEEF6 /* UserTouchCaptureView.m */; };
 		FEF5D83D14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */; };
+		FEF7419D150E6429003E0BC8 /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7419C150E6429003E0BC8 /* AutoScrollLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FEFCC15C14C9265C0037B0D9 /* star_empty_big.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15814C9265C0037B0D9 /* star_empty_big.png */; };
 		FEFCC15D14C9265C0037B0D9 /* star_empty_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15914C9265C0037B0D9 /* star_empty_big@2x.png */; };
 		FEFCC15E14C9265C0037B0D9 /* star_full_big.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC15A14C9265C0037B0D9 /* star_full_big.png */; };
@@ -178,6 +179,8 @@
 		FEE82D331500E998004AEEF6 /* UserTouchCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTouchCaptureView.h; sourceTree = "<group>"; };
 		FEE82D341500E998004AEEF6 /* UserTouchCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTouchCaptureView.m; sourceTree = "<group>"; };
 		FEF5D83C14C89945002ABB2E /* GRTDataBase_20Jan2012.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = GRTDataBase_20Jan2012.sqlite; sourceTree = "<group>"; };
+		FEF7419B150E6429003E0BC8 /* AutoScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoScrollLabel.h; sourceTree = "<group>"; };
+		FEF7419C150E6429003E0BC8 /* AutoScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoScrollLabel.m; sourceTree = "<group>"; };
 		FEFCC15814C9265C0037B0D9 /* star_empty_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_empty_big.png; sourceTree = "<group>"; };
 		FEFCC15914C9265C0037B0D9 /* star_empty_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star_empty_big@2x.png"; sourceTree = "<group>"; };
 		FEFCC15A14C9265C0037B0D9 /* star_full_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_full_big.png; sourceTree = "<group>"; };
@@ -311,6 +314,8 @@
 		FEACF04314C027F8003CC962 /* NextGRT */ = {
 			isa = PBXGroup;
 			children = (
+				FEF7419B150E6429003E0BC8 /* AutoScrollLabel.h */,
+				FEF7419C150E6429003E0BC8 /* AutoScrollLabel.m */,
 				FE12D57214E4FB1E00AAA725 /* MarqueeLabel.h */,
 				FE12D57314E4FB1F00AAA725 /* MarqueeLabel.m */,
 				FE23BD0F14C96CD5009154C0 /* MBProgressHUD */,
@@ -557,6 +562,7 @@
 				FE12D57414E4FB1F00AAA725 /* MarqueeLabel.m in Sources */,
 				FEE82D351500E998004AEEF6 /* UserTouchCaptureView.m in Sources */,
 				FE2D7C5F1508FF7E0080A5D6 /* StatusBarMsgAppDelegate.m in Sources */,
+				FEF7419D150E6429003E0BC8 /* AutoScrollLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

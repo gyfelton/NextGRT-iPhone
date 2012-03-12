@@ -95,7 +95,7 @@
         fav_.selected = YES;
         
         NSString* result = [[FavouriteStopsCentralManager sharedInstance] getCustomNameForStop:stop];
-        if( [result length] != 0 ) {
+        if( [result length] != 0 || ![result isEqualToString:@""]) {
             //if there is indeed a custom name, make it as main title
             name_.text = result;
             extraInfo_.text = [NSString stringWithFormat:@"%@, %@", stop.stopName, stop.stopID];
@@ -126,7 +126,7 @@
     //numRoutesToDisplay = numRoutesToDisplay>=3 ? 3:numRoutesToDisplay;
     
     if (numRoutesToDisplay != 0) {
-        availableRoutes_.text = local(@"Bus routes: ");
+        availableRoutes_.text = numRoutesToDisplay==1?local(@"Bus route in op: ") : local(@"Bus routes in op: ");
         for (int i=0; i<numRoutesToDisplay; i++) {
             //        if( i != 2 ) {
             //            UILabel* label = [routesAndTimes_ objectAtIndex:i];

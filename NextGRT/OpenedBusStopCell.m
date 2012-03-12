@@ -171,7 +171,12 @@
     }
     BusRoute* route = [stop_.busRoutes objectAtIndex:[indexPath row]];
     
-    ((RouteDetailCell*)cell).routeNumber.text = [NSString stringWithFormat:@"%@%@", route.fullRouteNumber, [route getNextBusDirection]];
+    [((RouteDetailCell*)cell).routeNumber setText:[NSString stringWithFormat:@"%@%@", route.fullRouteNumber, [route getNextBusDirection]]];
+    
+    if ([((RouteDetailCell*)cell).routeNumber.text  length] <= 0 || [((RouteDetailCell*)cell).routeNumber.text  isEqualToString:@""]) {
+        NSLog(@"ERROR! empty name!!!");
+    }
+    
     ((RouteDetailCell*)cell).firstTime.text = [self generateTextForTime:1 busRoute:route];//[route getFirstArrivalTime];
     ((RouteDetailCell*)cell).secondTime.text = [self generateTextForTime:2 busRoute:route];//[route getSecondArrivalTime];
     

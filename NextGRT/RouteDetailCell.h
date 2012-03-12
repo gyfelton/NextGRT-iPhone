@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "MarqueeLabel.h"
+#import "AutoScrollLabel.h"
 
 @interface RouteDetailCell : UITableViewCell {
     UIImageView* busIcon_;
-    MarqueeLabel* routeNumber_;
-    
+    //UILabel* routeNumber_;
+    AutoScrollLabel *routeNumber_;
     UILabel* nextBusIn_;
     UILabel* _subsequentBusIn;
     UILabel* firstTime_;
@@ -22,7 +23,7 @@
     //UILabel* nextBusDirection_; //direction now merge with route number
 }
 
-@property (nonatomic, strong) MarqueeLabel* routeNumber;
+@property (nonatomic, strong) AutoScrollLabel* routeNumber;
 @property (nonatomic, strong) UILabel* firstTime;
 @property (nonatomic, strong) UILabel* secondTime;
 //@property (nonatomic, readonly) UIButton *timerBtn;

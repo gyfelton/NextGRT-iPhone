@@ -31,7 +31,8 @@
 "subsequent bus:" = "下下班:";
 "Distance from here: %dm" = "距离这里有: %d米";
 "Bus Stop ID: %@" = "车站编号: %@";
-"Bus routes: " = "巴士车次: ";
+"Bus route in op: " = "服务的巴士车次: ";
+"Bus routes in op: " = "服务的巴士车次: ";
 "No bus route available." = "没有任何巴士服务";
 
 "Favourite Stop Added!" = "  已加入到您的收藏！";
