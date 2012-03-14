@@ -199,7 +199,9 @@
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
 	// Do any additional setup after loading the view, typically from a nib.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFavStopTable) name:kFavStopArrayDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFavStopTable) name:kFavStopArrayDidUpdateNotification object:nil];
+    //reload everything when a new day arrives
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFavStopTable) name:kNewDayArrivedNotification object:nil];
     //now load the list of fav stops
     [self loadFavStopTable];
     
@@ -209,7 +211,8 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kFavStopArrayDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kFavStopArrayDidUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNewDayArrivedNotification object:nil];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }

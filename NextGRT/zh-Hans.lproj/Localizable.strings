@@ -35,7 +35,7 @@
 "Bus routes in op: " = "服务的巴士车次: ";
 "No bus route available." = "没有任何巴士服务";
 
-"Favourite Stop Added!" = "  已加入到您的收藏！";
+"Bus stop added to your favorite!" = "  车站已加入到您的收藏！";
 "You can assign a nickname:\n\n\n" = "你可以给一个备注:\n\n\n";
 "Skip" = "跳过";
 "Done" = "完成";
@@ -59,14 +59,14 @@
 
 "No stops nearby. Click here to expand search radius." = "找不到车站，点击这里扩大搜索范围";
 "Load more stops..." = "载入更多车站...";
-
+//Pull to reload hint
 "Never Updated" = "从未更新";
 "Last Updated: %@" = "上一次更新: %@";
 "Release for nearby buses..." = "松开以查找附近车站";
 "Pull down for nearby buses..." = "下拉开始查找附近车站";
 "Searching..." = "搜索中...";
-"Up-to-date." = "以更新";
-
+"Up-to-date." = "已更新";
+"Tip: Pull down to reload nearby stops" = "提示：下拉刷新重新获得附近车站信息";
 //crash report
 "NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)<br>Please also indicate below what is the operation causing the crash (such as 'click at a bus stop'):<br>"
 =

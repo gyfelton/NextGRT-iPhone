@@ -49,7 +49,7 @@ typedef enum BusStopCellType BusStopCellType;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 - (void)initCellInfoWithStop:(Stop*)stop;
-- (void)refreshRoutesInCellWithSeconds:(NSTimeInterval) seconds;
+- (void)refreshRoutesInCell;
 - (void)toggleFavButtonStatus;
 - (void)askForEditingOfNickName;
 @property BusStopCellType cellType;

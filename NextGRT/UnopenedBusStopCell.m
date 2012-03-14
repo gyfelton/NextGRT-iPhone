@@ -38,11 +38,11 @@
     
     [super initCellInfoWithStop:stop];
     
-    [self refreshRoutesInCellWithSeconds:0];
+    [self refreshRoutesInCell];
 }
 
-- (void)refreshRoutesInCellWithSeconds:(NSTimeInterval) seconds {
-    [super refreshRoutesInCellWithSeconds:seconds];
+- (void)refreshRoutesInCell{
+    [super refreshRoutesInCell];
 }
 
 //- (void) refreshRoutesTimes:(NSTimeInterval) timeElapsed {

@@ -7,6 +7,7 @@
 //
 
 #import "Stop.h"
+#import "BusRoute.h"
 
 @implementation Stop
 
@@ -26,8 +27,18 @@
     return self;
 }
 
-- (void) assignBusRoutes:(NSArray*)routes {
-    self.busRoutes = routes;
+- (void)assignBusRoutes:(NSArray*)routes {
+    self.busRoutes = [NSMutableArray arrayWithArray:routes];
+}
+
+- (void)cleanNoServiceBus
+{
+    for (int i =0; i < [busRoutes_ count]; i++) {
+        BusRoute *route = [busRoutes_ objectAtIndex:i];
+        if (![route hasAnyMoreServices]) {
+            [busRoutes_ removeObjectAtIndex:i];
+        }
+    }
 }
 
 - (int) numberOfBusRoutes {
@@ -47,6 +58,7 @@
 - (void)dealloc {
     self.stopID = nil;
     self.stopName = nil;
+    self.busRoutes = nil;
 }
 
 @end

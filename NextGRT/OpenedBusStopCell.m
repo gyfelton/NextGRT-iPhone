@@ -51,8 +51,8 @@
     return self;
 }
 
-- (void)refreshRoutesInCellWithSeconds:(NSTimeInterval) seconds {   
-    [super refreshRoutesInCellWithSeconds:seconds];
+- (void)refreshRoutesInCell {   
+    [super refreshRoutesInCell];
     int distance = [stop_ distanceFromCurrPositionInMeter];
     if( distance != -1 ) {
         availableRoutes_.text = [NSString stringWithFormat:local(@"Distance from here: %dm"), distance];
@@ -69,7 +69,7 @@
     //need to adjust frame of detailTable based on number of routes
     detailTable_.frame = CGRectMake(detailTable_.frame.origin.x, detailTable_.frame.origin.y, detailTable_.frame.size.width, [stop_.busRoutes count]*OPENED_CELL_INTERNAL_CELL_HEIGHT + 20);
     [detailTable_ reloadData];
-    [self refreshRoutesInCellWithSeconds:0];
+    [self refreshRoutesInCell];
 }
 
 #pragma mark - UITable DataSource
@@ -178,8 +178,17 @@
     }
     
     ((RouteDetailCell*)cell).firstTime.text = [self generateTextForTime:1 busRoute:route];//[route getFirstArrivalTime];
-    ((RouteDetailCell*)cell).secondTime.text = [self generateTextForTime:2 busRoute:route];//[route getSecondArrivalTime];
+    NSString *secondText = [self generateTextForTime:2 busRoute:route];//[route getSecondArrivalTime];
     
+    // show red text when no more service
+    if ( [secondText isEqualToString:local(@"No more service")] ) {
+        ((RouteDetailCell*)cell).secondTime.textColor = [UIColor redColor];
+    } else
+    {
+        ((RouteDetailCell*)cell).secondTime.textColor = [UIColor blackColor];
+    }
+    
+    ((RouteDetailCell*)cell).secondTime.text = secondText;
     //((RouteDetailCell*)cell).nextBusDirection.text = [NSString stringWithFormat:@"To: %@", [route getNextBusDirection]];
     
     if (ENABLE_NEW_FEATURES) {

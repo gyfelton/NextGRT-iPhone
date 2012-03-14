@@ -30,7 +30,8 @@
 #define kDatabaseName   @"GRTDataBase_20Jan2012"
 //#define kStopInfoQuery  @"stopInfoFor%@"
 
-#define kFavStopArrayDidUpdate @"FavStopArrayDidUpdate"
+#define kFavStopArrayDidUpdateNotification @"FavStopArrayDidUpdate"
+#define kNewDayArrivedNotification @"NewDayArrivedNotification"
 
 #define kQueryStopIDs @"SELECT * FROM stops WHERE stop_id LIKE '%@%%'"
 #define kQueryStopName @"SELECT * FROM stops WHERE stop_name LIKE '%%%@%%'"

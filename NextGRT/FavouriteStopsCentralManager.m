@@ -69,7 +69,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
                                     forKeys:[NSArray arrayWithObjects: STOP_ID_KEY, STOP_CUSTOM_NAME_KEY, nil]];
         [_favStopDicts addObject:stopDict];
         [self saveFavStops];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdateNotification object:nil];
         return YES;
     } else {
         return NO;
@@ -83,7 +83,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
             if( [str compare:[stop stopID]] == NSOrderedSame ) {
                 [dict setValue:name forKey:STOP_CUSTOM_NAME_KEY];
                 [self saveFavStops];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdateNotification object:nil];
                 return YES;
             }
         }
@@ -100,7 +100,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
         [_favStopDicts removeObjectAtIndex:sourceIndex];
         [_favStopDicts insertObject:stopDict atIndex:destIndex];
         [self saveFavStops];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdateNotification object:nil];
         return YES;
     } else
     {
@@ -115,7 +115,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
         if( [str compare:[stop stopID]] == NSOrderedSame ) {
             [_favStopDicts removeObjectAtIndex:i];
             [self saveFavStops];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdateNotification object:nil];
             return YES;
             break;
         }
@@ -128,7 +128,7 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
     if ([_favStopDicts count]>index) {
         [_favStopDicts removeObjectAtIndex:index];
         [self saveFavStops];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdate object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFavStopArrayDidUpdateNotification object:nil];
         return YES;
     } else
     {

@@ -43,11 +43,13 @@
     [nextArrivalDirection_ addObject:direction];
 }
 
-- (void) refreshCountDownWithSeconds:(NSTimeInterval)seconds {
+- (void) refreshCountDown {
     //simply modify every countDown object
-    for( CountDown* countDown in nextBusCountDown_ ) {
-        countDown.countDown = countDown.countDown - seconds;
-    }
+//    for( CountDown* countDown in nextBusCountDown_ ) {
+//        countDown.countDown = countDown.countDown - seconds;
+//    }
+    [nextBusCountDown_ removeAllObjects];
+    [self initNextArrivalCountDownBaesdOnTime:[NSDate date]];
 }
 
 - (NSString*) getArrivalTime:(int) index {
@@ -69,7 +71,7 @@
 }
 
 - (NSString*) getNextBusDirection {
-    if( [nextArrivalDirection_ count] > 1 ) {
+    if( [nextArrivalDirection_ count] > 0 ) {
         return [nextArrivalDirection_ objectAtIndex:0];
     }
     return @"";
@@ -88,11 +90,7 @@
 
 - (NSString*) getSecondArrivalTime {
     NSString* result = [self getArrivalTime:1];
-    if( [result compare:[NSString stringWithString:@"No service"]] == NSOrderedSame ) {
-        return [NSString stringWithString:local(@"No more service")];
-    } else {
-        return result;
-    }
+    return result;
 }
 
 - (NSString*) getSecondArrivalActualTime {
@@ -114,7 +112,8 @@
     
     //TODO nextArrival should be nextDeparture
     //loop through every nextArrivalTime and calculate the count down
-    for( NSString* nextArrivalTime in nextArrivalTimes_ ) {
+    for( int i = 0; i < [nextArrivalTimes_ count]; i++ ) {
+        NSString* nextArrivalTime = [nextArrivalTimes_ objectAtIndex:i];
         int offset = 0;
         NSString *adjustedTime = [nextArrivalTime copy];
         //Problem: the query actually return with some time as "24:13:00" which whill not be parsed correctly
@@ -140,14 +139,29 @@
             //countdown will be negative if next arrival is like 24:14:00
             NSTimeInterval countDown = [nextArrivalTimeInNSDate timeIntervalSinceDate:time];
             countDown += offset * 3600; //add the missing hours back to countDown
-            CountDown* c = [[CountDown alloc] initWithTimeInterval:countDown];
-            [nextBusCountDown_ addObject: c];
+            
+            //here check whether count down is negative
+            if (countDown > 0) {
+                CountDown* c = [[CountDown alloc] initWithTimeInterval:countDown];
+                [nextBusCountDown_ addObject: c];
+            } else
+            {
+                //don't add to nextBusCountDown;
+                //delete this nextTimeArrival:
+                [nextArrivalTimes_ removeObjectAtIndex:i];
+            }
             
             //NSLog(@"time countdown: %f", diff);
         } else {
             NSLog(@"ERROR! invalid nextArrivalTimeInNSDate");
         }   
     }
+}
+
+- (BOOL)hasAnyMoreServices
+{
+    //if has more count down, that means still have service
+    return ([nextBusCountDown_ count]>0);
 }
 
 -(NSString*) parseTimeInterval:(NSTimeInterval) diff {

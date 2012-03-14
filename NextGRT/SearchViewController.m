@@ -352,6 +352,10 @@
         //dismiss the search display VC
         _searchDisplayVC.searchBar.prompt = @"";
         [_searchDisplayVC setActive:NO animated:YES];
+        
+        //remind user that pull to reload current location
+        AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+        [delegate showMessageAtStatusBarWithText:local(@"Tip: Pull down to reload nearby stops") duration:2.2 animated:YES];
     }
 }
 
@@ -391,7 +395,9 @@
     _hintButton.titleLabel.numberOfLines = 3;
     [_hintButton addTarget:self action:@selector(hintButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:kFavStopArrayDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:kFavStopArrayDidUpdateNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didResumeFromBackground:) name:kNewDayArrivedNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didResumeFromBackground:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
@@ -402,7 +408,8 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kFavStopArrayDidUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kFavStopArrayDidUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNewDayArrivedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

@@ -17,12 +17,12 @@
     
     double distanceFromCurrPositionInMeter_; //note: this is optional, if invalid, will just init as -1
     
-    NSArray* busRoutes_;
+    NSMutableArray* busRoutes_;
     //NSString* locationType;
     //NSString* zoneID;
 }
 
-@property (nonatomic, retain) NSArray* busRoutes;
+@property (nonatomic, retain) NSMutableArray* busRoutes;
 @property (nonatomic, retain) NSString* stopName;
 @property (nonatomic, retain) NSString* stopID;
 @property BOOL isFav;
@@ -33,6 +33,7 @@
 - (id) initWithStopID:(NSString*)stopID AndStopName:(NSString*)stopName Lat:(float)lat Lon:(float)lon;
 - (id) initWithStopID:(NSString*)stopID AndStopName:(NSString*)stopName Lat:(float)lat Lon:(float)lon distanceFromCurrPosition:(double)distance;
 - (void) assignBusRoutes:(NSArray*)routes;
+- (void)cleanNoServiceBus;
 - (int) numberOfBusRoutes;
 - (int) distanceFromCurrPosition;
 @end

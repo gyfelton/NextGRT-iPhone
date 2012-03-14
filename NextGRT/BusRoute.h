@@ -16,19 +16,26 @@
     NSString* routeID_;
     NSString* direction_; //ex: To FairView
     
+    //just keep track of all possible times, go away with time passed by
     NSMutableArray* nextArrivalTimes_; //keep track of time of next buses
-    NSMutableArray* nextArrivalDirection_;
+
     NSMutableArray* nextBusCountDown_;
+    
+    //should not keep count down in negative value!
+    NSMutableArray* nextArrivalDirection_;
 }
 
 @property (copy) NSString* fullRouteNumber;
 @property (copy) NSString* shortRouteNumber;
 @property (copy) NSString* routeID;
 
+
 - (id) initWithRouteNumber:(NSString*)routeNumber routeID:(NSString*)routeID direction:(NSString*)dir AndTime:(NSString*)time;
 - (void) addNextArrivalTime:(NSString*)time Direction:(NSString*) direction;
-- (void) refreshCountDownWithSeconds:(NSTimeInterval)seconds;
+- (void) refreshCountDown;
 - (void) initNextArrivalCountDownBaesdOnTime:(NSDate*)time;
+
+- (BOOL)hasAnyMoreServices;
 - (NSString*) parseTimeInterval:(NSTimeInterval) diff;
 - (NSString*) getNextBusDirection;
 

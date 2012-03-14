@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PullToRefreshTableViewController.h"
-
+#import "MBProgressHUD.h"
 #import "UserTouchCaptureView.h"
 
 #define UNOPENED_CELL_HEIGHT 65
@@ -27,10 +27,10 @@
 @end
 
 @interface BusStopBaseTableViewController : UITableViewController<UserTouchEventDelegate> {
+    MBProgressHUD *_hud;
     bool gotTimer;
-    NSTimer *_timerForUpdateTime;
-    NSTimer *_timerForRefreshView;
-    NSTimeInterval _timeTracking;
+    NSDate *_todayDate; //to keep track of whether the day has gone to tmr
+    NSTimer *_timerForUpdateTimeAndRefreshView;
     NSIndexPath* selectedCellIndexPath_;
 }
 

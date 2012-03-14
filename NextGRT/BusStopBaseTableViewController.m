@@ -11,8 +11,7 @@
 #import "OpenedBusStopCell.h"
 #import "UnopenedBusStopCell.h"
 
-#define REFRESH_INTERVAL_IN_SECONDS 30
-#define REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS 33
+#define REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS 36
 @implementation BusStopBaseTableViewController
 
 @synthesize stops, customDelegate, forFavStopVC;
@@ -47,6 +46,12 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    _hud = nil; //forget abt it first[[MBProgressHUD alloc] initWithView:self.tableView];
+    //[self.tableView addSubview:_hud];
+    //[self.tableView bringSubviewToFront:_hud];
+    //[_hud hide:NO];
+    //_hud.labelText = local(@"Processing...");
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateView) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
@@ -130,9 +135,11 @@
     //refresh timer if needed
     UITableViewCell* cell = nil;
     if( !gotTimer ) {
-        _timerForUpdateTime = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_IN_SECONDS target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
-        _timerForRefreshView = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS target:self selector:@selector(updateView) userInfo:nil repeats:NO];
+//        _timerForUpdateTime = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_IN_SECONDS target:self selector:@selector(updateTime) userInfo:nil repeats:NO];
+        _timerForUpdateTimeAndRefreshView = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS target:self selector:@selector(updateView) userInfo:nil repeats:NO];
         gotTimer = YES;
+        //register today's date once
+        _todayDate = [NSDate date];
     }
     
     if( (!selectedCellIndexPath_ || [selectedCellIndexPath_ compare:indexPath] != NSOrderedSame) )//&& [stops count] > 2 ) {
@@ -277,22 +284,75 @@
 }
 
 #pragma mark - Timer
-- (void) updateView
-{
-    NSArray* visibleCells = [self.tableView indexPathsForVisibleRows];
-    for( NSIndexPath *indexPath in visibleCells ) {
-        UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        if( [cell isKindOfClass:[BusStopCellBaseClass class]] )
-            [((BusStopCellBaseClass*)cell) refreshRoutesInCellWithSeconds:_timeTracking];
-    }
-    _timeTracking = 0;
-    _timerForRefreshView = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS target:self selector:@selector(updateView) userInfo:nil repeats:NO];
+- (BOOL)isSameDay:(NSDate*)date1 date2:(NSDate*)date2 {
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:date1];
+    NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date2];
+    
+    return [comp1 day]   == [comp2 day] &&
+    [comp1 month] == [comp2 month] &&
+    [comp1 year]  == [comp2 year];
 }
 
-- (void) updateTime {
-    //this just send a REFRESH_INTERVAL_IN_SECONDS signal to all routes telling them REFRESH_INTERVAL_IN_SECONDS has passed
-    _timeTracking += REFRESH_INTERVAL_IN_SECONDS;
+- (void)refreshCountDownAndUpdateView
+{
+    //begin refresh
+    @synchronized(self.stops)
+    {
+        //loop through every bus route to update its count down
+        for (Stop *stop in self.stops) {
+            for( BusRoute* route in stop.busRoutes ) {
+                [route refreshCountDown];
+            }
+            
+            //clean out buses no longer having services
+            [stop cleanNoServiceBus];
+        }
+    }
+    //now refresh views for visible cells
+    NSArray* visibleCells = [self.tableView indexPathsForVisibleRows];
+    for( NSIndexPath *indexPath in visibleCells ) {
+        if (indexPath.row < [self.stops count]) {
+            UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            if( [cell isKindOfClass:[BusStopCellBaseClass class]] )
+                [((BusStopCellBaseClass*)cell) refreshRoutesInCell];
+        }
+    }
+    [_hud hide:NO];
 }
+
+- (void) updateView
+{
+    //if user is scrolling, do not refresh!
+    if (self.tableView.isDragging || self.tableView.isDecelerating || self.tableView.isTracking || self.tableView.isEditing) {
+        //try again five seconds later
+        _timerForUpdateTimeAndRefreshView = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(updateView) userInfo:nil repeats:NO];
+    } else if (![self isSameDay:_todayDate date2:[NSDate date]])
+    {
+        //it already been to second day, reload today's date and immediately reconstuct whole table:
+        _todayDate = [NSDate date];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNewDayArrivedNotification object:nil];
+    }
+    {
+        _timerForUpdateTimeAndRefreshView = [NSTimer scheduledTimerWithTimeInterval:REFRESH_INTERVAL_FOR_VIEW_IN_SECONDS target:self selector:@selector(updateView) userInfo:nil repeats:NO];
+        [_hud show:NO];
+        [self refreshCountDownAndUpdateView];
+        //[self performSelector:@selector(refreshCountDownAndUpdateView) withObject:nil afterDelay:0.1f];
+    }
+}
+
+//- (void) updateTime {
+//    //this just send a REFRESH_INTERVAL_IN_SECONDS signal to all routes telling them REFRESH_INTERVAL_IN_SECONDS has passed
+////    _timeTracking += REFRESH_INTERVAL_IN_SECONDS;
+//    
+//    //synchronize cells (lock them) and refresh time for each cell
+//    @synchronized(self.stops)
+//    {
+//        
+//    }
+//}
 
 /*
 // Override to support conditional editing of the table view.
@@ -338,7 +398,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-    [_timerForUpdateTime invalidate];
+//    [_timerForUpdateTime invalidate];
 }
 
 - (void)didReceiveMemoryWarning

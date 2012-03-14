@@ -114,13 +114,7 @@
     }
 }
 
-- (void)refreshRoutesInCellWithSeconds:(NSTimeInterval) seconds {
-    //when we get the signal on number of seconds that has passed, we tell this to every route
-    //and then let sub classes to decide how to update the time
-    for( BusRoute* route in stop_.busRoutes ) {
-        [route refreshCountDownWithSeconds:seconds];
-    }
-    
+- (void)refreshRoutesInCell {
     int numRoutesToDisplay = [stop_ numberOfBusRoutes];
     //bool moreThanTwoRoues = numRoutesToDisplay>2 ? YES:NO;
     //numRoutesToDisplay = numRoutesToDisplay>=3 ? 3:numRoutesToDisplay;
@@ -156,7 +150,7 @@
         if( !isStopFav_ ) {
             [self toggleFavButtonStatus];
             
-            alert_ = [[UIAlertView alloc] initWithTitle:local(@"Favourite Stop Added!")
+            alert_ = [[UIAlertView alloc] initWithTitle:local(@"BusStop added to your favorite!")
                                                 message:local(@"You can assign a nickname:\n\n\n")
                                                delegate:self 
                                       cancelButtonTitle:local(@"Skip") otherButtonTitles:local(@"Done"), nil];
