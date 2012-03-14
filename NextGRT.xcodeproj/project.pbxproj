@@ -710,15 +710,15 @@
 					armv6,
 					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Derek Xin Zhe Li Li";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Derek Xin Zhe Li Li";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
 				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7422C748-D5BD-4EDF-9D4B-3F86E0CB1FEF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7422C748-D5BD-4EDF-9D4B-3F86E0CB1FEF";
+				PROVISIONING_PROFILE = "77B80C28-0F72-488B-9461-3C4B42002288";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77B80C28-0F72-488B-9461-3C4B42002288";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

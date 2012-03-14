@@ -68,7 +68,10 @@
 "Up-to-date." = "以更新";
 
 //crash report
-"NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)" = "NextGRT 崩溃报告&body=NextGRT 因为意外事件必须退出，请点击“发送”发送这封邮件以协助我们改善这个应用 :-)";
+"NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)<br>Please also indicate below what is the operation causing the crash (such as 'click at a bus stop'):<br>"
+=
+"NextGRT 崩溃报告&body=NextGRT 因为意外错误必须退出，请在下面描述你正在进行的动作（比如点击了“编辑”按钮)：<br><br>然后再点击右上方的“发送”发送这封邮件，以协助我们改善这个应用 :-)<br>";
+
 
 //Search
 "Search Result" = "搜索结果";

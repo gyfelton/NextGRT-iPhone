@@ -109,7 +109,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if( (selectedCellIndexPath_ && [selectedCellIndexPath_ compare:indexPath] == NSOrderedSame) ) {
+    if( (selectedCellIndexPath_ && [selectedCellIndexPath_ compare:indexPath] == NSOrderedSame && indexPath.row < [self.stops count]) ) {
         //calculate height of opened cell based on number of routes
         //if 0 route: just the base
         //else : base + INTERNAL_CELL_HEIGHT * #routes

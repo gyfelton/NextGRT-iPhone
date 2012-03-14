@@ -99,8 +99,8 @@
 //        _subsequentBusIn.shadowOffset = CGSizeMake(0, 1);
 //        _subsequentBusIn.shadowColor = [UIColor whiteColor];
         
-        //[routeNumber_ setTextShadowOffset:CGSizeMake(0, 1)];
-        //[routeNumber_ setTextShadowColor:[UIColor whiteColor]];
+        [routeNumber_ setTextShadowOffset:CGSizeMake(0, 1)];
+        [routeNumber_ setTextShadowColor:[UIColor whiteColor]];
         //routeNumber_.shadowOffset = CGSizeMake(0, 1);
         //routeNumber_.shadowColor = [UIColor whiteColor];
         

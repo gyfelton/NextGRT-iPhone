@@ -217,7 +217,7 @@
     //if this reload data is triggered by pull to refresh...
     if( self.reloading ) {
         [self dataSourceDidFinishLoadingNewData];
-        [refreshHeaderView setCurrentDate];  //  should check if location is got successfully!!! if not this date should be updated
+        [refreshHeaderView setCurrentDate];  //  should check if location is got successfully!!! if not this date should not be updated
 
     } else {
         //if it is triggered by load more button

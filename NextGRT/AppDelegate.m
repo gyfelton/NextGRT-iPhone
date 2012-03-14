@@ -35,11 +35,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSArray *arr = [exception callStackSymbols];
     NSString *reason = [exception reason];
     NSString *name = [exception name];
-    NSString *intro = local(@"NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)");
-    
+    NSString *intro = local(@"NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)<br>Please also indicate below what is the operation causing the crash (such as 'click at a bus stop'):");
     NSString *urlStr = [NSString stringWithFormat:@"mailto:gyfelton@gmail.com?subject=%@<br>"
                         "Detail info:<br>%@<br>--------------------------<br>%@<br>---------------------<br>%@", 
-                        intro,name,reason,[arr componentsJoinedByString:@"<br>"]];
+                        intro, name,reason,[arr componentsJoinedByString:@"<br>"]];
     
     NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     [[UIApplication sharedApplication] openURL:url];
