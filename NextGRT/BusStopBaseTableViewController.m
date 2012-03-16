@@ -299,17 +299,14 @@
 - (void)refreshCountDownAndUpdateView
 {
     //begin refresh
-    @synchronized(self.stops)
-    {
-        //loop through every bus route to update its count down
-        for (Stop *stop in self.stops) {
-            for( BusRoute* route in stop.busRoutes ) {
-                [route refreshCountDown];
-            }
-            
-            //clean out buses no longer having services
-            [stop cleanNoServiceBus];
+    //loop through every bus route to update its count down
+    for (Stop *stop in self.stops) {
+        for( BusRoute* route in stop.busRoutes ) {
+            [route refreshCountDown];
         }
+        
+        //clean out buses no longer having services
+        [stop cleanNoServiceBus];
     }
     //now refresh views for visible cells
     NSArray* visibleCells = [self.tableView indexPathsForVisibleRows];

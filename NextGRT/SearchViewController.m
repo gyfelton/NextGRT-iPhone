@@ -35,7 +35,10 @@
 
 - (void) didResumeFromBackground:(NSNotification*)notification
 {
-    [_locationManager startUpdatingLocation];
+    //don't do this for now
+//    [_locationManager startUpdatingLocation];
+    [_hud show:NO];
+    [_hud hide:NO afterDelay:0.5f];
 }
 
 - (void) startLoadingGeoLocation {
