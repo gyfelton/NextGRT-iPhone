@@ -8,7 +8,7 @@
 
 //StatusBarMsg
 "Tab a stop to change nickname" = "点击车站可以更改备注名称";
-"Click any stop below to reveal bus list" = "点击下面任何一个车站即可展开车次信息";
+"Tap any stop below to reveal list of buses" = "点击下面任何一个车站即可展开车次信息";
 
 //More
 "Settings" = "设置";
@@ -35,7 +35,7 @@
 "Bus routes in op: " = "服务的巴士车次: ";
 "No bus route available." = "没有任何巴士服务";
 
-"Bus stop added to your favorite!" = "  车站已加入到您的收藏！";
+"Added to your favorite!" = "  车站已加入到您的收藏！";
 "You can assign a nickname:\n\n\n" = "你可以给一个备注:\n\n\n";
 "Skip" = "跳过";
 "Done" = "完成";
@@ -51,7 +51,7 @@
 "Confirm" = "确定";
 "Please enter a name!" = "请输入一个昵称";
 "Arriving" = "到达中";
-"No more service" = "没有更多车次了";
+"No service" = "没有更多车次了";
 
 "m" = "分";
 "h" = "小时";

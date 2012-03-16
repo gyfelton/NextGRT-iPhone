@@ -57,7 +57,6 @@
         NSTimeInterval countDown = [[nextBusCountDown_ objectAtIndex:index] countDown];
         if( countDown < -30 ) {
             [nextBusCountDown_ removeObjectAtIndex:index];
-            //TODO should combine them together so that they don't exist when count down is deleted
             [nextArrivalDirection_ removeObjectAtIndex:index];
             [nextArrivalTimes_ removeObjectAtIndex:index];
         } else if( countDown < 30 ) {

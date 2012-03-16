@@ -150,7 +150,7 @@
         if( !isStopFav_ ) {
             [self toggleFavButtonStatus];
             
-            alert_ = [[UIAlertView alloc] initWithTitle:local(@"BusStop added to your favorite!")
+            alert_ = [[UIAlertView alloc] initWithTitle:local(@"Added to your favorite!")
                                                 message:local(@"You can assign a nickname:\n\n\n")
                                                delegate:self 
                                       cancelButtonTitle:local(@"Skip") otherButtonTitles:local(@"Done"), nil];

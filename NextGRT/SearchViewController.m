@@ -145,7 +145,7 @@
         BOOL hasShown = [[NSUserDefaults standardUserDefaults] boolForKey:alreadySeenKey];
         if (!hasShown) {
             StatusBarMsgAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate showMessageAtStatusBarWithText:local(@"Click any stop below to reveal bus list") duration:3.3f animated:YES];
+            [appDelegate showMessageAtStatusBarWithText:local(@"Tap any stop below to reveal list of buses") duration:3.3f animated:YES];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:alreadySeenKey];
         }
     } else {
