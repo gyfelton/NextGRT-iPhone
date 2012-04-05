@@ -164,7 +164,6 @@
 }
 
 -(NSString*) parseTimeInterval:(NSTimeInterval) diff {
-    //manually convert timeInterval to hour min and sec
     int hour = diff/3600;
     int minAndSec = (int)diff % 3600;
     int min = minAndSec / 60;

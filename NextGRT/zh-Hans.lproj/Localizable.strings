@@ -51,7 +51,7 @@
 "Confirm" = "确定";
 "Please enter a name!" = "请输入一个昵称";
 "Arriving" = "到达中";
-"No service" = "没有更多车次了";
+"No more service" = "没有更多车次了";
 
 "m" = "分";
 "h" = "小时";
@@ -59,6 +59,7 @@
 
 "No stops nearby. Click here to expand search radius." = "找不到车站，点击这里扩大搜索范围";
 "Load more stops..." = "载入更多车站...";
+
 //Pull to reload hint
 "Never Updated" = "从未更新";
 "Last Updated: %@" = "上一次更新: %@";
@@ -66,7 +67,8 @@
 "Pull down for nearby buses..." = "下拉开始查找附近车站";
 "Searching..." = "搜索中...";
 "Up-to-date." = "已更新";
-"Tip: Pull down to reload nearby stops" = "提示：下拉刷新重新获得附近车站信息";
+"Tip: Pull down to reload nearby stops" = "提示：下拉列表重新获得附近车站信息";
+
 //crash report
 "NextGRT crash report&body=NextGRT just crashed, please help us improve it by sending this crash report :-)<br>Please also indicate below what is the operation causing the crash (such as 'click at a bus stop'):<br>"
 =

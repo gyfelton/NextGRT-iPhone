@@ -182,7 +182,7 @@
     
     // show red text when no more service
     if ( [secondText isEqualToString:local(@"No more service")] ) {
-        ((RouteDetailCell*)cell).secondTime.textColor = [UIColor redColor];
+        ((RouteDetailCell*)cell).secondTime.textColor = [UIColor blueColor];//not red for now
     } else
     {
         ((RouteDetailCell*)cell).secondTime.textColor = [UIColor blackColor];

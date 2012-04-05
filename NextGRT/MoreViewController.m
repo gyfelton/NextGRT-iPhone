@@ -240,6 +240,7 @@
             cell.textLabel.text = local(@"Change language");
             cell.accessoryView = segmentControl;
             [segmentControl addTarget:self action:@selector(segmentedControlDidToggle:) forControlEvents:UIControlEventValueChanged];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
             break;
         case 3:

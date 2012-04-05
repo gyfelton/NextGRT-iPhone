@@ -11,6 +11,9 @@
 
 @class Stop;
 
+/**
+ * Cubsclass of BusStopBaseCell containing more information of a cell after it is expanded by the user
+ */
 @interface OpenedBusStopCell : BusStopCellBaseClass <UITableViewDelegate, UITableViewDataSource> {
     //UITable showing bus stops and routes
     UITableView* detailTable_;
@@ -22,9 +25,20 @@
     NSMutableArray *_detailCellTimerOverlay;
 }
 
+/**
+ *Remove all timer UI it puts on its superview
+ */
 - (void)removeAllTimerOverlayFromSuperView;
 
+/**
+ * An array of timer UI overlay
+ * readonly
+ */
 @property (nonatomic, readonly) NSMutableArray *detailCellTimerOverlay;
-//used for timer
+
+/**
+ * UITableViewController parentTableViewController
+ * link between the cell and its tableViewController for putting timer on it
+ */
 @property (nonatomic, unsafe_unretained) UITableViewController *parentTableViewController;
 @end

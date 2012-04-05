@@ -19,6 +19,7 @@
     
     MBProgressHUD *_hud;
 }
+
 @property (nonatomic, strong) NSMutableArray* favStopsDict;
 
 @end

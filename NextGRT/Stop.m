@@ -46,7 +46,12 @@
 }
 
 - (int) distanceFromCurrPosition {
-    return [[NSNumber numberWithDouble:distanceFromCurrPositionInMeter_] intValue];
+    if (distanceFromCurrPositionInMeter_) {
+            return [[NSNumber numberWithDouble:distanceFromCurrPositionInMeter_] intValue];
+    } else
+    {
+        return -1;
+    }
 }
 
 //helper function for sorting stops

@@ -208,6 +208,8 @@
 		FE1E6A6A14CA772400730B54 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				FEACF07814C02A91003CC962 /* MoreViewController.xib */,
+				FE1E6A6F14CA776200730B54 /* AboutScreenViewController.xib */,
 				FEACF07114C02A83003CC962 /* MoreViewController.h */,
 				FEACF07214C02A83003CC962 /* MoreViewController.m */,
 				FE1E6A6614CA772100730B54 /* AboutScreenViewController.h */,
@@ -237,6 +239,51 @@
 				FE23BD1114C96CE5009154C0 /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		FE2B5832152D7B26004E9DF9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FEF7419B150E6429003E0BC8 /* AutoScrollLabel.h */,
+				FEF7419C150E6429003E0BC8 /* AutoScrollLabel.m */,
+				FE12D57214E4FB1E00AAA725 /* MarqueeLabel.h */,
+				FE12D57314E4FB1F00AAA725 /* MarqueeLabel.m */,
+				FE23BD0F14C96CD5009154C0 /* MBProgressHUD */,
+				FE22D0B514C6888000429E91 /* FMDB */,
+				FEACF09214C08F27003CC962 /* EGOTableViewController */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		FE2B5834152D7B57004E9DF9 /* Favourites */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF04F14C027F8003CC962 /* FavouritesViewController.h */,
+				FEACF05014C027F8003CC962 /* FavouritesViewController.m */,
+				FEACF05D14C027F8003CC962 /* FavouritesViewController.xib */,
+			);
+			name = Favourites;
+			sourceTree = "<group>";
+		};
+		FE2B5835152D7B72004E9DF9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				FEACF05614C027F8003CC962 /* SearchViewController.h */,
+				FEACF05714C027F8003CC962 /* SearchViewController.m */,
+				FEACF06014C027F8003CC962 /* SearchViewController.xib */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		FE2B5836152D7B8E004E9DF9 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				FE2D7C5D1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.h */,
+				FE2D7C5E1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.m */,
+				FEACF04C14C027F8003CC962 /* AppDelegate.h */,
+				FEACF04D14C027F8003CC962 /* AppDelegate.m */,
+			);
+			name = AppDelegate;
 			sourceTree = "<group>";
 		};
 		FEA5E8F214C13C3800DCA3A0 /* Resources */ = {
@@ -314,30 +361,15 @@
 		FEACF04314C027F8003CC962 /* NextGRT */ = {
 			isa = PBXGroup;
 			children = (
-				FEF7419B150E6429003E0BC8 /* AutoScrollLabel.h */,
-				FEF7419C150E6429003E0BC8 /* AutoScrollLabel.m */,
-				FE12D57214E4FB1E00AAA725 /* MarqueeLabel.h */,
-				FE12D57314E4FB1F00AAA725 /* MarqueeLabel.m */,
-				FE23BD0F14C96CD5009154C0 /* MBProgressHUD */,
-				FE22D0B514C6888000429E91 /* FMDB */,
-				FEACF09214C08F27003CC962 /* EGOTableViewController */,
+				FE2B5832152D7B26004E9DF9 /* Utils */,
 				FEACF08B14C08F0A003CC962 /* BusStopTableViewController */,
 				FEACF0A314C08F7F003CC962 /* BusStopCells */,
-				FEACF08114C02E85003CC962 /* Model */,
+				FEACF08114C02E85003CC962 /* Data Models */,
 				FEACF07A14C02DB7003CC962 /* Singleton Managers */,
-				FE2D7C5D1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.h */,
-				FE2D7C5E1508FF7D0080A5D6 /* StatusBarMsgAppDelegate.m */,
-				FEACF04C14C027F8003CC962 /* AppDelegate.h */,
-				FEACF04D14C027F8003CC962 /* AppDelegate.m */,
-				FEACF04F14C027F8003CC962 /* FavouritesViewController.h */,
-				FEACF05014C027F8003CC962 /* FavouritesViewController.m */,
-				FEACF05614C027F8003CC962 /* SearchViewController.h */,
-				FEACF05714C027F8003CC962 /* SearchViewController.m */,
+				FE2B5834152D7B57004E9DF9 /* Favourites */,
+				FE2B5835152D7B72004E9DF9 /* Search */,
 				FE1E6A6A14CA772400730B54 /* More */,
-				FEACF05D14C027F8003CC962 /* FavouritesViewController.xib */,
-				FEACF06014C027F8003CC962 /* SearchViewController.xib */,
-				FEACF07814C02A91003CC962 /* MoreViewController.xib */,
-				FE1E6A6F14CA776200730B54 /* AboutScreenViewController.xib */,
+				FE2B5836152D7B8E004E9DF9 /* AppDelegate */,
 				FEA5E8F214C13C3800DCA3A0 /* Resources */,
 				FEACF04414C027F8003CC962 /* Supporting Files */,
 			);
@@ -367,7 +399,7 @@
 			name = "Singleton Managers";
 			sourceTree = "<group>";
 		};
-		FEACF08114C02E85003CC962 /* Model */ = {
+		FEACF08114C02E85003CC962 /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
 				FEACF08214C02E98003CC962 /* Stop.h */,
@@ -377,7 +409,7 @@
 				FEACF08814C02F63003CC962 /* CountDown.h */,
 				FEACF08914C02F63003CC962 /* CountDown.m */,
 			);
-			name = Model;
+			name = "Data Models";
 			sourceTree = "<group>";
 		};
 		FEACF08B14C08F0A003CC962 /* BusStopTableViewController */ = {

@@ -23,12 +23,25 @@
 
 @end
 
+/**
+ * This is a subclass of BusStopBaseTableViewController to add Pull-to-refresh ability
+ * because multiple inheritance is not allowed in Obj-C
+ */
 @interface BusStopsPullToRefreshTableViewController : BusStopBaseTableViewController {
 	EGORefreshTableHeaderView *refreshHeaderView;
 
 	BOOL _reloading;
 }
 
+/**
+ * init a new UITableViewController with the following parameters
+ * @param CGFloat width/height
+ * @param NSMutableArray s      Array of Stops to show, allow empty array
+ * @param id delegate           Delegate for PullToRefreshTableDelegate
+ * @param BOOL needMore         Indicate whether "load more" button is needed at the end of table
+ * @return A newly init BusStopsPullToRefreshTableViewController
+ */
+ 
 - (id)initWithTableWidth:(CGFloat)width Height:(CGFloat)height 
                    Stops:(NSMutableArray*)s andDelegate:(id)object
                    needLoadMoreStopsButton:(BOOL) needMore;
@@ -39,9 +52,19 @@
 
 @property BOOL needLoadMoreButton;
 
-
+/** 
+ * require to reload data and hide the loading screen
+ */
 - (void)reloadDataAndStopLoadingAnimation;
+
+/**
+ * user informs that he requires table data
+ */
 - (void)reloadTableViewDataSource;
+
+/**
+ * Datasource tells table that it has finished getting data
+ */
 - (void)dataSourceDidFinishLoadingNewData;
 
 @end

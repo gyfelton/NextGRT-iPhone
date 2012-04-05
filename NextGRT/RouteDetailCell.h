@@ -10,6 +10,9 @@
 #import "MarqueeLabel.h"
 #import "AutoScrollLabel.h"
 
+/**
+ * A UITableViewCell subclass showing info of each route for each bus stop
+ */
 @interface RouteDetailCell : UITableViewCell {
     UIImageView* busIcon_;
     //UILabel* routeNumber_;
@@ -18,14 +21,20 @@
     UILabel* _subsequentBusIn;
     UILabel* firstTime_;
     UILabel* secondTime_;
-    
-//    UIButton *_timerBtn;
-    //UILabel* nextBusDirection_; //direction now merge with route number
 }
 
+/**
+ * AutoScrollable routeNumber          route number and its headsign
+ * can be long so make it auto-scrollable
+ */
 @property (nonatomic, strong) AutoScrollLabel* routeNumber;
+
+/**
+ * UILabel firstTime/SecondTime        
+ * Showing two arrival times for each route
+ * Fully customizable
+ */
 @property (nonatomic, strong) UILabel* firstTime;
 @property (nonatomic, strong) UILabel* secondTime;
-//@property (nonatomic, readonly) UIButton *timerBtn;
-//@property (nonatomic, assign) UILabel* nextBusDirection;
+
 @end

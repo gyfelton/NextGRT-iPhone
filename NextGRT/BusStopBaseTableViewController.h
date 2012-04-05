@@ -17,13 +17,14 @@
 
 @class Stop;
 
+/*Protocol for passing events and information to viewController that owns this table view
+  These are identical to UITableView Delegate
+*/
 @protocol BusStopBaseTabeViewDelegate <NSObject>
 @optional
 - (void)tableView:(UITableView *)tableView  commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath;
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath;
-//- (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section;
-//- (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section;
 @end
 
 @interface BusStopBaseTableViewController : UITableViewController<UserTouchEventDelegate> {
@@ -38,7 +39,17 @@
 @property (nonatomic, retain) NSMutableArray* stops;
 @property (nonatomic, assign) id<BusStopBaseTabeViewDelegate> customDelegate;
 
+/**
+ *init the table with specified witdth, height and stops
+ *@param: CGFloat width/height
+ *@param: NSMutableArray s: Array of Stops, allow empty array
+ *@return: a new UITableViewController
+ */
 - (id)initWithTableWidth:(CGFloat)width Height:(CGFloat)height Stops:(NSMutableArray*)s;
+
+/**
+ *collapse all opened bus stop cells
+ */
 - (void)foldAllStops;
 
 @end

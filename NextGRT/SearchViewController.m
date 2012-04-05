@@ -358,7 +358,7 @@
         
         //remind user that pull to reload current location
         AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        [delegate showMessageAtStatusBarWithText:local(@"Tip: Pull down to reload nearby stops") duration:2.2 animated:YES];
+        [delegate showMessageAtStatusBarWithText:local(@"Tip: Pull down to reload nearby stops") duration:2.6 animated:YES];
     }
 }
 
@@ -383,6 +383,8 @@
     _searchDisplayVC.delegate = self;
     _searchDisplayVC.searchResultsDataSource = self;
     _searchDisplayVC.searchResultsDelegate = self;
+    _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+
     //[_searchBar setTintColor:[UIColor colorWithRed:0.427f green:0.514f blue:0.637 alpha:1.0f]];
     _searchTextReachCriteria = NO;
     _searchResultsReturned = NO;
