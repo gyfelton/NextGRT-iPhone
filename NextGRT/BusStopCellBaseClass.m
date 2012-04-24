@@ -88,7 +88,7 @@
 - (void)initCellInfoWithStop:(Stop*)stop {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    stop_ = stop;
+    _stop = stop;
     
     if( [[FavouriteStopsCentralManager sharedInstance] isFavouriteStop:stop] ) {
         isStopFav_ = YES;
@@ -115,7 +115,7 @@
 }
 
 - (void)refreshRoutesInCell {
-    int numRoutesToDisplay = [stop_ numberOfBusRoutes];
+    int numRoutesToDisplay = [_stop numberOfBusRoutes];
     //bool moreThanTwoRoues = numRoutesToDisplay>2 ? YES:NO;
     //numRoutesToDisplay = numRoutesToDisplay>=3 ? 3:numRoutesToDisplay;
     
@@ -135,8 +135,8 @@
             //            UILabel* label = [routesAndTimes_ objectAtIndex:i];
             //            label.text = @"";
             //        }
-            BusRoute* route = [stop_.busRoutes objectAtIndex:i];
-            NSString* comma = (i==[stop_.busRoutes count]-1)? @"" :@",";
+            BusRoute* route = [_stop.busRoutes objectAtIndex:i];
+            NSString* comma = (i==[_stop.busRoutes count]-1)? @"" :@",";
             availableRoutes_.text = [NSString stringWithFormat:@"%@%@%@ ", availableRoutes_.text, route.shortRouteNumber, comma];
         }
     } else {
@@ -250,27 +250,27 @@
             nickName = [customNameField_ text];
         }
         
-        [[FavouriteStopsCentralManager sharedInstance] addFavoriteStop:stop_ Name:nickName];
+        [[FavouriteStopsCentralManager sharedInstance] addFavoriteStop:_stop Name:nickName];
         
         //refresh the cell's name (replace name with custom name)
-        [self initCellInfoWithStop:stop_];
+        [self initCellInfoWithStop:_stop];
         
     } else if( alertView.tag == REMOVE_FAV_ALERT_TAG && buttonIndex == 1 ){
         //user confirmed to delete this fav
         [self toggleFavButtonStatus];
         [self setNeedsLayout]; //if this is not called, button will not become grey
         
-        [[FavouriteStopsCentralManager sharedInstance] deleteFavoriteStop:stop_];
+        [[FavouriteStopsCentralManager sharedInstance] deleteFavoriteStop:_stop];
         
         //refresh the cell's name (remove custom name)
-        [self initCellInfoWithStop:stop_];
+        [self initCellInfoWithStop:_stop];
     } else
     {
         if (buttonIndex == SKIP_INDEX) {
             //do nothing
         } else
         {
-            [[FavouriteStopsCentralManager sharedInstance] editFavoriteStop:stop_ Name:[customNameField_ text]];
+            [[FavouriteStopsCentralManager sharedInstance] editFavoriteStop:_stop Name:[customNameField_ text]];
         }
     }
 }

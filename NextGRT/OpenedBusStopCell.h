@@ -8,21 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "BusStopCellBaseClass.h"
+#import "RouteDetailTableViewController.h"
 
 @class Stop;
 
 /**
  * Cubsclass of BusStopBaseCell containing more information of a cell after it is expanded by the user
  */
-@interface OpenedBusStopCell : BusStopCellBaseClass <UITableViewDelegate, UITableViewDataSource> {
+@interface OpenedBusStopCell : BusStopCellBaseClass {
     //UITable showing bus stops and routes
-    UITableView* detailTable_;
+    RouteDetailTableViewController* _detailTableVC;
     
     //UILabel* distanceFromCurrPosition_;
     
     NSTimeInterval timeElapsed_;
-    
-    NSMutableArray *_detailCellTimerOverlay;
 }
 
 /**
@@ -31,14 +30,8 @@
 - (void)removeAllTimerOverlayFromSuperView;
 
 /**
- * An array of timer UI overlay
- * readonly
+ * id<UserTouchEventDelegate> parentViewController
+ * link between the cell and its viewController for putting timer on it
  */
-@property (nonatomic, readonly) NSMutableArray *detailCellTimerOverlay;
-
-/**
- * UITableViewController parentTableViewController
- * link between the cell and its tableViewController for putting timer on it
- */
-@property (nonatomic, unsafe_unretained) UITableViewController *parentTableViewController;
+@property (nonatomic, unsafe_unretained) id<UserTouchEventDelegate> parentViewController;
 @end

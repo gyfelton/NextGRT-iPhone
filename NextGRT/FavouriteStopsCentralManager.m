@@ -41,8 +41,9 @@ static FavouriteStopsCentralManager *sharedInstance_ = nil;
         NSString* str = [dict objectForKey:STOP_ID_KEY];
         if( [str compare:[stop stopID]] == NSOrderedSame ) {
             isFav = YES;
-            //for debug
-            //NSLog(@"%@ is a fav stop!", [stop stopID]);
+            if (debug) {
+                NSLog(@"%@ is a fav stop!", [stop stopID]);
+            }
             break;
         }
     }

@@ -13,12 +13,20 @@
     #import <Foundation/Foundation.h>
 #endif
 
+//Debug
+#define debug YES
+
 //variables:
-#define SHOW_MAP NO
+#define SHOW_MAP YES
 #define ENABLE_NEW_FEATURES NO
 
 //rename method:
 #define local(a) NSLocalizedString(a,a)
+
+//Utils
+#define CGRectChangeHeight(frame, height) CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, height)
+
+#define CGRectIncreaseHeight(frame, h) CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height + h)
 
 //customized strings:
 

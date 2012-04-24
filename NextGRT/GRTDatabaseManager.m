@@ -158,9 +158,11 @@ static GRTDatabaseManager* sharedManager = nil;
 
 - (void) queryNearbyStops:(CLLocation *)location withDelegate:(id<GRTDatabaseManagerDelegate>)object withSearchRadiusFactor:(double)factor {
     //for debug purpse:
-//    NSLog(@"ATTENTION! location is override!");
-//    CLLocation* temp = [[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059];
-//    location = temp;
+    if (debug) {
+        NSLog(@"ATTENTION! location is override!");
+        CLLocation* temp = [[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059];
+        location = temp;
+    }
     
     //init result array
     NSMutableArray* stops = [[NSMutableArray alloc] init];

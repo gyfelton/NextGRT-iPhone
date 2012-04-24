@@ -12,6 +12,8 @@
 
 @interface AppDelegate : StatusBarMsgAppDelegate <UITabBarControllerDelegate>
 
+void uncaughtExceptionHandler(NSException *exception);
+
 + (CLLocationManager*) sharedLocationManager;
 
 @property BOOL locationServiceBecomeActive;

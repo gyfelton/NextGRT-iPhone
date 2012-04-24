@@ -66,4 +66,24 @@
     self.busRoutes = nil;
 }
 
+#pragma mark - MKAnnotation Protocol
+- (CLLocationCoordinate2D)coordinate;
+{
+    CLLocationCoordinate2D theCoordinate;
+    theCoordinate.latitude = lat_;
+    theCoordinate.longitude = lon_;
+    return theCoordinate; 
+}
+
+// required if you set the MKPinAnnotationView's "canShowCallout" property to YES
+- (NSString *)title
+{
+    return self.stopName;
+}
+
+// optional
+- (NSString *)subtitle
+{
+    return @"Avaialable routes:";
+}
 @end

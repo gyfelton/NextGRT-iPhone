@@ -46,7 +46,7 @@ typedef enum BusStopCellType BusStopCellType;
     UITextField *customNameField_;
     UIAlertView* alert_;
     
-    Stop* stop_;
+    Stop* _stop;
     
     bool isStopFav_;
 }

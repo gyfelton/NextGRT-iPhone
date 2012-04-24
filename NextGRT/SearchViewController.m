@@ -7,8 +7,10 @@
 //
 
 #import "SearchViewController.h"
-
+#import "UIImage+RenderViewToImage.h"
 #import "AppDelegate.h"
+
+#define CENTER_OFFSET_FOR_SELECTED_ANNOTATION 80
 
 @implementation SearchViewController
 
@@ -21,6 +23,8 @@
 //        self.title = NSLocalizedString(@"Second", @"Second");
 //        self.tabBarItem.image = [UIImage imageNamed:@"second"];
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:2];
+        
+        _arrowUp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"route_detail_arrow_shadow"]];
     }
     return self;
 }
@@ -446,12 +450,42 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+#pragma mark - UIView Animation Stop Action
+- (void)removeAllAddedViews
+{
+    _mapView.userInteractionEnabled = YES;
+    [_arrowUp removeFromSuperview];
+    [_mapViewTopBtn removeFromSuperview];
+    [_routeDetailTableVC.tableView removeFromSuperview];
+    [_lowerPartImageView removeFromSuperview];
+    [_topShadow removeFromSuperview];
+    [_bottomShadow removeFromSuperview];
+    MKAnnotationView *temp = _currentAnnotationView;
+    _currentAnnotationView = nil;
+    [_mapView deselectAnnotation:temp.annotation animated:YES];
+}
+
+
+- (void)switchToMapViewAnimationDidFinish
+{
+    if (_mapView.superview) { //mapview is in place
+        //Put annotations to to it
+        [_mapView addAnnotations:self.stops];
+        //for debug purpose
+        if (debug) {
+            [_mapView setCenterCoordinate:CLLocationCoordinate2DMake(43.472617, -80.541059)];
+        }
+    }
+}
+
 #pragma mark - UISegmentControl
 - (IBAction)segmentControlValueChanged:(UISegmentedControl*)segmentControl
 {
     if (segmentControl.selectedSegmentIndex ==  0) {
         segmentControl.selectedSegmentIndex = 1; //need to revert back
         [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(removeAllAddedViews)];
         [UIView setAnimationDuration:0.6f];
         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.view cache:YES];
         [_mapBaseView removeFromSuperview];
@@ -459,6 +493,8 @@
     } else if (segmentControl.selectedSegmentIndex == 1) {
         segmentControl.selectedSegmentIndex = 0;
         [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(switchToMapViewAnimationDidFinish)];
         [UIView setAnimationDuration:0.6f];
         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.view cache:YES];
         
@@ -475,15 +511,6 @@
         [self.view addSubview:_mapBaseView];
         
         [UIView commitAnimations];
-        
-//        [UIView animateWithDuration:1.0f delay:0.0f options:UIViewAnimationOptionTransitionFlipFromRight animations:^
-//        {
-//            [self.view addSubview:_mapBaseView];
-//            [_mapBaseView addSubview:_mapTogglerBase];
-//        } completion:^(BOOL finished)
-//        {
-//            
-//        }];
     }
 }
 
@@ -492,4 +519,168 @@
 {
 
 }
+
+- (MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    // if it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    if ([annotation isKindOfClass:[Stop class]]) {
+        static NSString* busStopReuseID = @"BusStopAnnotationView_ID";
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)
+        [mapView dequeueReusableAnnotationViewWithIdentifier:busStopReuseID];
+        if (!pinView) {
+            // if an existing pin view was not available, create one
+            MKPinAnnotationView* customPinView = [[MKPinAnnotationView alloc]
+                                                   initWithAnnotation:annotation reuseIdentifier:busStopReuseID];
+            customPinView.pinColor = MKPinAnnotationColorGreen;
+            customPinView.animatesDrop = YES;
+            customPinView.canShowCallout = YES;
+            
+            // add a detail disclosure button to the callout which will open a new view controller page
+            //
+            // note: you can assign a specific call out accessory view, or as MKMapViewDelegate you can implement:
+            //  - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
+            //
+            UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            customPinView.rightCalloutAccessoryView = rightButton;
+            rightButton.tag = 1;
+            UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            leftButton.frame = CGRectMake(0, 0, 32, 32);
+            leftButton.showsTouchWhenHighlighted = YES;
+            leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 3, 0);
+            leftButton.tag = 0;
+            [leftButton setImage:[UIImage imageNamed:@"star_empty_big"] forState:UIControlStateNormal];
+            [leftButton setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateHighlighted];
+            [leftButton setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateSelected];
+            customPinView.leftCalloutAccessoryView = leftButton;
+            
+            return customPinView;
+        } else
+        {
+            pinView.annotation = annotation;
+        }
+    }
+    return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    if (control.tag == 1) { //right button
+        _currentAnnotationView = view;
+        //Not use this for now: this triggers didDeselectAnnotationView
+        //[mapView deselectAnnotation:view.annotation animated:YES];
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([view.annotation coordinate].latitude, [view.annotation coordinate].longitude);
+        CGPoint tempPoint = [mapView convertCoordinate:coord toPointToView:mapView];
+        tempPoint = CGPointMake(tempPoint.x, tempPoint.y+CENTER_OFFSET_FOR_SELECTED_ANNOTATION);
+        coord = [mapView convertPoint:tempPoint toCoordinateFromView:mapView];
+        [mapView setCenterCoordinate:coord animated:YES];
+    }
+}
+
+/* Not use this for now
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    if (_currentAnnotationView) {
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([view.annotation coordinate].latitude, [view.annotation coordinate].longitude);
+        CGPoint tempPoint = [mapView convertCoordinate:coord toPointToView:mapView];
+        tempPoint = CGPointMake(tempPoint.x, tempPoint.y+CENTER_OFFSET_FOR_SELECTED_ANNOTATION);
+        coord = [mapView convertPoint:tempPoint toCoordinateFromView:mapView];
+        [mapView setCenterCoordinate:coord animated:YES];
+    }
+}*/
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    NSLog(@"Region changed");
+    if (_currentAnnotationView) {
+        [mapView selectAnnotation:_currentAnnotationView.annotation animated:YES];
+        
+        _mapView.userInteractionEnabled = NO;
+        
+        //crop the image out 
+        CGFloat arrowHeight = _arrowUp.frame.size.height;
+        CGPoint annotationsPoint = [mapView convertCoordinate:[_currentAnnotationView.annotation coordinate] toPointToView:mapView];
+        CGRect cropRect = CGRectMake(0, annotationsPoint.y+arrowHeight, mapView.bounds.size.width, mapView.bounds.size.height-annotationsPoint.y - arrowHeight);
+        UIImage *mapViewImage = [UIImage renderViewToImage:mapView fromViewFrame:cropRect];
+        _lowerPartImageView = [[UIImageView alloc] initWithFrame:cropRect]; //Should not use initWithImage directly!
+        _lowerPartImageView.image = mapViewImage;
+        _lowerPartImageView.contentMode = UIViewContentModeScaleAspectFit;
+        
+        //Add Arrow
+        _arrowUp.center = CGPointMake(cropRect.origin.x+cropRect.size.width/2.0f, cropRect.origin.y);
+        _arrowUp.frame = CGRectMake((cropRect.origin.x+cropRect.size.width)/2-_arrowUp.frame.size.width/2.0f, cropRect.origin.y-_arrowUp.frame.size.height,_arrowUp.frame.size.width, _arrowUp.frame.size.height);
+        [_mapView addSubview:_arrowUp];
+
+        //Add Detail table view
+        _routeDetailTableVC = [[RouteDetailTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        _routeDetailTableVC.userTouchEventDelegate = self; //TODO
+        //assign the data
+        Stop* stop = _currentAnnotationView.annotation;
+        if ([stop isKindOfClass:[Stop class]]) {
+            _routeDetailTableVC.stop = stop;
+            //TODO add button for lower image
+            _routeDetailTableHeightOffset = [stop.busRoutes count] < 4? (-1*36.0f-(3-[stop.busRoutes count])*OPENED_CELL_INTERNAL_CELL_HEIGHT) : -1*33.0f;
+        } else
+        {
+            [NSException raise:@"RouteDetailTableVC Exception: No support of this annocation Class" format:@""];
+        }
+        
+        //TODO reuse tableVC
+        _routeDetailTableVC.tableView.frame = CGRectIncreaseHeight(cropRect, _routeDetailTableHeightOffset);
+        //As we add it to mapBaseView subview, we need to calculate the position of it relative to mapBaseView, not mapView
+        UITableView *table = _routeDetailTableVC.tableView;
+        table.frame = CGRectMake(table.frame.origin.x, table.frame.origin.y+_mapView.frame.origin.y, table.frame.size.width, table.frame.size.height);
+        
+        table.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        UIImage *bgImg = [UIImage imageNamed:@"route_detail_bg"];
+        bgImg = [bgImg stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        table.backgroundView = [[UIImageView alloc] initWithImage:bgImg];
+        
+        [_mapBaseView addSubview:table];
+        
+        //Add the shadows on top and bottom
+        _topShadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_horizontal_down_shadow"]];
+        _topShadow.frame = CGRectMake(table.frame.origin.x, table.frame.origin.y, table.frame.size.width, _topShadow.frame.size.height);
+        [_mapBaseView addSubview:_topShadow];
+        _bottomShadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_horizontal_up_shadow"]];
+        _bottomShadow.frame = CGRectMake(table.frame.origin.x, table.frame.origin.y+table.frame.size.height-_bottomShadow.frame.size.height, table.frame.size.width, _bottomShadow.frame.size.height);
+        [_mapBaseView addSubview:_bottomShadow];
+
+        
+        //Add a transparent button on the top portion
+        if (!_mapViewTopBtn) {
+            _mapViewTopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            _mapViewTopBtn.frame = CGRectMake(mapView.frame.origin.x,mapView.frame.origin.y,mapView.frame.size.width,mapView.frame.size.height-cropRect.size.height);
+            _mapViewTopBtn.backgroundColor = [UIColor clearColor];
+            [_mapViewTopBtn addTarget:self action:@selector(onMapTopButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        [_mapBaseView addSubview:_mapViewTopBtn];
+        [_mapBaseView bringSubviewToFront:_mapViewTopBtn];
+        
+        //Add lower image and animate transition
+        //As we need to add to mapBaseView, need to recalculate frame
+        _lowerPartImageView.frame = CGRectMake(_lowerPartImageView.frame.origin.x, _lowerPartImageView.frame.origin.y+_mapView.frame.origin.y, _lowerPartImageView.frame.size.width, _lowerPartImageView.frame.size.height);
+        [_mapBaseView addSubview:_lowerPartImageView];
+
+        [UIView beginAnimations:@"translation" context:NULL];
+        [UIView setAnimationDuration:0.6f];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        _lowerPartImageView.frame = CGRectOffset(_lowerPartImageView.frame, 0, _lowerPartImageView.frame.size.height+_routeDetailTableHeightOffset);
+        [UIView commitAnimations];
+    }
+}
+
+- (void)onMapTopButtonClicked:(id)sedner
+{
+    [UIView beginAnimations:@"translation" context:NULL];
+    [UIView setAnimationDuration:0.5f];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(removeAllAddedViews)];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    _lowerPartImageView.frame = CGRectOffset(_lowerPartImageView.frame, 0, -1*_lowerPartImageView.frame.size.height-_routeDetailTableHeightOffset);
+    [UIView commitAnimations];
+}
+
 @end

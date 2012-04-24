@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <MapKit/MapKit.h>
 /** 
- * A Model bus top
+ * A Model bus top that adopt MKAnnotation protocol
  */
-@interface Stop : NSObject {
+@interface Stop : NSObject <MKAnnotation>{
     float lat_;
     float lon_;
     NSString* stopID_;

@@ -170,7 +170,7 @@
         [((OpenedBusStopCell*)cell) initCellInfoWithStop:aStop];
         
         //link the delegate so that when it is touched, scrollEnabled set to false
-        ((OpenedBusStopCell*)cell).parentTableViewController = self;
+        [((OpenedBusStopCell*)cell) setParentViewController:self];
     }
 
     if (self.forFavStopVC) {
