@@ -16,9 +16,9 @@ static GRTDatabaseManager* sharedManager = nil;
 
 @implementation GRTDatabaseManager
 
-@synthesize databasePath = _databasePath;
+@synthesize databasePath = _databasePath, isAskingForManualLocation;
 
-+ (id) sharedManager {
++ (GRTDatabaseManager*) sharedManager {
     @synchronized(self) {
         if( sharedManager == nil ) {
             sharedManager = [[GRTDatabaseManager alloc] init];
@@ -81,6 +81,23 @@ static GRTDatabaseManager* sharedManager = nil;
  if there is any problem, feel free to email to gyfelton@gmail.com
 */
 
+- (NSString*)cleanStopID:(NSString*)stopID withResultSet:(FMResultSet*) s
+{
+    NSString *newStopID = [stopID copy];
+    //Need to analyse the stopID and convert illegal ones to legal ones
+    if ([newStopID length]>5) {
+        if (debug) {
+            NSLog(@"WARNING: illegal stop id");
+        }
+        NSString *stop_desc = [s stringForColumn:@"stop_desc"];
+        NSArray *texts = [stop_desc componentsSeparatedByString:@" "];
+        if ([texts count]>1) {
+            newStopID = [texts objectAtIndex:1]; //the second object, which is the real ID
+        }
+    }
+    return newStopID;
+}
+
 - (void) queryStopIDs:(NSArray*) stopIDs withDelegate:(id<GRTDatabaseManagerDelegate>)object groupByStopName:(bool) groupByStopName {
     // Setup the database object
     NSMutableArray* results = [[NSMutableArray alloc] init];
@@ -103,6 +120,8 @@ static GRTDatabaseManager* sharedManager = nil;
                 
             
             NSString *stopID = [s stringForColumn:@"stop_id"];
+            stopID = [self cleanStopID:stopID withResultSet:s];
+            
             NSString *stopName = [s stringForColumn:@"stop_name"];
                 
             // Create a new animal object with the data from the database
@@ -135,6 +154,8 @@ static GRTDatabaseManager* sharedManager = nil;
         
         
         NSString *stopID = [s stringForColumn:@"stop_id"];
+        stopID = [self cleanStopID:stopID withResultSet:s];
+        
         NSString *stopName = [s stringForColumn:@"stop_name"];
         
         // Create a new animal object with the data from the database
@@ -192,6 +213,8 @@ static GRTDatabaseManager* sharedManager = nil;
         double distance = [location distanceFromLocation:[[CLLocation alloc] initWithLatitude:lat longitude:lon]];
         
         NSString *stopID = [s stringForColumn:@"stop_id"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
+        stopID = [self cleanStopID:stopID withResultSet:s];
+        
         NSString *stopName = [s stringForColumn:@"stop_name"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
         
         // Create a new stop object with the data from the database
@@ -314,8 +337,10 @@ static GRTDatabaseManager* sharedManager = nil;
         float lat = [s doubleForColumn:@"stop_lat"];
         float lon = [s doubleForColumn:@"stop_lon"];//sqlite3_column_double(compiledStatement, 2);
         
-        NSString *stopID = [s stringForColumn:@"stop_id"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 3)];
-        NSString *stopName = [s stringForColumn:@"stop_name"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 4)];
+        NSString *stopID = [s stringForColumn:@"stop_id"];
+        stopID = [self cleanStopID:stopID withResultSet:s];
+        
+        NSString *stopName = [s stringForColumn:@"stop_name"];
         
         // Create a new stop object with the data from the database
         Stop* theStop = [[Stop alloc] initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon];

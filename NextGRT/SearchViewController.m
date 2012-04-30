@@ -24,7 +24,9 @@
 //        self.tabBarItem.image = [UIImage imageNamed:@"second"];
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:2];
         
-        _arrowUp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"route_detail_arrow_shadow"]];
+        if (SHOW_MAP) {
+            _arrowUp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"route_detail_arrow_shadow"]];
+        }
     }
     return self;
 }
@@ -93,11 +95,6 @@
     _hintButton.hidden = NO;
     [_hintButton setTitle:local(@"Fail to locate your position\n click here to try again.\nOr search bus stops above") forState:UIControlStateNormal];
     [_hud hide:YES];
-    //for debug purpose only
-    //    NSLog(@"ATTENTION: geo location manual override!");
-    //    CLLocation* newLocation = [[[CLLocation alloc] initWithLatitude:43.472617 longitude:-80.541059] autorelease];
-    //    currLocation_ = [newLocation copy];
-    //    [self performSelector:@selector(queryStops:) withObject:newLocation afterDelay:0]; 
 }
 
 #pragma mark - Query Stops
@@ -180,8 +177,11 @@
 }
 
 - (void) requestForMoreStops {
-    //expand search radius
-    _currSearchRadiusFactor+=0.5;
+    if (!_stopTableVC.isAskingForManualLocation) {
+        //expand search radius
+        [GRTDatabaseManager sharedManager].isAskingForManualLocation = YES;
+        _currSearchRadiusFactor+=0.5;
+    }
     
     //clear out current stops for new result
     self.stops = nil;

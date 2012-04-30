@@ -37,6 +37,8 @@
     FMDatabase *_db;
 }
 
+@property (nonatomic) BOOL isAskingForManualLocation;
+
 /**
  * @property path of the database the manager points to
  */
@@ -45,7 +47,7 @@
 /**
  * Accessor to the singleton of this manager
  */
-+ (id) sharedManager;
++ (GRTDatabaseManager*) sharedManager;
 
 /**
  * Query the information of a list of stops

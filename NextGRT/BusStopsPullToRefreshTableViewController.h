@@ -51,7 +51,7 @@
 @property (nonatomic, assign) id<PullToRefreshTableDelegate> delegate;
 
 @property BOOL needLoadMoreButton;
-
+@property BOOL isAskingForManualLocation;
 /** 
  * require to reload data and hide the loading screen
  */

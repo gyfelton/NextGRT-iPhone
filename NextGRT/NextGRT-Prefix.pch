@@ -14,10 +14,10 @@
 #endif
 
 //Debug
-#define debug YES
+#define debug NO
 
 //variables:
-#define SHOW_MAP YES
+#define SHOW_MAP NO
 #define ENABLE_NEW_FEATURES NO
 
 //rename method:
@@ -35,7 +35,7 @@
 
 #define UITableBackgroundColor [UIColor colorWithRed:0.96f green:0.96f blue:0.96f alpha:1.0f];
 
-#define kDatabaseName   @"GRTDataBase_20Jan2012"
+#define kDatabaseName   @"GRTDataBase_1May2012"
 //#define kStopInfoQuery  @"stopInfoFor%@"
 
 #define kFavStopArrayDidUpdateNotification @"FavStopArrayDidUpdate"

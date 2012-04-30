@@ -58,6 +58,7 @@
 "min" = "分钟";
 
 "No stops nearby. Click here to expand search radius." = "找不到车站，点击这里扩大搜索范围";
+"No stops nearby. Click here to expand search radius." = "找不到车站，点击这里扩大搜索范围";
 "Load more stops..." = "载入更多车站...";
 
 //Pull to reload hint

@@ -18,6 +18,7 @@
 @synthesize reloading=_reloading, needLoadMoreButton;
 @synthesize refreshHeaderView;
 @synthesize delegate;
+@synthesize isAskingForManualLocation;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -108,9 +109,20 @@
         }
         cell.textLabel.numberOfLines = 2;
         if( [[super stops] count] == 0 ) { //if there is no stop found, ask user to expand search radius
-            cell.textLabel.text = local(@"No stops nearby. Click here to expand search radius.");
-            cell.textLabel.textColor = [UIColor darkGrayColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:14];
+            switch (indexPath.row) {
+                case 0:
+                    cell.textLabel.text = local(@"No stops nearby. Click here to expand search radius.");
+                    cell.textLabel.textColor = [UIColor darkGrayColor];
+                    cell.textLabel.font = [UIFont systemFontOfSize:14];
+                    break;
+                case 2: //thid row
+                    cell.textLabel.text = local(@"No stops nearby. Click here to expand search radius.");
+                    cell.textLabel.textColor = [UIColor darkGrayColor];
+                    cell.textLabel.font = [UIFont systemFontOfSize:14];
+                    break;
+                default:
+                    break;
+            }
         } else {
             cell.textLabel.text = local(@"Load more stops...");
         }
@@ -170,7 +182,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //first check whether it is the need more button
     if( [indexPath row] >= [[super stops] count] ) {
-        [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text = local(@"Loading...");
+        switch (indexPath.row) {
+            case 0:
+                [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text = local(@"Loading...");
+                break;
+            case 2:
+                [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text = local(@"Loading...");
+                self.isAskingForManualLocation = YES;
+                break;
+            default:
+                break;
+        }
         //TODO what the heck? if not use this UI will freeze....
         [self performSelector:@selector(requestForMoreStops) withObject:nil afterDelay:0.01];
     } else {
