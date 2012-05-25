@@ -381,7 +381,6 @@
     
 	// Do any additional setup after loading the view, typically from a nib.
     //init the search bar and its controller
-    
     _searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:_searchBar contentsController:self];
 //    [_searchDisplayVC performSelector:@selector(setSearchBar:)withObject:_searchBar];
     _searchDisplayVC.delegate = self;
@@ -555,11 +554,13 @@
             [leftButton setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateSelected];
             customPinView.leftCalloutAccessoryView = leftButton;
             
-            return customPinView;
+            pinView = customPinView;
         } else
         {
             pinView.annotation = annotation;
+            //TODO set fav state
         }
+        return pinView;
     }
     return nil;
 }

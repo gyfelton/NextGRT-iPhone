@@ -14,10 +14,10 @@
 #endif
 
 //Debug
-#define debug NO
+#define debug YES
 
 //variables:
-#define SHOW_MAP NO
+#define SHOW_MAP YES
 #define ENABLE_NEW_FEATURES NO
 
 //rename method:
@@ -49,7 +49,7 @@
 
 #define kQueryNearbyStops @"SELECT * from stops WHERE stop_lat >= %f AND stop_lat <= %f AND stop_lon >= %f AND stop_lon <= %f"
 
-#define kQueryRoutesTimes @"SELECT route_id, trip_headsign , departure_time FROM stop_times INNER JOIN trips ON stop_times.trip_id = trips.trip_id WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, trip_headsign, departure_time"
+#define kQueryRoutesTimes @"SELECT route_id, trip_headsign , departure_time FROM stop_times INNER JOIN trips ON stop_times.trip_id = trips.trip_id WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, departure_time, trip_headsign"
 
 //#define kQueryRoutesTimes_unused @"SELECT route_id, departure_time, trip_headsign FROM RoutesInfoCombined WHERE stop_id = %@ AND departure_time > '%@' AND service_id IN ( %@ ) ORDER BY route_id, departure_time"
 

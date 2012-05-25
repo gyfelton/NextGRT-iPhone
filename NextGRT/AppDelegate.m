@@ -60,12 +60,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 //    viewController1.navigationController.navigationBar.tintColor = [UIColor colorWithRed:49/255 green:92/255 blue:152/255 alpha:1.0f];
     
     UIViewController *viewController2 = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
+    UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController:viewController2];
+    nav2.navigationBarHidden = YES;
     
     UIViewController *viewController3 = [[MoreViewController alloc] initWithNibName:@"MoreViewController" bundle:nil];
     UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:viewController3];
     
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:nav1, viewController2, nav3, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:nav1, nav2, nav3, nil];
 
     self.window.rootViewController = self.tabBarController;
 //    self.window.backgroundColor = UITableBackgroundColor;
