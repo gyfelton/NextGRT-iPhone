@@ -15,11 +15,27 @@
 
 //init the route with first direction and its time
 - (id) initWithRouteNumber:(NSString*)routeNumber routeID:(NSString*)routeID direction:(NSString*)dir AndTime:(NSString*)time {
+    NSString *realDir = [dir copy];
     if( [routeNumber compare:@"200"] == NSOrderedSame ) {
-        self.shortRouteNumber = @"iXps";
+        self.shortRouteNumber = @"iXp";
 //        self.fullRouteNumber = @"iXpress";
         self.fullRouteNumber = @"";
     } else {
+        //Check if first word of direction is one letter, that denotes the route number as well
+        if ([realDir length]>2 && [[realDir substringWithRange:NSMakeRange(1, 1)] isEqualToString:@" "]) {
+            //The first letter denotes route number as well
+            self.shortRouteNumber = [routeNumber stringByAppendingString:[realDir substringToIndex:1]];
+            if ([realDir length]>=3) {
+                realDir = [realDir substringFromIndex:2];
+            }
+            self.fullRouteNumber = self.shortRouteNumber;
+        } else
+        {
+            self.shortRouteNumber = routeNumber;
+            self.fullRouteNumber = routeNumber;
+        }
+
+        /*
         self.shortRouteNumber = routeNumber;
         if ([routeNumber compare:@"7"] == NSOrderedSame || [routeNumber compare:@"8"] == NSOrderedSame) { //add more stop here for special cases
             self.fullRouteNumber = routeNumber;
@@ -28,11 +44,12 @@
             //add a space to last number to separate route number and description, and iXps will not have a space at the front
             self.fullRouteNumber = [routeNumber stringByAppendingString:@" "];
         }
+         */
     }
     
     self.routeID = routeID;
     nextArrivalTimes_ = [[NSMutableArray alloc] initWithObjects:time, nil];
-    nextArrivalDirection_ = [[NSMutableArray alloc] initWithObjects:dir, nil];
+    nextArrivalDirection_ = [[NSMutableArray alloc] initWithObjects:realDir, nil];
     nextBusCountDown_ = [[NSMutableArray alloc] initWithObjects: nil];
     
     return self;
@@ -82,6 +99,7 @@
 
 - (NSString*) getFirstArrivalActualTime {
     if ([nextArrivalTimes_ count] > 0) {
+        //Here we use the first direction recorded for now
             return [nextArrivalTimes_ objectAtIndex:0];
     }
     return @"";

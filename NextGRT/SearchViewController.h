@@ -21,6 +21,7 @@
     IBOutlet UISearchBar* _searchBar;
     
     IBOutlet UIView* _tableContainer;
+    UIImageView *_table_top_shadow;
     BusStopsPullToRefreshTableViewController* _stopTableVC;
     UISearchDisplayController* _searchDisplayVC;
     

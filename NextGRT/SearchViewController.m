@@ -22,7 +22,7 @@
     if (self) {
 //        self.title = NSLocalizedString(@"Second", @"Second");
 //        self.tabBarItem.image = [UIImage imageNamed:@"second"];
-        self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:2];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:local(@"Search") image:[UIImage imageNamed:@"tabbar_radar"] tag:2];
         
         if (SHOW_MAP) {
             _arrowUp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"route_detail_arrow_shadow"]];
@@ -158,6 +158,11 @@
         [_stopTableVC reloadDataAndStopLoadingAnimation];
     }
 
+    //Add the shadow to the top
+    _table_top_shadow= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_horizontal_down_shadow"]];
+    _table_top_shadow.frame = CGRectMake(0, 0, 320, 10);
+    [_tableContainer addSubview:_table_top_shadow];
+//    top_shadow.backgroundColor = [UIColor redColor];
 }
 
 - (void) busRoutesForAllStopsReceived {
@@ -386,8 +391,9 @@
     _searchDisplayVC.delegate = self;
     _searchDisplayVC.searchResultsDataSource = self;
     _searchDisplayVC.searchResultsDelegate = self;
+    
     _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-
+    
     //[_searchBar setTintColor:[UIColor colorWithRed:0.427f green:0.514f blue:0.637 alpha:1.0f]];
     _searchTextReachCriteria = NO;
     _searchResultsReturned = NO;
@@ -419,6 +425,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kFavStopArrayDidUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNewDayArrivedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    _table_top_shadow = nil;
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -666,7 +673,7 @@
         [_mapBaseView addSubview:_lowerPartImageView];
 
         [UIView beginAnimations:@"translation" context:NULL];
-        [UIView setAnimationDuration:0.6f];
+        [UIView setAnimationDuration:0.5f];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
         _lowerPartImageView.frame = CGRectOffset(_lowerPartImageView.frame, 0, _lowerPartImageView.frame.size.height+_routeDetailTableHeightOffset);
         [UIView commitAnimations];

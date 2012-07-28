@@ -23,44 +23,44 @@
 
 @implementation BusStopCellBaseClass
 
-@synthesize name = name_, extraInfo = extraInfo_, cellType;
+@synthesize name = _name, extraInfo = _extraInfo, cellType;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        name_ = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, 3, NAME_WIDTH, NAME_HEIGHT)];
-        name_.shadowOffset = CGSizeMake(0, 1);
-        name_.shadowColor = [UIColor whiteColor];
-        name_.backgroundColor = [UIColor clearColor];
-        name_.font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
-        [self.contentView addSubview:name_];
+        _name = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, 3, NAME_WIDTH, NAME_HEIGHT)];
+        _name.shadowOffset = CGSizeMake(0, 1);
+        _name.shadowColor = [UIColor whiteColor];
+        _name.backgroundColor = [UIColor clearColor];
+        _name.font = [UIFont boldSystemFontOfSize:NAME_FONT_SIZE];
+        [self.contentView addSubview:_name];
         
-        extraInfo_ = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, NAME_HEIGHT+4, EXTRA_INFO_WIDTH, EXTRA_INFO_HEIGHT)];
-        extraInfo_.font = [UIFont systemFontOfSize:EXTRA_INFO_FONT_SIZE];
-        extraInfo_.textAlignment = UITextAlignmentLeft;
-        extraInfo_.textColor = [UIColor grayColor];
-        extraInfo_.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:extraInfo_];
+        _extraInfo = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, NAME_HEIGHT+4, EXTRA_INFO_WIDTH, EXTRA_INFO_HEIGHT)];
+        _extraInfo.font = [UIFont systemFontOfSize:EXTRA_INFO_FONT_SIZE];
+        _extraInfo.textAlignment = UITextAlignmentLeft;
+        _extraInfo.textColor = [UIColor grayColor];
+        _extraInfo.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_extraInfo];
         
-        fav_ = [[UIButton alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width-INSET_RIGHT-10, 0, INSET_RIGHT, 80)];
-        fav_.center = CGPointMake(fav_.center.x, self.contentView.center.y);
-        fav_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        fav_.showsTouchWhenHighlighted = YES;
-        [fav_ setImage:[UIImage imageNamed:@"star_empty_big"] forState:UIControlStateNormal];
-        [fav_ setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateHighlighted];
-        [fav_ setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateSelected];
-        [fav_ addTarget:self action:@selector(favPressed) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:fav_];
+        _fav = [[UIButton alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width-INSET_RIGHT-10, 0, INSET_RIGHT, 80)];
+        _fav.center = CGPointMake(_fav.center.x, self.contentView.center.y);
+        _fav.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        _fav.showsTouchWhenHighlighted = YES;
+        [_fav setImage:[UIImage imageNamed:@"star_empty_big"] forState:UIControlStateNormal];
+        [_fav setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateHighlighted];
+        [_fav setImage:[UIImage imageNamed:@"star_full_big"] forState:UIControlStateSelected];
+        [_fav addTarget:self action:@selector(favPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:_fav];
         
-        availableRoutes_ = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, NAME_HEIGHT+EXTRA_INFO_HEIGHT+8, BUTTON_SIZE_WIDTH, BUTTON_SIZE_HEIGHT)];
-        availableRoutes_.font = [UIFont systemFontOfSize:EXTRA_INFO_FONT_SIZE];
-        availableRoutes_.backgroundColor = [UIColor clearColor];
-        availableRoutes_.textAlignment = UITextAlignmentLeft;
-        availableRoutes_.text = @"";
-        availableRoutes_.shadowOffset = CGSizeMake(0, 1);
-        availableRoutes_.shadowColor = [UIColor whiteColor];
-        [self.contentView addSubview:availableRoutes_];
+        _availableRoutes = [[UILabel alloc] initWithFrame:CGRectMake(INSET_LEFT, NAME_HEIGHT+EXTRA_INFO_HEIGHT+8, BUTTON_SIZE_WIDTH, BUTTON_SIZE_HEIGHT)];
+        _availableRoutes.font = [UIFont systemFontOfSize:EXTRA_INFO_FONT_SIZE];
+        _availableRoutes.backgroundColor = [UIColor clearColor];
+        _availableRoutes.textAlignment = UITextAlignmentLeft;
+        _availableRoutes.text = @"";
+        _availableRoutes.shadowOffset = CGSizeMake(0, 1);
+        _availableRoutes.shadowColor = [UIColor whiteColor];
+        [self.contentView addSubview:_availableRoutes];
         
         UIImage *cellBg = [UIImage imageNamed:@"cell_bg"];
         cellBg = [cellBg stretchableImageWithLeftCapWidth:0 topCapHeight:1];
@@ -75,14 +75,14 @@
 {
     [super layoutSubviews];
     if (cellType == cellForFavVC) {
-        fav_.userInteractionEnabled = NO;
+        _fav.userInteractionEnabled = NO;
     }
-     fav_.center = CGPointMake(fav_.center.x, 32); 
+     _fav.center = CGPointMake(_fav.center.x, 32); 
 }
 
 - (void)toggleFavButtonStatus {
-    isStopFav_ = !isStopFav_;
-    fav_.selected = !fav_.selected;
+    _isStopFav = !_isStopFav;
+    _fav.selected = !_fav.selected;
 }
 
 - (void)initCellInfoWithStop:(Stop*)stop {
@@ -91,36 +91,36 @@
     _stop = stop;
     
     if( [[FavouriteStopsCentralManager sharedInstance] isFavouriteStop:stop] ) {
-        isStopFav_ = YES;
-        fav_.selected = YES;
+        _isStopFav = YES;
+        _fav.selected = YES;
         
         NSString* result = [[FavouriteStopsCentralManager sharedInstance] getCustomNameForStop:stop];
         if( [result length] != 0 || ![result isEqualToString:@""]) {
             //if there is indeed a custom name, make it as main title
-            name_.text = result;
-            extraInfo_.text = [NSString stringWithFormat:@"%@, %@", stop.stopName, stop.stopID];
+            _name.text = result;
+            _extraInfo.text = [NSString stringWithFormat:@"%@, %@", stop.stopName, stop.stopID];
         } else {
             //otherwise, still put original stop name
             //TODO refractor this method(duplication)
-            name_.text = stop.stopName;
-            extraInfo_.text = [NSString stringWithFormat:local(@"Bus Stop ID: %@"), stop.stopID];
+            _name.text = stop.stopName;
+            _extraInfo.text = [NSString stringWithFormat:local(@"Bus Stop ID: %@"), stop.stopID];
         }
     } else {
-        isStopFav_ = NO;
-        fav_.selected = NO;
+        _isStopFav = NO;
+        _fav.selected = NO;
         
-        name_.text = stop.stopName;
-        extraInfo_.text = [NSString stringWithFormat:local(@"Bus Stop ID: %@"), stop.stopID];
+        _name.text = stop.stopName;
+        _extraInfo.text = [NSString stringWithFormat:local(@"Bus Stop ID: %@"), stop.stopID];
     }
 }
 
 - (void)refreshRoutesInCell {
-    int numRoutesToDisplay = [_stop numberOfBusRoutes];
+    int numRoutesToDisplay = [_stop numberOfDistinctBusRoutes];
     //bool moreThanTwoRoues = numRoutesToDisplay>2 ? YES:NO;
     //numRoutesToDisplay = numRoutesToDisplay>=3 ? 3:numRoutesToDisplay;
     
     if (numRoutesToDisplay != 0) {
-        availableRoutes_.text = numRoutesToDisplay==1?local(@"Bus route in op: ") : local(@"Bus routes in op: ");
+        _availableRoutes.text = numRoutesToDisplay==1?local(@"Bus route: ") : local(@"Bus routes: ");
         for (int i=0; i<numRoutesToDisplay; i++) {
             //        if( i != 2 ) {
             //            UILabel* label = [routesAndTimes_ objectAtIndex:i];
@@ -135,80 +135,78 @@
             //            UILabel* label = [routesAndTimes_ objectAtIndex:i];
             //            label.text = @"";
             //        }
-            BusRoute* route = [_stop.busRoutes objectAtIndex:i];
-            NSString* comma = (i==[_stop.busRoutes count]-1)? @"" :@",";
-            availableRoutes_.text = [NSString stringWithFormat:@"%@%@%@ ", availableRoutes_.text, route.shortRouteNumber, comma];
+            NSString* routeName = [_stop.distinctBusRoutesName objectAtIndex:i];
+            NSString* comma = (i==[_stop.distinctBusRoutesName count]-1)? @"" :@",";
+            _availableRoutes.text = [NSString stringWithFormat:@"%@%@%@ ", _availableRoutes.text, routeName, comma];
         }
     } else {
-        availableRoutes_.text = local(@"No bus route available.");
+        _availableRoutes.text = local(@"No bus route available.");
     }
 }
 
 #pragma mark - fav button delegate
 - (void)favPressed {
     if (cellType == cellForSearchVC) {
-        if( !isStopFav_ ) {
+        if( !_isStopFav ) {
             [self toggleFavButtonStatus];
             
-            alert_ = [[UIAlertView alloc] initWithTitle:local(@"Added to your favorite!")
+            _alert = [[UIAlertView alloc] initWithTitle:local(@"Added to your favorite!")
                                                 message:local(@"You can assign a nickname:\n\n\n")
                                                delegate:self 
                                       cancelButtonTitle:local(@"Skip") otherButtonTitles:local(@"Done"), nil];
-            alert_.tag = ADD_FAV_ALERT_TAG;
+            _alert.tag = ADD_FAV_ALERT_TAG;
             
-            customNameField_ = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,30)];
+            _customNameField = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,28)];
             //        customNameField_.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 13, 10)];
-            customNameField_.borderStyle = UITextBorderStyleBezel;
-            customNameField_.clearButtonMode = UITextFieldViewModeWhileEditing;
-            customNameField_.leftViewMode = UITextFieldViewModeAlways;
-            customNameField_.layer.cornerRadius = 5.0f;
-            customNameField_.font = [UIFont systemFontOfSize:18];
-            customNameField_.backgroundColor = [UIColor whiteColor];
-            customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
-            customNameField_.delegate = self;
-            [customNameField_ setSelected:YES];
+            _customNameField.borderStyle = UITextBorderStyleRoundedRect;
+            _customNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            _customNameField.leftViewMode = UITextFieldViewModeAlways;
+            _customNameField.font = [UIFont systemFontOfSize:18];
+            _customNameField.backgroundColor = [UIColor whiteColor];
+            _customNameField.keyboardAppearance = UIKeyboardAppearanceAlert;
+            _customNameField.delegate = self;
+            [_customNameField setSelected:YES];
             //customNameField_.placeholder = local(@"enter the nickname here");
             
-            [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
-            [alert_ show];
+            [_alert setTransform:CGAffineTransformMakeTranslation(0,109)];
+            [_alert show];
             
-            [alert_ addSubview:customNameField_];
+            [_alert addSubview:_customNameField];
         } else {
-            alert_ = [[UIAlertView alloc] initWithTitle:local(@"Remove Favourite Stop")
+            _alert = [[UIAlertView alloc] initWithTitle:local(@"Remove Favourite Stop")
                                                 message:local(@"Are you sure to do so?")
                                                delegate:self 
                                       cancelButtonTitle:local(@"Cancel") otherButtonTitles:local(@"Confirm"), nil];
-            alert_.tag = REMOVE_FAV_ALERT_TAG;
+            _alert.tag = REMOVE_FAV_ALERT_TAG;
             
-            [alert_ show];
+            [_alert show];
         }
     } else
     {
         //edit the nickname!
-        alert_ = [[UIAlertView alloc] initWithTitle:local(@"Change Nickname")
+        _alert = [[UIAlertView alloc] initWithTitle:local(@"Change Nickname")
                                             message:local(@"Or leave it blank to erase nickname\n\n\n")
                                            delegate:self 
                                   cancelButtonTitle:local(@"Cancel") otherButtonTitles:local(@"Done"), nil];
-        alert_.tag = EDIT_FAV_ALERT_TAG;
+        _alert.tag = EDIT_FAV_ALERT_TAG;
         
-        customNameField_ = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,30)];
+        _customNameField = [[UITextField alloc] initWithFrame:CGRectMake(14,77,254,28)];
         //        customNameField_.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 13, 10)];
-        customNameField_.borderStyle = UITextBorderStyleBezel;
-        customNameField_.clearButtonMode = UITextFieldViewModeWhileEditing;
-        customNameField_.leftViewMode = UITextFieldViewModeAlways;
-        customNameField_.layer.cornerRadius = 5.0f;
-        customNameField_.font = [UIFont systemFontOfSize:18];
-        customNameField_.backgroundColor = [UIColor whiteColor];
-        customNameField_.keyboardAppearance = UIKeyboardAppearanceAlert;
-        customNameField_.delegate = self;
-        [customNameField_ setSelected:YES];
-        customNameField_.placeholder = name_.text;
+        _customNameField.borderStyle = UITextBorderStyleRoundedRect;
+        _customNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _customNameField.leftViewMode = UITextFieldViewModeAlways;
+        _customNameField.font = [UIFont systemFontOfSize:18];
+        _customNameField.backgroundColor = [UIColor whiteColor];
+        _customNameField.keyboardAppearance = UIKeyboardAppearanceAlert;
+        _customNameField.delegate = self;
+        [_customNameField setSelected:YES];
+        _customNameField.placeholder = _name.text;
         //customNameField_.placeholder = local(@"enter the nickname here");
         
-        [alert_ setTransform:CGAffineTransformMakeTranslation(0,109)];
-        [alert_ show];
+        [_alert setTransform:CGAffineTransformMakeTranslation(0,109)];
+        [_alert show];
         
-        [alert_ addSubview:customNameField_];
+        [_alert addSubview:_customNameField];
     }
 }
 
@@ -220,7 +218,7 @@
 #pragma mark - Text Field Delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if( [[textField text] length] != 0 ) {
-        [alert_ dismissWithClickedButtonIndex:CONFIRM_INDEX animated:YES];
+        [_alert dismissWithClickedButtonIndex:CONFIRM_INDEX animated:YES];
     } else {
         textField.placeholder = local(@"Please enter a name!");
     }
@@ -230,14 +228,14 @@
 #pragma mark - Alert View Delegate
 
 - (void)didPresentAlertView:(UIAlertView *)alertView {
-    [customNameField_ becomeFirstResponder];
+    [_customNameField becomeFirstResponder];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 }
 
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
-    [customNameField_ resignFirstResponder];
+    [_customNameField resignFirstResponder];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -247,7 +245,7 @@
             nickName = @"";
         } else
         {
-            nickName = [customNameField_ text];
+            nickName = [_customNameField text];
         }
         
         [[FavouriteStopsCentralManager sharedInstance] addFavoriteStop:_stop Name:nickName];
@@ -270,7 +268,7 @@
             //do nothing
         } else
         {
-            [[FavouriteStopsCentralManager sharedInstance] editFavoriteStop:_stop Name:[customNameField_ text]];
+            [[FavouriteStopsCentralManager sharedInstance] editFavoriteStop:_stop Name:[_customNameField text]];
         }
     }
 }

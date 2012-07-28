@@ -12,6 +12,7 @@
 @implementation Stop
 
 @synthesize busRoutes = busRoutes_, isFav = isFavorite_, stopID = stopID_, stopName = stopName_, lat = lat_, lon = lon_, distanceFromCurrPositionInMeter = distanceFromCurrPositionInMeter_;
+@synthesize distinctBusRoutesName = _distinctBusRoutesName;
 
 - (id) initWithStopID:(NSString*)stopID AndStopName:(NSString*)stopName Lat:(float)lat Lon:(float)lon {
     return [self initWithStopID:stopID AndStopName:stopName Lat:lat Lon:lon distanceFromCurrPosition:-1];
@@ -27,8 +28,18 @@
     return self;
 }
 
+- (void)initDistinctRouteNames
+{
+    NSMutableSet *nameSet = [[NSMutableSet alloc] initWithCapacity:[self.busRoutes count]];
+    for (BusRoute *busRoute in self.busRoutes) {
+        [nameSet addObject:busRoute.shortRouteNumber];
+    }
+    self.distinctBusRoutesName = [NSMutableArray arrayWithArray:[nameSet allObjects]];
+}
+                                  
 - (void)assignBusRoutes:(NSArray*)routes {
     self.busRoutes = [NSMutableArray arrayWithArray:routes];
+    [self initDistinctRouteNames];
 }
 
 - (void)cleanNoServiceBus
@@ -39,10 +50,16 @@
             [busRoutes_ removeObjectAtIndex:i];
         }
     }
+    [self initDistinctRouteNames];
 }
 
 - (int) numberOfBusRoutes {
     return [self.busRoutes count];
+}
+
+- (int) numberOfDistinctBusRoutes
+{
+    return [self.distinctBusRoutesName count];
 }
 
 - (int) distanceFromCurrPosition {

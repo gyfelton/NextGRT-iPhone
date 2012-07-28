@@ -57,10 +57,10 @@
     [super refreshRoutesInCell];
     int distance = [_stop distanceFromCurrPositionInMeter];
     if( distance != -1 ) {
-        availableRoutes_.text = [NSString stringWithFormat:local(@"Distance from here: %dm"), distance];
-        availableRoutes_.font = [UIFont boldSystemFontOfSize:EXTRA_INFO_FONT_SIZE];
+        _availableRoutes.text = [NSString stringWithFormat:local(@"Distance from here: %dm"), distance];
+        _availableRoutes.font = [UIFont boldSystemFontOfSize:EXTRA_INFO_FONT_SIZE];
     } else {
-        availableRoutes_.font = [UIFont systemFontOfSize:EXTRA_INFO_FONT_SIZE];
+        _availableRoutes.font = [UIFont systemFontOfSize:EXTRA_INFO_FONT_SIZE];
     }
     _detailTableVC.stop = _stop;
     [_detailTableVC.tableView reloadData];

@@ -15,8 +15,8 @@
  */
 @interface RouteDetailCell : UITableViewCell {
     UIImageView* busIcon_;
-    //UILabel* routeNumber_;
-    AutoScrollLabel *routeNumber_;
+    UILabel* _routeNumber;
+    AutoScrollLabel *_routeDetail;
     UILabel* nextBusIn_;
     UILabel* _subsequentBusIn;
     UILabel* firstTime_;
@@ -27,7 +27,9 @@
  * AutoScrollable routeNumber          route number and its headsign
  * can be long so make it auto-scrollable
  */
-@property (nonatomic, strong) AutoScrollLabel* routeNumber;
+@property (nonatomic, strong) AutoScrollLabel* routeDetail;
+
+@property (nonatomic, strong) UILabel *routeNumber;
 
 /**
  * UILabel firstTime/SecondTime        

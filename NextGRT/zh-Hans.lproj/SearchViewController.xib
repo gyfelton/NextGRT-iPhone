@@ -50,7 +50,7 @@
 						<int key="IBUIContentMode">3</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBPlaceholder">搜索车站</string>
-						<object class="NSColor" key="IBTintColor">
+						<object class="NSColor" key="IBTintColor" id="202936731">
 							<int key="NSColorSpace">6</int>
 							<string key="NSCatalogName">System</string>
 							<string key="NSColorName">windowFrameColor</string>
@@ -73,6 +73,7 @@
 								<string key="NSFrame">{{20, 145}, {280, 78}}</string>
 								<reference key="NSSuperview" ref="246918078"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -98,7 +99,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 44}, {320, 367}}</string>
+						<string key="NSFrame">{{0, 43}, {320, 368}}</string>
 						<reference key="NSSuperview" ref="719361833"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="405097043"/>
@@ -190,6 +191,7 @@
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
 						</array>
+						<reference key="IBUITintColor" ref="202936731"/>
 					</object>
 					<object class="IBMKMapView" id="600156341">
 						<reference key="NSNextResponder" ref="942457773"/>
@@ -197,6 +199,7 @@
 						<string key="NSFrame">{{0, 43}, {320, 368}}</string>
 						<reference key="NSSuperview" ref="942457773"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -226,6 +229,7 @@
 						<string key="NSFrame">{{10, 8}, {300, 30}}</string>
 						<reference key="NSSuperview" ref="167445418"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBSegmentControlStyle">2</int>
@@ -277,6 +281,7 @@
 						<int key="IBUISystemItemIdentifier">5</int>
 					</object>
 				</array>
+				<reference key="IBUITintColor" ref="202936731"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

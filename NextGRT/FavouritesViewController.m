@@ -107,6 +107,16 @@
 }
 
 #pragma mark - BarItem Target
+- (void)onSendTextClicked:(id)sender
+{
+    MFMessageComposeViewController *msgVC = [[MFMessageComposeViewController alloc] init];
+    msgVC.recipients = [NSArray arrayWithObject:@"57555"];
+    msgVC.body = @"2137";
+    msgVC.messageComposeDelegate = self;
+    [self presentModalViewController:msgVC animated:YES];
+    [msgVC becomeFirstResponder];
+}
+
 - (void)openMap:(UIButton*)btn
 {
     NSString *defaultLatLong = @"43.472737,-80.541206";//UW Davis
@@ -206,6 +216,17 @@
     [self loadFavStopTable];
     
     //[self scheduleLocalNotification];
+    
+    /*******
+     Send text ability
+     */
+    if (ENABLE_NEW_FEATURES) {
+        id sendTextCapable = NSClassFromString(@"MFMessageComposeViewController");
+        if (sendTextCapable && [MFMessageComposeViewController canSendText]) {
+            UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:@"57555" style:UIBarButtonItemStylePlain target:self action:@selector(onSendTextClicked:)];
+            [self.navigationItem setLeftBarButtonItem:leftItem];
+        }
+    }
 }
 
 - (void)viewDidUnload
@@ -246,4 +267,9 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+#pragma mark - MFMessageCompose Delegate
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [controller dismissModalViewControllerAnimated:YES];
+}
 @end

@@ -33,22 +33,22 @@ typedef enum BusStopCellType BusStopCellType;
  */
 @interface BusStopCellBaseClass : UITableViewCell <UITextFieldDelegate,UIAlertViewDelegate> {
     //Showing bus stop name or custom name
-    UILabel* name_;
+    UILabel* _name;
 
     //Showing bus stop ID and original name if have customized name
-    UILabel* extraInfo_;
+    UILabel* _extraInfo;
     
     //fav button
-    UIButton* fav_;
+    UIButton* _fav;
     
-    UILabel* availableRoutes_;
+    UILabel* _availableRoutes;
     
-    UITextField *customNameField_;
-    UIAlertView* alert_;
+    UITextField *_customNameField;
+    UIAlertView* _alert;
     
     Stop* _stop;
     
-    bool isStopFav_;
+    bool _isStopFav;
 }
 
 /**
@@ -58,7 +58,7 @@ typedef enum BusStopCellType BusStopCellType;
 
 /**
  * After cell is created, use this method to assign information to the cell
- * @param: Stop stop    cannot be nil value
+ * @param: Stop stop cannot be nil value
  */
 - (void)initCellInfoWithStop:(Stop*)stop;
 

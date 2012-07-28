@@ -194,7 +194,7 @@
                 break;
         }
         //TODO what the heck? if not use this UI will freeze....
-        [self performSelector:@selector(requestForMoreStops) withObject:nil afterDelay:0.01];
+        [self performSelector:@selector(requestForMoreStops) withObject:nil afterDelay:0.02];
     } else {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }

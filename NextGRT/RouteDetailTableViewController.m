@@ -176,9 +176,11 @@
     
     BusRoute* route = [_stop.busRoutes objectAtIndex:[indexPath row]];
     
-    [((RouteDetailCell*)cell).routeNumber setText:[NSString stringWithFormat:@"%@%@", route.fullRouteNumber, [route getNextBusDirection]]];
+    ((RouteDetailCell*)cell).routeNumber.text = route.shortRouteNumber;
     
-    if ([((RouteDetailCell*)cell).routeNumber.text  length] <= 0 || [((RouteDetailCell*)cell).routeNumber.text  isEqualToString:@""]) {
+    [((RouteDetailCell*)cell).routeDetail setText:[NSString stringWithFormat:@"%@", [route getNextBusDirection]]];
+    
+    if ([((RouteDetailCell*)cell).routeDetail.text  length] <= 0 || [((RouteDetailCell*)cell).routeDetail.text  isEqualToString:@""]) {
         NSLog(@"ERROR! empty name!!!");
     }
     

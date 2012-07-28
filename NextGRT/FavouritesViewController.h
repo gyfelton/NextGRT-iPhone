@@ -10,8 +10,9 @@
 #import "BusStopBaseTableViewController.h"
 #import "GRTDatabaseManager.h"
 #import "MBProgressHUD.h"
+#import <MessageUI/MessageUI.h>
 
-@interface FavouritesViewController : UIViewController <GRTDatabaseManagerDelegate, MBProgressHUDDelegate, BusStopBaseTabeViewDelegate>
+@interface FavouritesViewController : UIViewController <GRTDatabaseManagerDelegate, MBProgressHUDDelegate, BusStopBaseTabeViewDelegate, MFMessageComposeViewControllerDelegate>
 {
     IBOutlet UIImageView *_welcomeHint;
     NSMutableArray* _favStops;

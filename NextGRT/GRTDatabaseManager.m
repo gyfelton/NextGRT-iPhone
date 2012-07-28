@@ -284,6 +284,7 @@ static GRTDatabaseManager* sharedManager = nil;
 //        NSLog(@"%@", [aStop stopID]);
         FMResultSet *s = [_db executeQuery:completeSQLStmt];
         NSString* currRoute = nil;
+        NSString *currTripHeadSign = nil;
         BusRoute* route = nil;
         while ([s next]) {
             
@@ -293,7 +294,7 @@ static GRTDatabaseManager* sharedManager = nil;
             NSString* direction = [s stringForColumn:@"trip_headsign"];//[NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 2)];
             
 //            NSString *numAndDirectionCombined = [NSString stringWithFormat:@"%@%@", routeNum, direction];
-            if( currRoute && [currRoute compare:routeNum] == NSOrderedSame ) {
+            if( currRoute && [currRoute compare:routeNum] == NSOrderedSame && [currTripHeadSign compare:direction] == NSOrderedSame ) {
                 //just add the time and direction since it is the same bus
                 [route addNextArrivalTime:departureTime Direction:direction];
             } else { //we encounter a new route, add old route to array
@@ -302,7 +303,8 @@ static GRTDatabaseManager* sharedManager = nil;
                     //[route release];
                 }
                 currRoute = routeNum;
-                
+                currTripHeadSign = direction;
+
                 //alloc a new route object for new route
                 route = [[BusRoute alloc] initWithRouteNumber:routeNum routeID:routeNum direction:direction AndTime:departureTime];
             }

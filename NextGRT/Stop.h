@@ -21,11 +21,13 @@
     double distanceFromCurrPositionInMeter_; //note: this is optional, if invalid, will just init as -1
     
     NSMutableArray* busRoutes_;
+    NSMutableArray *_distinctBusRoutesName;
     //NSString* locationType;
     //NSString* zoneID;
 }
 
 @property (nonatomic, retain) NSMutableArray* busRoutes;
+@property (nonatomic, retain) NSMutableArray *distinctBusRoutesName;
 @property (nonatomic, retain) NSString* stopName;
 @property (nonatomic, retain) NSString* stopID;
 @property BOOL isFav;
@@ -51,7 +53,7 @@
 
 /**
  * Attach array of routes to the stop
- * @param: NSArray routes       An array of routes instances, can be nil or empty array
+ * @param: NSArray routes: An array of routes instances, can be nil or empty array
  */
 - (void) assignBusRoutes:(NSArray*)routes;
 
@@ -59,6 +61,8 @@
  * Method to delete all buses that no long have service within this day
  */
 - (void)cleanNoServiceBus;
+
+- (int) numberOfDistinctBusRoutes;
 
 /**
  * @return number of bus routes under this stop
