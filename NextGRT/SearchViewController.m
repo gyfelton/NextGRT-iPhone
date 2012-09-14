@@ -116,7 +116,13 @@
     [_hud hide:YES];
     //put stop to the table
     if( !_stopTableVC ) {
-        _stopTableVC = [[BusStopsPullToRefreshTableViewController alloc] initWithTableWidth:320 Height:367 Stops:self.stops andDelegate:self needLoadMoreStopsButton:_areNearbyStops];
+        CGFloat height = 367;
+        //TODO change to user currentResolution
+        if (_tableContainer.frame.size.height > 367) {
+            height = 367+88;
+        }
+        
+        _stopTableVC = [[BusStopsPullToRefreshTableViewController alloc] initWithTableWidth:320 Height:height Stops:self.stops andDelegate:self needLoadMoreStopsButton:_areNearbyStops];
         _stopTableVC.customDelegate = self;
         
         if (SHOW_MAP) {
