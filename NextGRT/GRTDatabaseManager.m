@@ -234,28 +234,28 @@ static GRTDatabaseManager* sharedManager = nil;
     int weekday = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:[NSDate date]] weekday];
     switch (weekday) {
         case 1:
-            return [NSString stringWithString:@"sunday"];
+            return @"sunday";
             break;
         case 2:
-            return [NSString stringWithString:@"monday"];
+            return @"monday";
             break;
         case 3:
-            return [NSString stringWithString:@"tuesday"];
+            return @"tuesday";
             break;
         case 4:
-            return [NSString stringWithString:@"wednesday"];
+            return @"wednesday";
             break;
         case 5:
-            return [NSString stringWithString:@"thursday"];
+            return @"thursday";
             break;
         case 6:
-            return [NSString stringWithString:@"friday"];
+            return @"friday";
             break;
         case 7:
-            return [NSString stringWithString:@"saturday"];
+            return @"saturday";
             break;
         default:
-            return [NSString stringWithString:@"monday"];
+            return @"monday";
             break;
     }
 }

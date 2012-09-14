@@ -33,7 +33,9 @@
 #define USER_DEFAULT_KEY_COUNTDOWN @"showCountdownForNextBus"
 #define USER_DEFAULT_KEY_ACTUAL_TIME @"showActualTimeForNextBus"
 
-#define UITableBackgroundColor [UIColor colorWithRed:0.96f green:0.96f blue:0.96f alpha:1.0f];
+#define UITableBackgroundColor [UIColor colorWithRed:0.96f green:0.96f blue:0.96f alpha:1.0f]
+
+#define SearchBarTintColor [UIColor colorWithRed:154.0f/255.0f green:154.0f/255.0f blue:154.0f/255.0f alpha:1.0f]
 
 #define kDatabaseName   @"GRTDataBase_1May2012"
 //#define kStopInfoQuery  @"stopInfoFor%@"
