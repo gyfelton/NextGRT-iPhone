@@ -54,11 +54,17 @@
 {
     _statusBarMsgViewLabel.text = text;
     _statusBarMsgViewLabel.textAlignment = UITextAlignmentCenter;
-    _statusBarMsgViewLabel.textColor = [UIColor whiteColor];
+    _statusBarMsgViewLabel.textColor = [UIColor colorWithRed:188/263.0f green:206/255.0f blue:220/255.0f alpha:1.0f];
     _statusBarMsgViewLabel.shadowColor = [UIColor blackColor];
-    _statusBarMsgViewLabel.shadowOffset = CGSizeMake(0, 1);
+    _statusBarMsgViewLabel.shadowOffset = CGSizeMake(0, -1);
     _statusBarMsgViewLabel.font = [UIFont boldSystemFontOfSize:15];
-    _statusBarMsgView.backgroundColor = [UIColor colorWithRed:0.12f green:0.69f blue:0.99f alpha:1.0f];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = _statusBarMsgView.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithRed:80/255.0f green:106/255.0f blue:142/255.0f alpha:1.0f] CGColor], (id)[[UIColor colorWithRed:66/255.0f green:92/255.0f blue:132/255.0f alpha:1.0f] CGColor], (id)[[UIColor colorWithRed:64/255.0f green:91/255.0f blue:131/255.0f alpha:1.0f] CGColor], nil];
+    [_statusBarMsgView.layer insertSublayer:gradient atIndex:0];
+    
+    _statusBarMsgView.backgroundColor = [UIColor colorWithRed:64/255.0f green:91/255.0f blue:131/255.0f alpha:1.0f];
     
     _statusBarMsgView.hidden = NO;
     

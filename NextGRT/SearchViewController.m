@@ -116,13 +116,13 @@
     [_hud hide:YES];
     //put stop to the table
     if( !_stopTableVC ) {
-        CGFloat height = 367;
-        //TODO change to user currentResolution
-        if (_tableContainer.frame.size.height > 367) {
-            height = 367+88;
-        }
-        
-        _stopTableVC = [[BusStopsPullToRefreshTableViewController alloc] initWithTableWidth:320 Height:height Stops:self.stops andDelegate:self needLoadMoreStopsButton:_areNearbyStops];
+//        CGFloat height = 367;
+//        //TODO change to user currentResolution
+//        if (_tableContainer.frame.size.height > 367) {
+//            height = 367+88;
+//        }
+//        
+        _stopTableVC = [[BusStopsPullToRefreshTableViewController alloc] initWithTableWidth:320 Height:_tableContainer.frame.size.height Stops:self.stops andDelegate:self needLoadMoreStopsButton:_areNearbyStops];
         _stopTableVC.customDelegate = self;
         
         if (SHOW_MAP) {
@@ -165,10 +165,11 @@
     }
 
     //Add the shadow to the top
-    _table_top_shadow= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_horizontal_down_shadow"]];
-    _table_top_shadow.frame = CGRectMake(0, 0, 320, 10);
-    [_tableContainer addSubview:_table_top_shadow];
-//    top_shadow.backgroundColor = [UIColor redColor];
+    if (!_table_top_shadow) {
+        _table_top_shadow= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"table_horizontal_down_shadow"]];
+        _table_top_shadow.frame = CGRectMake(0, 0, 320, 16);
+        [_tableContainer addSubview:_table_top_shadow];
+    }
 }
 
 - (void) busRoutesForAllStopsReceived {

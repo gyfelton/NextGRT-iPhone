@@ -33,18 +33,17 @@ static GRTDatabaseManager* sharedManager = nil;
         // Setup some globals
         
         // Get the path to the documents directory and append the databaseName
-        self.databasePath = [[NSBundle mainBundle] pathForResource:kDatabaseName ofType:@"sqlite"];
-//        NSLog(@"%@", self.databasePath);
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:kDatabaseName ofType:@"sqlite"];
+        _databasePath = filePath;
         
         _db = [FMDatabase databaseWithPath:self.databasePath];
-        
-        if (!_db) {
+        if (!_db || !self.databasePath) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fatal error" message:@"Cannot find database, app cannot run anymore." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
             return nil;
         }
         [_db open];
-        
+
 //        //load database
 //        // Check if the SQL database has already been saved to the users phone, if not then copy it over
 //        BOOL success;
@@ -74,7 +73,7 @@ static GRTDatabaseManager* sharedManager = nil;
 /*Notes for Developer:
  The following sqlite queries requires modification to original GRT database, please make sure the following is done so that the app run as expected:
  1. In Calendar Table, make sure no out-dated service_id exists(only allow one service_id), otherwise we can have multiple entry for a same time for same bus/bus stop
- 2. In CalendarDate Table, all entris having retired service_id must be deleted
+ 2. In CalendarDate Table, all entries having retired service_id must be deleted
  3. In Stops: stop_lat and stop_lon needs to be DOUBLE or it will not get any result. 
  4. All Stop_id field must be numeric
  5. In Calandar Table, monday, tuesday.... must be NUMERIC 
@@ -110,8 +109,8 @@ static GRTDatabaseManager* sharedManager = nil;
             completeSQLStmt = [completeSQLStmt stringByAppendingString:kQueryFilterGroupByStopName];
         }
         
-        
         FMResultSet *s = [_db executeQuery:completeSQLStmt];
+        
         while ([s next]) {
                 // Read the data from the result row
                 //TODO check char* return is null or not before format to string

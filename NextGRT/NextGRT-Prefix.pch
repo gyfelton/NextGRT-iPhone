@@ -14,7 +14,7 @@
 #endif
 
 //Debug
-#define debug YES
+#define debug NO
 
 //variables:
 #define SHOW_MAP NO
@@ -37,7 +37,7 @@
 
 #define SearchBarTintColor [UIColor colorWithRed:154.0f/255.0f green:154.0f/255.0f blue:154.0f/255.0f alpha:1.0f]
 
-#define kDatabaseName   @"GRTDataBase_1May2012"
+#define kDatabaseName   @"GRTDataBase_20Sep2012"
 //#define kStopInfoQuery  @"stopInfoFor%@"
 
 #define kFavStopArrayDidUpdateNotification @"FavStopArrayDidUpdate"

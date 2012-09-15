@@ -191,6 +191,7 @@
                 self.isAskingForManualLocation = YES;
                 break;
             default:
+                [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text = local(@"Loading...");
                 break;
         }
         //TODO what the heck? if not use this UI will freeze....

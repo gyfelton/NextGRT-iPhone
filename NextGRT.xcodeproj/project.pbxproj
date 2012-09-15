@@ -39,8 +39,8 @@
 		FE53B44414C307D900FAD3D2 /* cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B44214C307D900FAD3D2 /* cell_bg@2x.png */; };
 		FE53B44E14C30E3D00FAD3D2 /* route_detail_arrow_deprecated.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B44C14C30E3D00FAD3D2 /* route_detail_arrow_deprecated.png */; };
 		FE53B44F14C30E3D00FAD3D2 /* route_detail_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FE53B44D14C30E3D00FAD3D2 /* route_detail_bg.png */; };
+		FE576C84160447E300722EF8 /* GRTDataBase_20Sep2012.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FEC1D8591603E12300576D72 /* GRTDataBase_20Sep2012.sqlite */; };
 		FE6D22F71603B6D800D46B42 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FE6D22F61603B6D800D46B42 /* Default-568h@2x.png */; };
-		FE81EF5F154EFAC1005573F2 /* GRTDataBase_1May2012.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = FE81EF5E154EFAC1005573F2 /* GRTDataBase_1May2012.sqlite */; };
 		FEA5E8FB14C13C3800DCA3A0 /* btnBus_64x64.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F514C13C3800DCA3A0 /* btnBus_64x64.png */; };
 		FEA5E8FE14C13C3800DCA3A0 /* star_grey.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F814C13C3800DCA3A0 /* star_grey.png */; };
 		FEA5E8FF14C13C3800DCA3A0 /* star_yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = FEA5E8F914C13C3800DCA3A0 /* star_yellow.png */; };
@@ -136,7 +136,6 @@
 		FE6D22F61603B6D800D46B42 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		FE6D22F81603B90E00D46B42 /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
 		FE6D22F91603B90E00D46B42 /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
-		FE81EF5E154EFAC1005573F2 /* GRTDataBase_1May2012.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = GRTDataBase_1May2012.sqlite; sourceTree = "<group>"; };
 		FE97911E14E2CD3400A6B34C /* NextGRT-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NextGRT-Prefix.pch"; sourceTree = "<group>"; };
 		FEA5E8F514C13C3800DCA3A0 /* btnBus_64x64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btnBus_64x64.png; sourceTree = "<group>"; };
 		FEA5E8F814C13C3800DCA3A0 /* star_grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_grey.png; sourceTree = "<group>"; };
@@ -198,6 +197,7 @@
 		FEACF0AB14C08FA4003CC962 /* UnopenedBusStopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnopenedBusStopCell.m; sourceTree = "<group>"; };
 		FEAEBCBE14E77A02003D59FF /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		FEAEBCC014E77A05003D59FF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		FEC1D8591603E12300576D72 /* GRTDataBase_20Sep2012.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = GRTDataBase_20Sep2012.sqlite; sourceTree = "<group>"; };
 		FED4C5071571D9A000D1EAFF /* route_num_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = route_num_bg.png; sourceTree = "<group>"; };
 		FEE7117114E6C683000EFE94 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		FEE82D331500E998004AEEF6 /* UserTouchCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTouchCaptureView.h; sourceTree = "<group>"; };
@@ -321,7 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				FEEA83251573C4D600CC310F /* Chalkduster.ttf */,
-				FE81EF5E154EFAC1005573F2 /* GRTDataBase_1May2012.sqlite */,
+				FEC1D8591603E12300576D72 /* GRTDataBase_20Sep2012.sqlite */,
 				FEA5E8F414C13C3800DCA3A0 /* images */,
 			);
 			path = Resources;
@@ -602,12 +602,12 @@
 				FE1424F11547195F00578B33 /* table_horizontal_down_shadow@2x.png in Resources */,
 				FE1424F415471A9600578B33 /* table_horizontal_up_shadow@2x.png in Resources */,
 				FE1424F515471A9600578B33 /* table_horizontal_up_shadow.png in Resources */,
-				FE81EF5F154EFAC1005573F2 /* GRTDataBase_1May2012.sqlite in Resources */,
 				FED4C5081571D9A000D1EAFF /* route_num_bg.png in Resources */,
 				FEEA83261573C4D600CC310F /* Chalkduster.ttf in Resources */,
 				FE07FD7D15C4399E00D9BF0F /* tabbar_radar.png in Resources */,
 				FE07FD7E15C4399E00D9BF0F /* tabbar_radar@2x.png in Resources */,
 				FE6D22F71603B6D800D46B42 /* Default-568h@2x.png in Resources */,
+				FE576C84160447E300722EF8 /* GRTDataBase_20Sep2012.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,8 +719,8 @@
 					armv6,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -736,9 +736,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
+				PROVISIONING_PROFILE = "E41D0132-3B55-4568-B2F0-571D674482E2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E41D0132-3B55-4568-B2F0-571D674482E2";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s armv6";
 			};
 			name = Debug;
 		};
@@ -751,8 +752,8 @@
 					armv6,
 				);
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -763,10 +764,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
+				PROVISIONING_PROFILE = "E41D0132-3B55-4568-B2F0-571D674482E2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E41D0132-3B55-4568-B2F0-571D674482E2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s armv6";
 			};
 			name = Release;
 		};
@@ -774,20 +776,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
 					armv6,
-					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
+				PROVISIONING_PROFILE = "E41D0132-3B55-4568-B2F0-571D674482E2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E41D0132-3B55-4568-B2F0-571D674482E2";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s armv6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -796,20 +799,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
 					armv6,
-					armv7,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ruoshi Zeng (DB9JM8RT89)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Derek Li (Q8S9C62V92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Derek Li (Q8S9C62V92)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NextGRT/NextGRT-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "NextGRT/NextGRT-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE300F0C-6E8C-48D5-837E-3415DDF5C5B3";
+				PROVISIONING_PROFILE = "E41D0132-3B55-4568-B2F0-571D674482E2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E41D0132-3B55-4568-B2F0-571D674482E2";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s armv6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
