@@ -52,7 +52,7 @@
     //[_hud hide:NO];
     //_hud.labelText = local(@"Processing...");
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateView) name:UIApplicationDidBecomeActiveNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateView) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -224,7 +224,7 @@
         }
     } else
     {
-        //during editing, clicking on it causes editing of title (assuming under search, we cannnot edit!!!
+        //during editing, clicking on it causes editing of title (assuming under search, we cannnot edit!!!)
         BusStopCellBaseClass *cell = (BusStopCellBaseClass*)[tableView cellForRowAtIndexPath:indexPath];
         [cell askForEditingOfNickName];
     }

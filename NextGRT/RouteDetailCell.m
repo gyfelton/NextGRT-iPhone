@@ -56,6 +56,8 @@
     _routeNumber.shadowColor = [UIColor colorWithRed:0.22f green:0.55f blue:0.80f alpha:1.0f];
     _routeNumber.shadowOffset = CGSizeMake(0, -1);
     _routeNumber.font = [UIFont boldSystemFontOfSize:18];
+    _routeNumber.adjustsFontSizeToFitWidth = YES;
+    _routeNumber.minimumFontSize = 11;
     _routeNumber.frame = CGRectMake(0, 0, _routeNumber.frame.size.width, _routeNumber.frame.size.height);
     [route_num_bg addSubview:_routeNumber];
     

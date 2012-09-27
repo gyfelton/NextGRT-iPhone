@@ -55,17 +55,24 @@
     //start updating gps location
     _currSearchRadiusFactor = 1;
     _locationManager = [AppDelegate sharedLocationManager];
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
     _locationManager.distanceFilter = 100;
     _locationManager.delegate = self;
     [_locationManager startUpdatingLocation];   
 }
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //TODO no update of table if location does not change
+    //If horizontal accuracy is more than 100, don't use this location
+    NSLog(@"horizontal accuracy:%f", newLocation.horizontalAccuracy);
+    if (newLocation.horizontalAccuracy > 100) {
+        return; //!!!
+    }
+    
+     //TODO no update of table if location does not change
     [manager stopUpdatingLocation];
     
     //if location change is significant
-    if (!_areNearbyStops || !oldLocation || [newLocation distanceFromLocation:oldLocation]>100.0f) {
+    if (!_areNearbyStops || !oldLocation || [newLocation distanceFromLocation:oldLocation]>10.0f) {
         _currLocation = [newLocation copy];
         
         //the stops we have later will be nearby stops, so load more button is needed
@@ -85,7 +92,7 @@
         }
     } else
     {
-        [_stopTableVC reloadDataAndStopLoadingAnimation];
+        [_stopTableVC performSelector:@selector(reloadDataAndStopLoadingAnimation) withObject:nil afterDelay:0.7f];
     }
 }
 
